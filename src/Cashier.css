@@ -6,20 +6,19 @@
     font-family: 'Kumbh Sans', sans-serif;
     scroll-behavior: smooth;
 }
+
 /* Style the header to go across the entire top of the page */
 .header {
     width: 100%;
     background-color: #333;
     /* Example background color */
     color: #fff;
-    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: fixed;
-    top: 0;
-    left: 0;
     z-index: 1;
+
 }
 
 .sharetea_header {
@@ -48,40 +47,57 @@
     text-decoration: underline;
 }
 
-/*----------------END OF HEADER*-----------------------/
-
-/* -------------beginning of place order view -----------------*/
+/*----------------END OF HEADER*-----------------------*/
 .placeorders_page {
     display: flex;
     width: 100%;
-    justify-content: space-evenly;
+}
 
-  }
-  
-  .place_left_side {
-    display:block;
-    width: 50%;
-  }
-  
-  .place_right_side {
-    width: 50%;
-  }
-  
-  .grid-container {
+.place_left_side {
+    width: 60%; /* Takes up 2/3 of the page width */
+    padding: 20px; /* Add padding as needed */
+    box-sizing: border-box; /* Include padding in the width */
+}
+
+.place_right_side {
+    width: 40%; /* Adjust the width as needed */
+    align-items: center; /* Center-align its contents horizontally */
+    color: #333;
+    margin-top: 60px;
+}
+.place_right_side h1{
+    font-size: 1.2rem;
+}
+
+.grid-container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 50px; /* Increase the gap to create more space between buttons */
+    gap: 10px; /* Adjust the gap between buttons as needed */
     justify-content: flex-start;
-    margin-right: 600px;
-  }
-  
-  .grid-button {
+}
+
+.grid-button {
     background-color: #007BFF;
     color: #fff;
     border: none;
     cursor: pointer;
     text-align: center;
-    padding: 30px; /* Increase padding for larger buttons */
-    width: 130%;
-    height: 100px; /* Adjust the height to make the buttons larger */
-  }
+    padding: 20px; /* Adjust padding for the button size */
+    height: 120px;
+}
+
+.grid-button:hover {
+    background-color: #073566;
+}
+
+.menu-title {
+    margin-top: 40px;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.place_right_side p1 {
+    color: #333;
+    font-size: larger;
+}

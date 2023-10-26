@@ -3,20 +3,32 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './Cashier.css'
 
-
-function Header() {
-    const [currentView, setCurrentView] = useState("");
+function populateButtons(handleClick) {
     const order_buttons = [];
+
     for (let i = 0; i < 5; i++) {
         for (let j = 0; j < 5; j++) {
             const buttonLabel = `Button ${i * 5 + j + 1}`;
             order_buttons.push(
-                <button key={i * 5 + j + 1} className='grid-button'>
+                <button key={i * 5 + j + 1} className='grid-button' onClick={() => handleClick(buttonLabel)}>
                     {buttonLabel}
                 </button>
             );
         }
     }
+
+    return order_buttons;
+}
+function Header() {
+    const [currentView, setCurrentView] = useState("");
+    const [selectedButton, setSelectedButton] = useState("");
+
+    const handleButtonClick = (buttonName) => {
+        setSelectedButton(buttonName);
+    }
+
+    const buttons_array = populateButtons(handleButtonClick);
+
     const ViewOrdersClick = () => {
         setCurrentView('viewOrders');
     };
@@ -26,7 +38,7 @@ function Header() {
     };
 
     return (
-        <body>
+        <div>
             <nav className='header'>
                 <div className='sharetea_header'>
                     ShareTea
@@ -41,14 +53,15 @@ function Header() {
                 <div className='place_left_side'>
                     <h1 className='menu-title'>Menu Items</h1>
                     <div className='grid-container'>
-                        {order_buttons}
+                        {buttons_array}
                     </div>
                 </div>
                 <div className='place_right_side'>
-                    <h1>Heading</h1>
+                    <h1 style={{display: 'inline'}}>Selected Button: </h1>
+                    <h1 style={{display: 'inline'}}>{selectedButton}</h1>
                 </div>
             </div>
-        </body>
+        </div>
 
     );
 
