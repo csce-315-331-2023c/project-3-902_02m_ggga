@@ -1,0 +1,87 @@
+/*--------------HEADER STUFF-----------------*/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Kumbh Sans', sans-serif;
+    scroll-behavior: smooth;
+}
+/* Style the header to go across the entire top of the page */
+.header {
+    width: 100%;
+    background-color: #333;
+    /* Example background color */
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.sharetea_header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 3rem;
+    margin-left: 10px;
+}
+
+.links {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    margin-right: 10px;
+}
+
+.links li {
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.6rem;
+    margin: 0 1rem;
+}
+
+.links li:hover {
+    text-decoration: underline;
+}
+
+/*----------------END OF HEADER*-----------------------/
+
+/* -------------beginning of place order view -----------------*/
+.placeorders_page {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+
+  }
+  
+  .place_left_side {
+    display:block;
+    width: 50%;
+  }
+  
+  .place_right_side {
+    width: 50%;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 50px; /* Increase the gap to create more space between buttons */
+    justify-content: flex-start;
+    margin-right: 600px;
+  }
+  
+  .grid-button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    padding: 30px; /* Increase padding for larger buttons */
+    width: 130%;
+    height: 100px; /* Adjust the height to make the buttons larger */
+  }
