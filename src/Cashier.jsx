@@ -1,41 +1,63 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './Cashier.css'
+import CustomerInput from './CustomerInput';
+import axios from 'axios';
+import { prodArray } from './productArray';
+
 
 function populateButtons(handleClick) {
     const order_buttons = [];
 
-    for (let i = 0; i < 5; i++) {
-        for (let j = 0; j < 5; j++) {
-            const buttonLabel = `Button ${i * 5 + j + 1}`;
-            order_buttons.push(
-                <button key={i * 5 + j + 1} className='grid-button' onClick={() => handleClick(buttonLabel)}>
-                    {buttonLabel}
-                </button>
-            );
-        }
-    }
+    const products = prodArray.map
+
+    for (let i = 0; i < prodArray.length; i++) {
+        const product = prodArray[i];
+        const buttonLabel = product.name; // Assuming your product object has a "name" property
+        const buttonPrice = product.price;
+        const buttonID = product.id;
+        const buttonMods = product.ingredients;
+      
+        order_buttons.push(
+          <button
+            key={i}
+            className='grid-button'
+            onClick={() => handleClick(buttonLabel, buttonPrice, buttonMods, buttonID)}
+          >
+            {buttonLabel}
+          </button>
+        );
+      }
 
     return order_buttons;
 }
 function Header() {
+    
+
+    // here I have all my states and handlers
     const [currentView, setCurrentView] = useState("");
     const [selectedButton, setSelectedButton] = useState("");
+    const [quantity, setQuantity] = useState(1);
+    const [price, setPrice] = useState(0.0);
 
-    const handleButtonClick = (buttonName) => {
-        setSelectedButton(buttonName);
+    const handleInputChange = (inputValue) => {
+        setQuantity(inputValue)
     }
 
+    const handleButtonClick = (buttonName, btn_price, btn_mods, btn_ID) => {
+        setSelectedButton(buttonName);
+        setPrice(btn_price);
+
+    }
+
+    const handleViewChange = (view) => {
+        setCurrentView(view);
+    }
+
+    //populating the button
+
     const buttons_array = populateButtons(handleButtonClick);
-
-    const ViewOrdersClick = () => {
-        setCurrentView('viewOrders');
-    };
-
-    const PlaceOrdersClick = () => {
-        setCurrentView('placeOrders');
-    };
 
     return (
         <div>
@@ -44,11 +66,13 @@ function Header() {
                     ShareTea
                 </div>
                 <ul className='links'>
-                    <li onClick={ViewOrdersClick}> View Orders</li>
-                    <li onClick={PlaceOrdersClick}>Place Orders</li>
+                    <li onClick={() => handleViewChange('viewOrders')}> View Orders</li>
+                    <li onClick={() => handleViewChange('placeOrders')}>Place Orders</li>
                     <li>Log Out</li>
                 </ul>
             </nav>
+                {currentView === 'placeOrders' && <PlaceOrders/>}; 
+                {currentView === 'viewOrders' && <ViewOrders/>}; 
             <div className='placeorders_page'>
                 <div className='place_left_side'>
                     <h1 className='menu-title'>Menu Items</h1>
@@ -57,40 +81,28 @@ function Header() {
                     </div>
                 </div>
                 <div className='place_right_side'>
-                    <h1 style={{display: 'inline'}}>Selected Button: </h1>
-                    <h1 style={{display: 'inline'}}>{selectedButton}</h1>
+                    <div>
+                        <CustomerInput onInputChange = {handleInputChange}/>
+                        <p>Quantity: {quantity} </p>
+                    </div>
+                    <div className='selectedAttributes'>
+                        <h1 style={{ display: 'inline' }}>Selected Item: </h1>
+                        <h1 style={{ display: 'inline' }}>{selectedButton}</h1>    
+                        <h1>Price: {price}</h1>                    
+                    </div>
+
                 </div>
             </div>
         </div>
 
     );
-
 }
 
 function ViewOrders() {
 
 }
 function PlaceOrders() {
-    const order_buttons = [];
-    for (let i = 0; i < 5; i++) {
-        for (let j = 0; j < 5; j++) {
-            const buttonLabel = `Button ${i * 5 + j + 1}`;
-            order_buttons.push(
-                <button key={i * 5 + j + 1} className='grid-button'>
-                    {buttonLabel}
-                </button>
-            );
-        }
-    }
 
-    return (
-        <div className='placeorders_page'>
-            <div className='place_left_side'>
-                <h1>Menu Items</h1>
-                {order_buttons} {/* Use order_buttons instead of buttons */}
-            </div>
-        </div>
-    );
 }
 
 function Cashier() {
