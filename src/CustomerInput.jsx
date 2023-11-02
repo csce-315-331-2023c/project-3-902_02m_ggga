@@ -19,10 +19,9 @@ function CustomerInput(props) {
         <div>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Quantity:
                     <input type="number" value={inputValue} onChange={handleChange} />
                 </label>
-                <button type="submit">Submit</button>
+                {/* <button type="submit">Submit </button> */}
             </form>
         </div>
     );

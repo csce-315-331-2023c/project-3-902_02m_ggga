@@ -10,7 +10,7 @@ const prodArray = [
         id: "1",
         name: "milk tea",
         price: 4.99,
-        ingredients: []
+        ingredients: ["milk, ", "other stuff "]
     },
     {
         id: "2",

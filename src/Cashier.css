@@ -30,6 +30,8 @@
 }
 
 .links {
+    margin-top: 12px;
+    justify-content: flex-start;
     list-style: none;
     display: flex;
     gap: 10px;
@@ -64,6 +66,8 @@
     align-items: center; /* Center-align its contents horizontally */
     color: #333;
     margin-top: 60px;
+    padding: 20px; /* Add padding as needed */
+
 }
 .place_right_side h1{
     font-size: 1.2rem;
@@ -100,4 +104,9 @@
 .place_right_side p1 {
     color: #333;
     font-size: larger;
+}
+
+.order_mods {
+    display: flex;
+    justify-content: space-evenly;
 }

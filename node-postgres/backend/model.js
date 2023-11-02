@@ -2,7 +2,7 @@ const Pool = require('pg').Pool
 const pool = new Pool({
   user: "csce331_902_gabrielmarshall327",
   host: "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315331_02m_db",
-  database: 'orders',
+  database: 'csce315331_02m_db',
   password: "password123",
   port: 5432,
 });

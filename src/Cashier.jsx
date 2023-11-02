@@ -12,6 +12,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+// import { NavBar } from "react-bootstrap"
+import "bootstrap/dist/css/bootstrap.min.css"
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Form from 'react-bootstrap/Form';
+
 
 
 function populateButtons(handleClick) {
@@ -87,16 +95,75 @@ function Header() {
                     </div>
                 </div>
                 <div className='place_right_side'>
-                    <div>
-                        <CustomerInput onInputChange={handleInputChange} />
-                        <p>Quantity: {quantity} </p>
+                    <div className='order_mods'>
+                        <div>
+                            <label>Quantity</label>
+                            <CustomerInput onInputChange={handleInputChange} />
+                            <p>Quantity: {quantity} </p>
+                        </div>
+                        <div>
+                            <label>Modifications</label>
+                            <Form>
+                                {['checkbox'].map((type) => (
+                                    <div key={`inline-${type}`} className="mb-3">
+                                        <Form.Check
+                                            inline
+                                            label="No Milk"
+                                            name="group1"
+                                            type={type}
+                                            id={`inline-${type}-1`}
+                                        />
+                                        <Form.Check
+                                            inline
+                                            label="No Sugar"
+                                            name="group1"
+                                            type={type}
+                                            id={`inline-${type}-2`}
+                                        />
+                                        <Form.Check
+                                            inline
+                                            label="No Boba"
+                                            type={type}
+                                            id={`inline-${type}-3`}
+                                        />
+                                    </div>
+                                ))}
+                            </Form>
+                            <Form>
+                                {['checkbox'].map((type) => (
+                                    <div key={`inline-${type}`} className="mb-3">
+                                        <Form.Check
+                                            inline
+                                            label="No Milk"
+                                            name="group1"
+                                            type={type}
+                                            id={`inline-${type}-1`}
+                                        />
+                                        <Form.Check
+                                            inline
+                                            label="No Sugar"
+                                            name="group1"
+                                            type={type}
+                                            id={`inline-${type}-2`}
+                                        />
+                                        <Form.Check
+                                            inline
+                                            label="No Boba"
+                                            type={type}
+                                            id={`inline-${type}-3`}
+                                        />
+                                    </div>
+                                ))}
+                            </Form>
+
+                        </div>
                     </div>
                     <div className='selectedAttributes'>
                         <h1 style={{ display: 'inline' }}>Selected Item: </h1>
                         <h1 style={{ display: 'inline' }}>{selectedButton}</h1>
                         <h1>Price: {price}</h1>
                     </div>
-                    <DenseTable/>
+                    <DenseTable />
                 </div>
             </div>
         </div>
@@ -109,11 +176,10 @@ function DenseTable() {
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                        <TableCell>Product</TableCell>
+                        <TableCell align="right">Quantity</TableCell>
+                        <TableCell align="right">Modifications</TableCell>
+                        <TableCell align="right">Price</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -125,10 +191,9 @@ function DenseTable() {
                             <TableCell component="th" scope="row">
                                 {row.name}
                             </TableCell>
-                            <TableCell align="right">{row.calories}</TableCell>
-                            <TableCell align="right">{row.fat}</TableCell>
-                            <TableCell align="right">{row.carbs}</TableCell>
-                            <TableCell align="right">{row.protein}</TableCell>
+                            <TableCell align="right">{row.quantity}</TableCell>
+                            <TableCell align="right">{row.price}</TableCell>
+                            <TableCell align="right">{row.ingredients}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -145,32 +210,20 @@ function PlaceOrders() {
 }
 
 function Cashier() {
-    // const [count, setCount] = useState(0)
+    return (
+        <Navbar bg="light" data-bs-theme="light">
+            <Container>
+                <Navbar.Brand className="me-auto" href="#home">Share Tea</Navbar.Brand>
+                <Nav className="me-auto">
+                    <Nav.Link href="#test">Home</Nav.Link>
+                    <Nav.Link href="#features">Features</Nav.Link>
+                    <Nav.Link href="#pricing">Pricing</Nav.Link>
+                </Nav>
+            </Container>
+        </Navbar>
+    );
 
-    // return (
-    //     <>
-    //         <div>
-    //             <a href="https://vitejs.dev" target="_blank">
-    //                 <img src={viteLogo} className="logo" alt="Vite logo" />
-    //             </a>
-    //             <a href="https://react.dev" target="_blank">
-    //                 <img src={reactLogo} className="logo react" alt="React logo" />
-    //             </a>
-    //         </div>
-    //         <h1>Vite + React</h1>
-    //         <div className="card">
-    //             <button onClick={() => setCount((count) => count + 1)}>
-    //                 count is {count}
-    //             </button>
-    //             <p>
-    //                 Edit <code>src/App.jsx</code> and save to test HMR
-    //             </p>
-    //         </div>
-    //         <p className="read-the-docs">
-    //             Click on the Vite and React logos to learn more
-    //         </p>
-    //     </>
-    // )
+
 }
 
 export default Cashier
