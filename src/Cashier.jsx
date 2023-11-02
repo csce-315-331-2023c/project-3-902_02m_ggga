@@ -57,25 +57,15 @@ function Header() {
     const [selectedLabels, setSelectedLabels] = useState([]);
     const [cart, setCart] = useState([]);
     const [currentProd, setCurrentProd] = useState({ name: "", qty: 1, price: 0.0, ingredients: [] })
-    // const [inputValue, setInputValue] = useState('');
-
-    // const handleChange = (inputValue) => {
-    //     setInputValue(e.target.value);
-    //     // Call the callback function to pass the input value to the parent component
-    //     props.onInputChange(e.target.value);
-    // };
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     // Process the customer input here (e.g., send it to an API, store it in state, etc.)
-    //     console.log('Customer input:', inputValue);
-    // };
+    const [totalPrice, setTotalPrice] = useState(0.0);
 
     const handleLabelChange = (label) => {
         if (label === 'clearAll') {
             // Clear all selected labels
             setSelectedLabels([]);
             setCart([])
+            setTotalPrice(0.0)
+            setQuantity(1)
         } else if (selectedLabels.includes(label)) {
             // If the item is selected, then we will remove it
             setSelectedLabels(selectedLabels.filter(item => item !== label));
@@ -83,6 +73,8 @@ function Header() {
             // If the item was not selected, then we will add it
             setSelectedLabels([...selectedLabels, label]);
         }
+
+        setCurrentProd({ name: selectedButton, qty: quantity, price: price, ingredients: selectedLabels });
     };
 
     const handleClear = () => {
@@ -96,11 +88,14 @@ function Header() {
 
     const handleCartChange = () => {
         setCart([...cart, currentProd])
+        setTotalPrice(totalPrice + currentProd.price)
+        setQuantity(1)
     }
 
     const handleQuantityChange = (e) => {
         // Update the quantity state with the input value
         setQuantity(e.target.value);
+        setCurrentProd({ name: selectedButton, qty: quantity, price: price, ingredients: selectedLabels });
     };
 
     // when a button is clicked, the attribtues are then passed in.
@@ -111,7 +106,7 @@ function Header() {
         setCurrentProd({
             name: buttonName,
             qty: quantity,
-            price: btn_price * quantity,
+            price: btn_price,
             ingredients: selectedLabels
         })
     }
@@ -152,9 +147,9 @@ function Header() {
                             <label className='quant_label'>Quantity</label>
                             <input
                                 type="number"
-                                value={quantity}
                                 onChange={handleQuantityChange}
-                            />                            <p>Quantity: {quantity} </p>
+                            />
+                            <p>Quantity: {quantity} </p>
 
                         </div>
                         <div>
@@ -204,8 +199,10 @@ function Header() {
                                     <p>Quantity: {item.qty}</p>
                                 </li>
                             ))}
-                        </ul>                    </div>
+                        </ul>
+                    </div>
                     <DenseTable data={cart} />
+                    <h1>Total Price: {totalPrice} </h1>
                     <div className='order_placing_btns'>
                         <button onClick={() => handleCartChange()}> Add to Cart</button>
                         <button onClick={() => handleLabelChange("clearAll")}>Clear</button>
