@@ -21,7 +21,6 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 
 
-
 function populateButtons(handleClick) {
     const order_buttons = [];
 
@@ -32,13 +31,13 @@ function populateButtons(handleClick) {
         const buttonLabel = product.name; // Assuming your product object has a "name" property
         const buttonPrice = product.price;
         const buttonID = product.id;
-        const buttonMods = product.ingredients;
+        const buttonIngredients = product.ingredients;
 
         order_buttons.push(
             <button
                 key={i}
                 className='grid-button'
-                onClick={() => handleClick(buttonLabel, buttonPrice, buttonMods, buttonID)}
+                onClick={() => handleClick(buttonLabel, buttonPrice, buttonIngredients, buttonID)}
             >
                 {buttonLabel}
             </button>
@@ -57,12 +56,26 @@ function Header() {
     const [price, setPrice] = useState(0.0);
     const [selectedLabels, setSelectedLabels] = useState([]);
     const [cart, setCart] = useState([]);
-    const [currentProd, setCurrentProd] = useState({ id: 0, name: "undefined", price: 0.0, ingredients: [] })
+    const [currentProd, setCurrentProd] = useState({ name: "", qty: 1, price: 0.0, ingredients: [] })
+    // const [inputValue, setInputValue] = useState('');
+
+    // const handleChange = (inputValue) => {
+    //     setInputValue(e.target.value);
+    //     // Call the callback function to pass the input value to the parent component
+    //     props.onInputChange(e.target.value);
+    // };
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     // Process the customer input here (e.g., send it to an API, store it in state, etc.)
+    //     console.log('Customer input:', inputValue);
+    // };
 
     const handleLabelChange = (label) => {
         if (label === 'clearAll') {
             // Clear all selected labels
             setSelectedLabels([]);
+            setCart([])
         } else if (selectedLabels.includes(label)) {
             // If the item is selected, then we will remove it
             setSelectedLabels(selectedLabels.filter(item => item !== label));
@@ -71,12 +84,6 @@ function Header() {
             setSelectedLabels([...selectedLabels, label]);
         }
     };
-
-    const [checkboxState, setCheckboxState] = useState({
-        extraMilk: false,
-        extraSugar: false,
-        extraBoba: false,
-    });
 
     const handleClear = () => {
         // Create a new object with all checkboxes set to false
@@ -88,21 +95,24 @@ function Header() {
     };
 
     const handleCartChange = () => {
-        setCart(...cart, currentProd)
+        setCart([...cart, currentProd])
     }
 
-    const handleInputChange = (inputValue) => {
-        setQuantity(inputValue)
-    }
+    const handleQuantityChange = (e) => {
+        // Update the quantity state with the input value
+        setQuantity(e.target.value);
+    };
 
-    const handleButtonClick = (buttonName, btn_price, btn_mods, btn_ID) => {
+    // when a button is clicked, the attribtues are then passed in.
+    // this function will then set the current products attributes to what is pressed
+    const handleButtonClick = (buttonName, btn_price, btn_ingr, btn_ID) => {
         setSelectedButton(buttonName);
         setPrice(btn_price);
         setCurrentProd({
-            id: btn_ID,
             name: buttonName,
-            price: btn_price,
-            ingredients: btn_mods
+            qty: quantity,
+            price: btn_price * quantity,
+            ingredients: selectedLabels
         })
     }
     const handleViewChange = (view) => {
@@ -140,8 +150,12 @@ function Header() {
                     <div className='order_mods'>
                         <div>
                             <label className='quant_label'>Quantity</label>
-                            <CustomerInput onInputChange={handleInputChange} />
-                            <p>Quantity: {quantity} </p>
+                            <input
+                                type="number"
+                                value={quantity}
+                                onChange={handleQuantityChange}
+                            />                            <p>Quantity: {quantity} </p>
+
                         </div>
                         <div>
                             <label className='mod_label'>Modifications</label>
@@ -179,11 +193,19 @@ function Header() {
                         </div>
                     </div>
                     <div className='selectedAttributes'>
-                        <h1>Selected Item: {selectedButton} </h1>
-                        <h1>Price: {price}</h1>
-                        <h1>Cart: {cart} </h1>
-                    </div>
-                    <DenseTable />
+                        <h1>Selected Item: {currentProd.name} </h1>
+                        <h1>Price: {currentProd.price}</h1>
+                        <h1>Cart:</h1>
+                        <ul>
+                            {cart.map((item) => (
+                                <li key={item.id}>
+                                    <p>Name: {item.name}</p>
+                                    <p>Price: {item.price}</p>
+                                    <p>Quantity: {item.qty}</p>
+                                </li>
+                            ))}
+                        </ul>                    </div>
+                    <DenseTable data={cart} />
                     <div className='order_placing_btns'>
                         <button onClick={() => handleCartChange()}> Add to Cart</button>
                         <button onClick={() => handleLabelChange("clearAll")}>Clear</button>
@@ -194,7 +216,7 @@ function Header() {
 
     );
 }
-function DenseTable() {
+function DenseTable({ data }) {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -207,7 +229,7 @@ function DenseTable() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {prodArray.map((row) => (
+                    {data.map((row) => (
                         <TableRow
                             key={row.name}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -215,9 +237,9 @@ function DenseTable() {
                             <TableCell component="th" scope="row">
                                 {row.name}
                             </TableCell>
-                            <TableCell align="right">{row.quantity}</TableCell>
-                            <TableCell align="right">{row.price}</TableCell>
+                            <TableCell align="right">{row.qty}</TableCell>
                             <TableCell align="right">{row.ingredients}</TableCell>
+                            <TableCell align="right">{row.price}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

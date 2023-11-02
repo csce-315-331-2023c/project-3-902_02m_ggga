@@ -17,11 +17,11 @@ function CustomerInput(props) {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form onChange={handleSubmit}>
                 <label>
                     <input type="number" value={inputValue} onChange={handleChange} />
                 </label>
-                {/* <button type="submit">Submit </button> */}
+                <button type="submit">Submit </button>
             </form>
         </div>
     );
