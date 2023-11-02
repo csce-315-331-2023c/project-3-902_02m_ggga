@@ -55,6 +55,41 @@ function Header() {
     const [selectedButton, setSelectedButton] = useState("");
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(0.0);
+    const [selectedLabels, setSelectedLabels] = useState([]);
+    const [cart, setCart] = useState([]);
+    const [currentProd, setCurrentProd] = useState({ id: 0, name: "undefined", price: 0.0, ingredients: [] })
+
+    const handleLabelChange = (label) => {
+        if (label === 'clearAll') {
+            // Clear all selected labels
+            setSelectedLabels([]);
+        } else if (selectedLabels.includes(label)) {
+            // If the item is selected, then we will remove it
+            setSelectedLabels(selectedLabels.filter(item => item !== label));
+        } else {
+            // If the item was not selected, then we will add it
+            setSelectedLabels([...selectedLabels, label]);
+        }
+    };
+
+    const [checkboxState, setCheckboxState] = useState({
+        extraMilk: false,
+        extraSugar: false,
+        extraBoba: false,
+    });
+
+    const handleClear = () => {
+        // Create a new object with all checkboxes set to false
+        const clearedCheckboxes = {};
+        for (const key in checkboxState) {
+            clearedCheckboxes[key] = false;
+        }
+        setCheckboxState(clearedCheckboxes);
+    };
+
+    const handleCartChange = () => {
+        setCart(...cart, currentProd)
+    }
 
     const handleInputChange = (inputValue) => {
         setQuantity(inputValue)
@@ -63,7 +98,12 @@ function Header() {
     const handleButtonClick = (buttonName, btn_price, btn_mods, btn_ID) => {
         setSelectedButton(buttonName);
         setPrice(btn_price);
-
+        setCurrentProd({
+            id: btn_ID,
+            name: buttonName,
+            price: btn_price,
+            ingredients: btn_mods
+        })
     }
     const handleViewChange = (view) => {
         setCurrentView(view);
@@ -72,6 +112,8 @@ function Header() {
     //populating the button
 
     const buttons_array = populateButtons(handleButtonClick);
+    const top_labels = ["No Milk ", "No Sugar ", "No Boba "]
+    const bottom_labels = ["Extra Milk ", "Extra Sugar ", "Extra Boba "]
 
     return (
         <div>
@@ -97,73 +139,55 @@ function Header() {
                 <div className='place_right_side'>
                     <div className='order_mods'>
                         <div>
-                            <label>Quantity</label>
+                            <label className='quant_label'>Quantity</label>
                             <CustomerInput onInputChange={handleInputChange} />
                             <p>Quantity: {quantity} </p>
                         </div>
                         <div>
-                            <label>Modifications</label>
-                            <Form>
-                                {['checkbox'].map((type) => (
-                                    <div key={`inline-${type}`} className="mb-3">
+                            <label className='mod_label'>Modifications</label>
+                            {/* forms made using boostrap */}
+                            <Form className='horizontal_checks'>
+                                {top_labels.map((label, index) => (
+                                    <div key={index} className="mb-3">
                                         <Form.Check
                                             inline
-                                            label="No Milk"
+                                            label={label}
                                             name="group1"
-                                            type={type}
-                                            id={`inline-${type}-1`}
-                                        />
-                                        <Form.Check
-                                            inline
-                                            label="No Sugar"
-                                            name="group1"
-                                            type={type}
-                                            id={`inline-${type}-2`}
-                                        />
-                                        <Form.Check
-                                            inline
-                                            label="No Boba"
-                                            type={type}
-                                            id={`inline-${type}-3`}
+                                            type="checkbox"
+                                            checked={selectedLabels.includes(label)} // Ensure correct checked status
+                                            onChange={() => handleLabelChange(label)}
                                         />
                                     </div>
                                 ))}
                             </Form>
-                            <Form>
-                                {['checkbox'].map((type) => (
-                                    <div key={`inline-${type}`} className="mb-3">
+                            <Form className='horizontal_checks'>
+                                {bottom_labels.map((label, index) => (
+                                    <div key={index} className="mb-3">
                                         <Form.Check
                                             inline
-                                            label="No Milk"
+                                            label={label}
                                             name="group1"
-                                            type={type}
-                                            id={`inline-${type}-1`}
-                                        />
-                                        <Form.Check
-                                            inline
-                                            label="No Sugar"
-                                            name="group1"
-                                            type={type}
-                                            id={`inline-${type}-2`}
-                                        />
-                                        <Form.Check
-                                            inline
-                                            label="No Boba"
-                                            type={type}
-                                            id={`inline-${type}-3`}
+                                            type="checkbox"
+                                            checked={selectedLabels.includes(label)} // Ensure correct checked status
+                                            onChange={() => handleLabelChange(label)}
                                         />
                                     </div>
                                 ))}
                             </Form>
+                            <p>Mods: {selectedLabels} </p>
 
                         </div>
                     </div>
                     <div className='selectedAttributes'>
-                        <h1 style={{ display: 'inline' }}>Selected Item: </h1>
-                        <h1 style={{ display: 'inline' }}>{selectedButton}</h1>
+                        <h1>Selected Item: {selectedButton} </h1>
                         <h1>Price: {price}</h1>
+                        <h1>Cart: {cart} </h1>
                     </div>
                     <DenseTable />
+                    <div className='order_placing_btns'>
+                        <button onClick={() => handleCartChange()}> Add to Cart</button>
+                        <button onClick={() => handleLabelChange("clearAll")}>Clear</button>
+                    </div>
                 </div>
             </div>
         </div>

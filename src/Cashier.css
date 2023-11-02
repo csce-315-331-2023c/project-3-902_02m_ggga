@@ -56,27 +56,35 @@
 }
 
 .place_left_side {
-    width: 60%; /* Takes up 2/3 of the page width */
-    padding: 20px; /* Add padding as needed */
-    box-sizing: border-box; /* Include padding in the width */
+    width: 60%;
+    /* Takes up 2/3 of the page width */
+    padding: 20px;
+    /* Add padding as needed */
+    box-sizing: border-box;
+    /* Include padding in the width */
 }
 
 .place_right_side {
-    width: 40%; /* Adjust the width as needed */
-    align-items: center; /* Center-align its contents horizontally */
+    width: 40%;
+    /* Adjust the width as needed */
+    align-items: center;
+    /* Center-align its contents horizontally */
     color: #333;
     margin-top: 60px;
-    padding: 20px; /* Add padding as needed */
+    padding: 20px;
+    /* Add padding as needed */
 
 }
-.place_right_side h1{
+
+.place_right_side h1 {
     font-size: 1.2rem;
 }
 
 .grid-container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 10px; /* Adjust the gap between buttons as needed */
+    gap: 10px;
+    /* Adjust the gap between buttons as needed */
     justify-content: flex-start;
 }
 
@@ -86,7 +94,8 @@
     border: none;
     cursor: pointer;
     text-align: center;
-    padding: 20px; /* Adjust padding for the button size */
+    padding: 20px;
+    /* Adjust padding for the button size */
     height: 120px;
 }
 
@@ -110,3 +119,31 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+.quant_label {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.mod_label {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.order_placing_btns {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.order_placing_btns button{
+    background-color: #a7c8eb;
+}
+.order_placing_btns button:hover{
+    background-color: #4b96e6;
+}
+
+.horizontal_checks{
+    display: flex;
+    gap: 20px; /* Adjust the gap as needed */
+  }
