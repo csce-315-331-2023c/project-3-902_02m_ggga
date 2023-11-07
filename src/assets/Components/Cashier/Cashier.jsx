@@ -54,7 +54,7 @@ export const Cashier = () => {
     const [price, setPrice] = useState(0.0);
     const [selectedLabels, setSelectedLabels] = useState([]);
     const [cart, setCart] = useState([]);
-    const [currentProd, setCurrentProd] = useState({ name: "", qty: 1, price: 0.0, ingredients: [] })
+    const [currentProd, setCurrentProd] = useState({ name: "", qty: 1, price: 0.0, ingredients: [] });
     const [totalPrice, setTotalPrice] = useState(0.0);
 
     const handleLabelChange = (label) => {
@@ -67,9 +67,21 @@ export const Cashier = () => {
         } else if (selectedLabels.includes(label)) {
             // If the item is selected, then we will remove it
             setSelectedLabels(selectedLabels.filter(item => item !== label));
+            setCurrentProd({
+                name: currentProd.name,
+                quantity: currentProd.quantity,
+                price: currentProd.price,
+                ingredients: currentProd.ingredients +  selectedLabels
+            })
         } else {
             // If the item was not selected, then we will add it
             setSelectedLabels([...selectedLabels, label]);
+            setCurrentProd({
+                name: currentProd.name,
+                quantity: currentProd.quantity,
+                price: currentProd.price,
+                ingredients: currentProd.ingredients + selectedLabels
+            })
         }
 
         setCurrentProd({ name: selectedButton, qty: quantity, price: price, ingredients: selectedLabels });
@@ -86,14 +98,17 @@ export const Cashier = () => {
 
     const handleCartChange = () => {
         setCart([...cart, currentProd])
-        setTotalPrice(totalPrice + currentProd.price)
-        setQuantity(1)
+        setTotalPrice(Number(totalPrice) + Number(currentProd.price))
+        // setQuantity(1)
     }
 
     const handleQuantityChange = (e) => {
         // Update the quantity state with the input value
         setQuantity(e.target.value);
-        setCurrentProd({ name: selectedButton, qty: quantity, price: price, ingredients: selectedLabels });
+        setCurrentProd({
+            name: currentProd.name,
+            qty: e.target.value, price: currentProd.price, ingredients: currentProd.ingredients
+        });
     };
 
     // when a button is clicked, the attribtues are then passed in.
@@ -114,7 +129,7 @@ export const Cashier = () => {
 
     //populating the button
 
-    const buttons_array = populateButtons(handleButtonClick);
+    const buttons_array = populateButtons(handleButtonClick);//unneeded as of right now
     const top_labels = ["No Milk ", "No Sugar ", "No Boba "]
     const bottom_labels = ["Extra Milk ", "Extra Sugar ", "Extra Boba "]
 
@@ -218,6 +233,7 @@ export const Cashier = () => {
                     <div className='order_placing_btns'>
                         <button onClick={() => handleCartChange()}> Add to Cart</button>
                         <button onClick={() => handleLabelChange("clearAll")}>Clear</button>
+                        <button>Place Orders</button>
                     </div>
                 </div>
             </div>

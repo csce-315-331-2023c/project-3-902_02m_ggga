@@ -93,17 +93,19 @@
     font-size: 20px;
 }
 
-.order_placing_btns {
+.order_placing_btns{
     display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
+    justify-content: space-between;
 }
 
 .order_placing_btns button{
-    background-color: #a7c8eb;
+    color: #000000;
+    background-color:#aac9eb
 }
+
 .order_placing_btns button:hover{
-    background-color: #4b96e6;
+    background-color: #2989ef;
+    color: #fff;
 }
 
 .horizontal_checks{
