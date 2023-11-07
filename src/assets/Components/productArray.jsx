@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './Cashier.css'
-import CustomerInput from './CustomerInput';
+import CustomerInput from '../CustomerInput';
 import axios from 'axios';
-
 const prodArray = [
     {
         id: "1",

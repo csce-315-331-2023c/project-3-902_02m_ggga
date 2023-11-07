@@ -1,10 +1,4 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Kumbh Sans', sans-serif;
-    scroll-behavior: smooth;
-}
+
 
 /* Style the header to go across the entire top of the page */
 /* ------------------HEADER STUFF ------------------- */
@@ -16,6 +10,7 @@
     font-family: 'Kumbh Sans', sans-serif;
     scroll-behavior: smooth;
 }
+
 
 /* Style the header to go across the entire top of the page */
 .header {
@@ -70,15 +65,19 @@
     height: 100vh;
     background-color: #f0f0f0;
 }
-
 .container {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* This ensures the container takes up the full height of the viewport. */
 }
 
 .big_logo {
-    font-size: 10rem;
+    font-size: 1rem;
+    text-align: center;
     /* Increase the font size */
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     /* Add margin to create space between the text and buttons */
 }
 
@@ -90,7 +89,7 @@
     /* Add spacing between the buttons */
 }
 
-button {
+.button {
     padding: 10px 20px;
     font-size: 1.5rem;
     background-color: #658ab1;
