@@ -12,6 +12,8 @@
     display: flex;
     width: 100%;
     gap: 150px;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .place_left_side {
@@ -21,6 +23,7 @@
     /* Add padding as needed */
     box-sizing: border-box;
     /* Include padding in the width */
+    flex: 2;
 }
 
 .place_right_side {
@@ -31,6 +34,7 @@
     color: #333;
     margin-top: 60px;
     padding: 20px;
+    flex: 1;
     /* Add padding as needed */
 
 }
@@ -41,7 +45,7 @@
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 10px;
     /* Adjust the gap between buttons as needed */
     justify-content: flex-start;

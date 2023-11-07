@@ -22,6 +22,7 @@
 .sharetea_header {
     font-size: 3rem;
     margin-left: 10px;
+    font-weight: bold;
 }
 
 .links {
@@ -33,7 +34,7 @@
 }
 
 .links li {
-    color: #fff;
+    color: #f7f7f7;
     cursor: pointer;
     font-size: 1.6rem;
     margin: 10px;
@@ -42,3 +43,13 @@
 .links li:hover {
     text-decoration: underline;
 }
+
+.links a {
+    text-decoration: none; /* Remove the default underline */
+    color: #ffffff; /* Set the link color to your desired color (e.g., orange) */
+  }
+  
+  .links a:hover {
+    text-decoration: underline; /* Underline on hover */
+    color: #ffffff;
+  }

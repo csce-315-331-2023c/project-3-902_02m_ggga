@@ -1,8 +1,9 @@
 const express = require("express");
+const cors = require("cors");
 const { Pool } = require("pg");
 
 const app = express();
-const port = 5000;
+const port = 5001;
 
 const pool = new Pool({
   user: "csce331_902_gabrielmarshall327",
@@ -12,9 +13,11 @@ const pool = new Pool({
   port: 5432,
 });
 
-app.get("/api/products", async (req, res) => {
+app.use(cors());
+
+app.get("/api/pastorders", async (req, res) => {
   try {
-    const result = await pool.query("SELECT name, price FROM product");
+    const result = await pool.query("SELECT * FROM orders ORDER BY id DESC LIMIT 20;");
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching products", error);

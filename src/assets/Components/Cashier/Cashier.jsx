@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './Cashier.css'
+import axios from "axios";
 import { prodArray } from '../productArray';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -19,29 +20,30 @@ import { Header } from '../Header/Header';
 
 
 function populateButtons(handleClick) {
-    const order_buttons = [];
+    function populateButtons(handleClick) {
+        const [products, setProducts] = useState([]);
 
-    const products = prodArray.map
+        useEffect(() => {
+            axios
+                .get("http://localhost:5000/api/products")
+                .then((response) => setProducts(response.data))
+                .catch((error) => console.error("Error fetching products", error));
+        }, []);
 
-    for (let i = 0; i < prodArray.length; i++) {
-        const product = prodArray[i];
-        const buttonLabel = product.name; // Assuming your product object has a "name" property
-        const buttonPrice = product.price;
-        const buttonID = product.id;
-        const buttonIngredients = product.ingredients;
+        const order_buttons = products.map((product, i) => {
+            return (
+                <button
+                    key={i}
+                    className='grid-button'
+                    onClick={() => handleClick(product.name, product.price)}
+                >
+                    {product.name}
+                </button>
+            );
+        });
 
-        order_buttons.push(
-            <button
-                key={i}
-                className='grid-button'
-                onClick={() => handleClick(buttonLabel, buttonPrice, buttonIngredients, buttonID)}
-            >
-                {buttonLabel}
-            </button>
-        );
+        return (order_buttons)
     }
-
-    return order_buttons;
 }
 export const Cashier = () => {
 
@@ -96,7 +98,7 @@ export const Cashier = () => {
 
     // when a button is clicked, the attribtues are then passed in.
     // this function will then set the current products attributes to what is pressed
-    const handleButtonClick = (buttonName, btn_price, btn_ingr, btn_ID) => {
+    const handleButtonClick = (buttonName, btn_price) => {
         setSelectedButton(buttonName);
         setPrice(btn_price);
         setCurrentProd({
@@ -116,6 +118,16 @@ export const Cashier = () => {
     const top_labels = ["No Milk ", "No Sugar ", "No Boba "]
     const bottom_labels = ["Extra Milk ", "Extra Sugar ", "Extra Boba "]
 
+    // -------------populating buttons-----------------
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:5000/api/products")
+            .then((response) => setProducts(response.data))
+            .catch((error) => console.error("Error fetching products", error));
+    }, []);
+
     return (
         <div >
             <div className='header'>
@@ -127,7 +139,18 @@ export const Cashier = () => {
                 <div className='place_left_side'>
                     <h1 className='menu-title'>Menu Items</h1>
                     <div className='grid-container'>
-                        {buttons_array}
+                        {prodArray.map((product) => (
+                            <button
+                                key={product.name}
+                                className="grid-button"
+                                onClick={() => handleButtonClick(product.name, product.price)}
+                            >
+                                <div className="product-info">
+                                    <div>{product.name}</div>
+                                    <div>${product.price}</div>
+                                </div>
+                            </button>
+                        ))}
                     </div>
                 </div>
                 <div className='place_right_side'>
