@@ -11,6 +11,7 @@
 .placeorders_page {
     display: flex;
     width: 100%;
+    gap: 150px;
 }
 
 .place_left_side {

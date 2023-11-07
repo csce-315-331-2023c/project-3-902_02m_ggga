@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import './LogIn.css'
 
 export const LogIn = () =>  {
     const [username, setUsername] = useState('');
@@ -22,8 +23,10 @@ export const LogIn = () =>  {
         setPassword('');
     };
 
+    
     return (
         <div className='login_container'>
+            <p>Log In Please</p>
             <div className='username'>
                 <label>Username:</label>
                 <input
@@ -41,8 +44,8 @@ export const LogIn = () =>  {
                 />
             </div>
             <div className='button'>
-                <button onClick={handleLogIn}>Log In</button>
-                <button onClick={handleClear}>Clear</button>
+                <button className='login_btn' onClick={handleLogIn}>Log In</button>
+                <button className='login_btn' onClick={handleClear}>Clear</button>
             </div>
         </div>
     );

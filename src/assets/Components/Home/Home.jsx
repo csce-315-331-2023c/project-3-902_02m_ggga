@@ -3,11 +3,14 @@ import './Home.css'
 // import { NavBar } from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Header } from '../Header/Header';
+import {Link} from 'react-router-dom'
 
 
 export const Home = () => {
+    // initially sets log in as false so not visible
     const [loginVisible, setLoginVisible] = useState(false);
 
+    // sets if log in is visible or not
     const toggleLogin = () => {
         setLoginVisible(!loginVisible);
     };
@@ -15,7 +18,18 @@ export const Home = () => {
     return (
         <div>
             <div className='header_part'>
-                <Header />
+                <nav className='header'>
+                    <div className='sharetea_header'>
+                        ShareTea
+                    </div>
+                    <ul className='links'>
+                        <li >Log In</li>
+                        <li > Menu </li>
+                        <li> Start Order</li>
+                        <li> Contact</li>
+                        <li>Cashier</li>
+                    </ul>
+                </nav>
             </div>
             <div className='body'>
                 <div className='container'>
@@ -23,8 +37,8 @@ export const Home = () => {
                         <h1>WELCOME TO SHARE TEA</h1>
                     </div>
                     <div className='button-container'>
-                        <button className ='home_buttons' onClick={toggleLogin}>Log In</button>
-                        <button className = 'home_buttons' >Start Ordering</button>
+                        <button className='home_buttons' onClick={toggleLogin}>Log In</button>
+                        <button className='home_buttons' >Start Ordering</button>
                     </div>
                     {loginVisible && (
                         <div className='login-area'>

@@ -15,7 +15,9 @@ function App() {
     //   <h1>hi
     //   </h1>
     // </div>
-    <Home/>
+    // <LogIn/>
+    // <Home/>
+    <Cashier/>
     // <BrowserRouter>
     //   <Routes>
     //     <Route index element={<Home/>} />

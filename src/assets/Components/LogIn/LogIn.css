@@ -14,11 +14,24 @@
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     width: 30%;
+    font-size: 20px;
   }
+
+  .login_container p {
+    font-size: 30px; /* Adjust the size to your preference */
+}
+
 
 .username,
 .password {
-    margin: 10px 0;
+    margin-bottom: 30px;
+}
+
+.username label {
+    margin-right: 10px;
+}
+.password label {
+    margin-right: 10px;
 }
 
 label {
@@ -31,16 +44,22 @@ input {
     border-radius: 5px;
 }
 
-.buttons {
+.button {
     display: flex;
-    gap: 10px;
     margin-top: 20px;
+    gap: 20px;
+    color: #104277;
+}
+
+.login_btn {
+    color: #f7f7f7;
+    background-color: #104277;
 }
 
 button {
     padding: 10px 20px;
-    background-color: #007BFF;
-    color: #fff;
+    background-color: #104277;
+    color: #daaeae;
     border: none;
     border-radius: 5px;
     cursor: pointer;
