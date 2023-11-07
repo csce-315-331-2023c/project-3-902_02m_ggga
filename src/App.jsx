@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import {Cashier as Cashier} from './assets/Components/Cashier/Cashier'
-import Home, {LogIn} from './assets/Components/Home/Home'
+import {Home as Home} from './assets/Components/Home/Home'
 import { Header as Header } from './assets/Components/Header/Header'
 import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {LogIn as LogIn} from './assets/Components/LogIn/LogIn'
 
 
 function App() {
