@@ -1,5 +1,4 @@
 const express = require("express");
-const cors = require("cors");
 const { Pool } = require("pg");
 
 const app = express();
@@ -12,8 +11,6 @@ const pool = new Pool({
   password: "password123",
   port: 5432,
 });
-
-app.use(cors());
 
 app.get("/api/products", async (req, res) => {
   try {
