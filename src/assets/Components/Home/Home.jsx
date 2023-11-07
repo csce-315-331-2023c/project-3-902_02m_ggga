@@ -49,7 +49,7 @@ function LogIn() {
                     onChange={handlePasswordChange}
                 />
             </div>
-            <div className='buttons'>
+            <div className='button'>
                 <button onClick={handleLogIn}>Log In</button>
                 <button onClick={handleClear}>Clear</button>
             </div>
@@ -68,7 +68,7 @@ function Home() {
     return (
         <div>
             <div className='header_part'>
-                <Header/>
+                <Header />
             </div>
             <div className='body'>
                 <div className='container'>
@@ -76,8 +76,8 @@ function Home() {
                         <h1>WELCOME TO SHARE TEA</h1>
                     </div>
                     <div className='button-container'>
-                        <button onClick={toggleLogin}>Log In</button>
-                        <button>Start Ordering</button>
+                        <button className ='home_buttons' onClick={toggleLogin}>Log In</button>
+                        <button className = 'home_buttons' >Start Ordering</button>
                     </div>
                     {loginVisible && (
                         <div className='login-area'>
@@ -87,9 +87,8 @@ function Home() {
                 </div>
             </div>
         </div>
-
-    )
+    );
 }
 export default Home
-export {LogIn}
+export { LogIn }
 
