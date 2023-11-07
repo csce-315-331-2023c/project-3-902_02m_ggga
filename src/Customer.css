@@ -83,13 +83,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 700px;
-  height: 700px;
   background-color: #333; /* Dark background color */
   color: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .product-overlay {
@@ -103,4 +102,50 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.modal-container {
+  margin: 1rem;
+  display: flex;
+}
+
+.modal-container-left {
+  width: 50%;
+}
+
+.modal-container-left img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.modal-container-right {
+  width: 50%;
+  position: relative;
+}
+
+.modal-button-container {
+  display: flex;
+  position: absolute;
+  justify-content: space-between;
+  align-items: center;
+  bottom: 0;
+  width: 80%;
+  margin: auto;
+}
+
+.modal-buttons {
+  padding: 0.5rem;
+  background-color: white; /* Green background color */
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.b1:hover {
+  background-color: rgb(240, 72, 72); /* Darker green on hover */
+}
+
+.b2:hover {
+  background-color: #45a049; /* Darker green on hover */
 }

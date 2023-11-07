@@ -15,10 +15,38 @@ const ProductModal = ({ isOpen, onClose, product }) => {
       className="product-modal"
       overlayClassName="product-overlay"
     >
-      <h2>{product.name}</h2>
-      <img src={`/assets/${product.imageFileName}`} alt={product.name} />
-      <p>Price: ${product.price}</p>
-      <button onClick={onClose}>Close</button>
+      <div className="modal-container">
+        <div className="modal-container-left">
+          <img src={tea} alt={product.name} style={{ padding: "1rem" }} />
+        </div>
+        <div className="modal-container-right">
+          <h2 style={{ padding: "1rem" }}>{product.name}</h2>
+          <p>Price: ${product.price}</p>
+          <select name="sugar">
+            <option value="">Extra Sugar</option>
+            <option value="">Extra Sugar</option>
+            <option value="">Extra Sugar</option>
+          </select>
+          <select name="sugar">
+            <option value="">Extra Sugar</option>
+            <option value="">Extra Sugar</option>
+            <option value="">Extra Sugar</option>
+          </select>
+          <select name="sugar">
+            <option value="">Extra Sugar</option>
+            <option value="">Extra Sugar</option>
+            <option value="">Extra Sugar</option>
+          </select>
+          <div className="modal-button-container">
+            <button onClick={onClose} className="modal-buttons b1">
+              Close
+            </button>
+            <button onClick={onClose} className="modal-buttons b2">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
     </Modal>
   );
 };
