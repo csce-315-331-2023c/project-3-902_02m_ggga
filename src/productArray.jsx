@@ -1,8 +1,3 @@
-import { useState, useEffect } from 'react'
-import './Cashier.css'
-import CustomerInput from './CustomerInput';
-import axios from 'axios';
-
 const prodArray = [
     {
         id: "1",
