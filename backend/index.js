@@ -3,6 +3,8 @@ const app = express();
 const port = 3001;
 
 const order_model = require("./model");
+const employee_model = require("./employee_model"); 
+
 
 app.use(express.json());
 app.use(function (req, res, next) {
@@ -18,6 +20,30 @@ app.use(function (req, res, next) {
 app.get("/", (req, res) => {
   model
     .getOrders()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+
+app.get("/employees", (req, res) => {
+  employee_model
+    .getEmployees()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+
+app.get("/api/inventory", (req, res) => {
+  inventory_model
+    .getInventoryItems()
     .then((response) => {
       res.status(200).send(response);
     })

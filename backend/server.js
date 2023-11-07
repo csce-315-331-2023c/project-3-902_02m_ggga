@@ -25,6 +25,30 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
+app.get("/api/employees", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM employees");
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching employees", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+app.get("/api/inventory", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM inventory");
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching inventory", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
