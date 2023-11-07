@@ -15,7 +15,15 @@ function App() {
     //   <h1>hi
     //   </h1>
     // </div>
-    <Home />
+    <Home/>
+    // <BrowserRouter>
+    //   <Routes>
+    //     <Route index element={<Home/>} />
+    //      {/* <Route path="Cashier" element={<Cashier/>} /> */}
+    //     {/* <Route path="contact" element={<Contact />} />
+    //     <Route path="*" element={<NoPage />} /> */}
+    //   </Routes>
+    // </BrowserRouter>
   );
 }
 export default App

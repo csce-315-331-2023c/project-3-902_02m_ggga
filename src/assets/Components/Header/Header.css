@@ -1,47 +1,42 @@
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Kumbh Sans', sans-serif;
-    scroll-behavior: smooth;
+    box-sizing: border-box;
 }
 
-/* Style the header to go across the entire top of the page */
+/* Style the header */
 .header {
-    width: 100%;
-    background-color: #333;
-    /* Example background color */
+    background-color: #333; /* Example background color */
     color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 1;
-
+    height: 10%;
 }
 
 .sharetea_header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
     font-size: 3rem;
     margin-left: 10px;
 }
 
 .links {
-    margin-top: 12px;
-    justify-content: flex-start;
     list-style: none;
     display: flex;
     gap: 10px;
     margin-right: 10px;
+    align-items: center; /* Vertically align the links with the header */
 }
 
 .links li {
     color: #fff;
     cursor: pointer;
     font-size: 1.6rem;
-    margin: 0 1rem;
+    margin: 10px;
 }
 
 .links li:hover {
