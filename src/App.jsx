@@ -8,16 +8,14 @@ import {LogIn as LogIn} from './assets/Components/LogIn/LogIn'
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<Home/>} />
-         {/* <Route path="Cashier" element={<Cashier/>} /> */}
-        {/* <Route path="contact" element={<Contact />} />
-        <Route path="*" element={<NoPage />} /> */}
-      </Routes>
-    </BrowserRouter>
+    // <div className='test'>
+    //   <p>hi</p>
+    //   <h1>hi
+    //   </h1>
+    // </div>
+    <Home />
   );
 }
 export default App
