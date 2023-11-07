@@ -72,7 +72,7 @@ function Customer() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get("https://mocktea.onrender.com/api/products")
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products", error));
   }, []);

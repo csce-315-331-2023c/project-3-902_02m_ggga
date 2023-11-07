@@ -15,7 +15,7 @@ const pool = new Pool({
 
 app.use(cors());
 
-app.get("/api/products", async (req, res) => {
+app.get("/", async (req, res) => {
   try {
     const result = await pool.query("SELECT name, price FROM product");
     res.json(result.rows);
