@@ -5,11 +5,12 @@ const app = express();
 const port = 5000;
 
 const pool = new Pool({
-  user: "csce331_902_gabrielmarshall327",
-  host: "csce-315-db.engr.tamu.edu",
-  database: "csce315331_02m_db",
-  password: "password123",
-  port: 5432,
+  user: process.env.PSQL_USER,
+  host: process.env.PSQL_HOST,
+  database: process.env.PSQL_DATABASE,
+  password: process.env.PSQL_PASSWORD,
+  port: process.env.PSQL_PORT,
+  ssl: { rejectUnauthorized: false },
 });
 
 app.get("/api/products", async (req, res) => {
