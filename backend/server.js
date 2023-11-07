@@ -17,7 +17,7 @@ app.use(cors());
 
 app.get("/api/products", async (req, res) => {
   try {
-    const result = await pool.query("SELECT name FROM product");
+    const result = await pool.query("SELECT name, price FROM product");
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching products", error);
