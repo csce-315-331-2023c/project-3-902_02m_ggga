@@ -17,8 +17,18 @@ app.use(cors());
 
 app.get("/products/", async (req, res) => {
   try {
+    const result = await pool.query("SELECT * FROM product");
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching products", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/pastorders/", async (req, res) => {
+  try {
     const result = await pool.query(
-      "SELECT name, price, ingredients FROM product"
+      "SELECT * FROM orders ORDER BY id DESC LIMIT 20;"
     );
     res.json(result.rows);
   } catch (error) {

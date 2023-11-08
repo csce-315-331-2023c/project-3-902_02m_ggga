@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import CustomerInput from '../CustomerInput';
 import axios from 'axios';
 
 // const prodArray = [];
