@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import React from 'react'
 import './LogIn.css'
 
 export const LogIn = () =>  {
@@ -50,5 +51,3 @@ export const LogIn = () =>  {
         </div>
     );
 }
-
-// export default LogIn

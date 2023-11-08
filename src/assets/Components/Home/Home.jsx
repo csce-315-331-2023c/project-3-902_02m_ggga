@@ -3,7 +3,7 @@ import './Home.css'
 // import { NavBar } from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Header } from '../Header/Header';
-import {Link} from 'react-router-dom'
+import {Outlet, Link} from 'react-router-dom';
 
 
 export const Home = () => {
@@ -17,40 +17,20 @@ export const Home = () => {
 
     return (
         <div>
-            <div className='header_part'>
-                <nav className='header'>
-                    <div className='sharetea_header'>
-                        ShareTea
-                    </div>
-                    <ul className='links'>
-                        <li ><Link to ='/login'>Log In</Link></li>
-                        <li><Link to = '/menu'>Menu</Link></li>
-                        <li> <Link to ='/customer'>Start Order</Link></li>
-                        <li><Link to='/cashier'>Cashier</Link></li>
-                        <li><Link to='/manager'>Manager</Link></li>
-                        <li> Contact</li>
-                    </ul>
-                </nav>
-            </div>
             <div className='body'>
                 <div className='container'>
                     <div className='big_logo'>
                         <h1>WELCOME TO SHARE TEA</h1>
                     </div>
                     <div className='button-container'>
-                        <button className='home_buttons' onClick={toggleLogin}>Log In</button>
+                        <button className='home_buttons'>Log In</button>
                         <button className='home_buttons' >Start Ordering</button>
                     </div>
-                    {loginVisible && (
-                        <div className='login-area'>
-                            <LogIn />
-                        </div>
-                    )}
                 </div>
             </div>
         </div>
     );
-}
+};
 
 // function LogIn() {
 //     const [username, setUsername] = useState('');
@@ -100,4 +80,4 @@ export const Home = () => {
 //     );
 // }
 
-// export default Home
+
