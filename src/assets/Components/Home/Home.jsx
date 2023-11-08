@@ -8,12 +8,12 @@ import {Link} from 'react-router-dom'
 
 export const Home = () => {
     // initially sets log in as false so not visible
-    const [loginVisible, setLoginVisible] = useState(false);
+    // const [loginVisible, setLoginVisible] = useState(false);
 
-    // sets if log in is visible or not
-    const toggleLogin = () => {
-        setLoginVisible(!loginVisible);
-    };
+    // // sets if log in is visible or not
+    // const toggleLogin = () => {
+    //     setLoginVisible(!loginVisible);
+    // };
 
     return (
         <div>
@@ -23,11 +23,12 @@ export const Home = () => {
                         ShareTea
                     </div>
                     <ul className='links'>
-                        <li >Log In</li>
-                        <li > Menu </li>
-                        <li> Start Order</li>
+                        <li ><Link to ='/login'>Log In</Link></li>
+                        <li><Link to = '/menu'>Menu</Link></li>
+                        <li> <Link to ='/customer'>Start Order</Link></li>
+                        <li><Link to='/cashier'>Cashier</Link></li>
+                        <li><Link to='/manager'>Manager</Link></li>
                         <li> Contact</li>
-                        <li>Cashier</li>
                     </ul>
                 </nav>
             </div>

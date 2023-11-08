@@ -16,18 +16,21 @@ function App() {
     //   </h1>
     // </div>
     // <LogIn/>
-    // <Home/>
-    <Router>
-      <div className='Cashier'>
-        <Header/>
-        <div className='content'>
-          <Routes>
-            <Route path="/view" element={<ViewOrders/>} />
-            <Route path="/place" element={<Cashier/>} />
-          </Routes>
-        </div>
-      </div>
-    </Router>
+    <Home/>
+    // <Router>
+    //   <div className='Cashier'>
+    //     <Home/>
+    //     <div className='content'>
+    //       <Routes>
+    //         <Route path="/login" element={<LogIn/>} />
+    //         <Route path="/menu" element={<LogIn/>} />
+    //         <Route path="/customer" element={<LogIn/>} /> 
+    //         <Route path="/cashier" element={<Cashier/>} />
+    //         <Route path="/manager" element={<LogIn/>} />
+    //       </Routes>
+    //     </div>
+    //   </div>
+    // </Router>
     // <ViewOrders/>
     
   );
