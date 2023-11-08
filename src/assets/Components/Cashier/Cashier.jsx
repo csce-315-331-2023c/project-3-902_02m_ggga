@@ -296,3 +296,4 @@ function PlaceOrders() {
 
 
 // }
+export default Cashier;

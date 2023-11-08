@@ -1,0 +1,172 @@
+/* Style the header to go across the entire top of the page */
+.header {
+  width: 100%;
+  background-color: #333;
+  /* Example background color */
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+}
+
+.sharetea_header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 3rem;
+  margin-left: 10px;
+}
+
+.links {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  margin-right: 10px;
+}
+
+.links li {
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.6rem;
+  margin: 0 1rem;
+}
+
+.links li:hover {
+  text-decoration: underline;
+}
+
+/*header end*/
+
+.body {
+  padding: 6rem;
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.product-button {
+  width: 300px;
+  height: 300px;
+  background-color: grey;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  border: none;
+}
+
+.product-button:hover {
+  cursor: pointer;
+  border: 3px black solid;
+}
+
+.product-image {
+  width: 70%;
+  height: 70%;
+  margin-bottom: 10px;
+}
+
+.product-info {
+  text-align: center;
+}
+
+/* pop up window below */
+.product-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #333; /* Dark background color */
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.product-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-container {
+  display: flex;
+}
+
+.modal-container-left {
+  width: 50%;
+}
+
+.modal-container-left img {
+  max-width: 100%;
+  max-height: 100%;
+  padding: 0.5rem;
+}
+
+.modal-container-right {
+  width: 50%;
+  position: relative;
+  justify-content: center;
+}
+
+.dropdown-container {
+  padding: 1.5rem;
+}
+
+.dropdown-mods {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.select-menu {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 200px;
+}
+
+.modal-button-container {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  bottom: 0;
+  width: 80%;
+  margin: auto;
+}
+
+.modal-buttons {
+  padding: 0.5rem;
+  background-color: white; /* Green background color */
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.b1:hover {
+  background-color: rgb(240, 72, 72); /* Darker green on hover */
+}
+
+.b2:hover {
+  background-color: #45a049; /* Darker green on hover */
+}

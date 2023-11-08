@@ -2,9 +2,12 @@ import { useState } from 'react'
 import {Cashier as Cashier} from './assets/Components/Cashier/Cashier'
 import {Home as Home} from './assets/Components/Home/Home'
 import { Header as Header } from './assets/Components/Header/Header'
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route, BrowserRouter} from "react-router-dom";
 import {LogIn as LogIn} from './assets/Components/LogIn/LogIn'
 import { ViewOrders as ViewOrders } from './assets/Components/ViewOrders/ViewOrders'
+import CustomerInput from './assets/CustomerInput';
+import { Navbar as Navbar} from './assets/Components/Navbar';
+import { CustomerComp } from './assets/Components/Customer/CustomerComp';
 
 
 function App() {
@@ -16,7 +19,19 @@ function App() {
     //   </h1>
     // </div>
     // <LogIn/>
-    <Home/>
+    <div className="App">
+    <Router> 
+      <Navbar/> 
+      <Routes>
+     <Route path="/" element={<Home/>} />
+     <Route path="/LogIn" element={<LogIn/>} />
+     <Route path="/Cashier" element={<Cashier/>}/>
+     <Route path="/Customer" element={<CustomerComp/>}/>
+     
+     </Routes>
+    </Router>
+    </div>
+
     // <Router>
     //   <div className='Cashier'>
     //     <Home/>
@@ -32,7 +47,6 @@ function App() {
     //   </div>
     // </Router>
     // <ViewOrders/>
-    
   );
 }
-export default App
+export default App;
