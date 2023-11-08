@@ -15,10 +15,11 @@ const pool = new Pool({
 
 app.use(cors());
 
-
-app.get("/api/products", async (req, res) => {
+app.get("/products/", async (req, res) => {
   try {
-    const result = await pool.query("SELECT name, price, ingredients FROM product");
+    const result = await pool.query(
+      "SELECT name, price, ingredients FROM product"
+    );
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching products", error);
