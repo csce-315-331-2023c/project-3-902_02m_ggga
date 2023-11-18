@@ -20,7 +20,8 @@ export const CashierLanding = () => {
                 </Routes>
             </Router>
         </div>
-
     )
 
 }
+
+export default CashierLanding
