@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import React from 'react'
 import './LogIn.css'
+import { Link } from 'react-router-dom';
+
 
 export const LogIn = () =>  {
     const [username, setUsername] = useState('');
@@ -47,6 +49,7 @@ export const LogIn = () =>  {
             <div className='button'>
                 <button className='login_btn' onClick={handleLogIn}>Log In</button>
                 <button className='login_btn' onClick={handleClear}>Clear</button>
+                <Link to="/home"><button className='login_btn'>Back</button></Link>
             </div>
         </div>
     );

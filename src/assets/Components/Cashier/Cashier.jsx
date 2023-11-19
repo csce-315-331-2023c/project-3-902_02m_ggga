@@ -136,7 +136,7 @@ export const Cashier = () => {
     // -------------populating buttons-----------------
     const [products, setProducts] = useState([]);
 
-    useEffect(() => {
+    useEffect(() => {   
         axios
             .get("http://localhost:5000/api/products")
             .then((response) => setProducts(response.data))
@@ -144,7 +144,7 @@ export const Cashier = () => {
     }, []);
 
     return (
-        <div >
+        <div className='page_container' >
             <div className='header'>
                 <Header />
             </div>

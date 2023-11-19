@@ -3,6 +3,7 @@ import './Home.css'
 // import { NavBar } from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Header } from '../Header/Header';
+import { Navbar as Navbar } from '../Navbar';
 import {Outlet, Link} from 'react-router-dom';
 
 
@@ -17,6 +18,9 @@ export const Home = () => {
 
     return (
         <div>
+            <div className='home_header'>
+                <Navbar />
+            </div>
             <div className='body'>
                 <div className='container'>
                     <div className='big_logo'>

@@ -5,6 +5,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import {Link} from "react-router-dom"
+import {NavLink, Outlet} from 'react-router-dom'
+
 export const Header = () => {
 
     // const [currentView, setCurrentView] = useState("");
@@ -19,12 +21,14 @@ export const Header = () => {
                 ShareTea
             </div>
             <ul className='links'>
-                <li><Link to ="/vieworder">View Orders</Link></li>
-                <li><Link to = '/placeorder'>Place Orders</Link></li>
+                <li><NavLink to ="/CashierLanding/vieworder">View Orders</NavLink></li>
+                <li><NavLink to = '/CashierLanding/placeorder'>Place Orders</NavLink></li>
                 {/* <li onClick={() => handleViewChange('viewOrders')}> View Orders</li>
                 <li onClick={() => handleViewChange('placeOrders')}>Place Orders</li> */}
-                <li><Link to = '/logout'>Log Out</Link></li>
+                <li><NavLink to = '/home'>Log Out</NavLink></li>
             </ul>
+
+            <Outlet/>
         </nav>
     )
 

@@ -16,14 +16,17 @@ export const ViewOrders = () => {
 
     useEffect(() => {
         axios.get("http://localhost:5001/api/pastorders")
-        .then((response) => setOrders(response.data))
-        .catch((error) => console.error("Error getting past orders", error));
+            .then((response) => setOrders(response.data))
+            .catch((error) => console.error("Error getting past orders", error));
     }, []);
 
-    return(
+    return (
         <div className='past_orders'>
+            <div className='header'>
+                <Header />
+            </div>
             <h1>Past 20 Orders</h1>
-            <DenseTable data={orders}/>
+            <DenseTable data={orders} />
         </div>
     )
 }
