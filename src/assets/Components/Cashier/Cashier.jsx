@@ -144,6 +144,7 @@ export const Cashier = () => {
     const handleButtonClick = (buttonName, btn_price) => {
         setSelectedButton(buttonName);
         setPrice(btn_price);
+        setTotalPrice(btn_price * quantity);
         // setCurrentProd({
         //     name: buttonName,
         //     qty: quantity,
@@ -177,9 +178,9 @@ export const Cashier = () => {
 
     return (
         <div className='page_container' >
-            <div className='header'>
+            {/* <div className='header'>
                 <Header />
-            </div>
+            </div> */}
             {currentView === 'placeOrders' && <PlaceOrders />};
             {currentView === 'viewOrders' && <ViewOrders />};
             <div className='placeorders_page'>

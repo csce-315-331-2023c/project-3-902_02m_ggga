@@ -14,33 +14,33 @@ function App() {
   // const [count, setCount] = useState(0)
   return (
 
-    <CashierLanding/>
+    // <CashierLanding/>
     // <Cashier/>
     // <Header />
     
 
 
-    // <div className="App">
-    //   <Router>
-    //     {/* <Navbar /> */}
-    //     <Routes>
-    //       <Route index element={<Home />}></Route>
-    //       <Route path="/home" element={<Home />} />
-    //       <Route path="/LogIn" element={<LogIn />}> 
-    //         <Route path="home" element={<Home/>}></Route>
-    //       </Route>
+    <div className="App">
+      <Router>
+        {/* <Navbar /> */}
+        <Routes>
+          <Route index element={<Home />}></Route>
+          <Route path="/home" element={<Home />} />
+          <Route path="/LogIn" element={<LogIn />}> 
+            <Route path="home" element={<Home/>}></Route>
+          </Route>
 
-    //       <Route path="/CashierLanding/" element={<CashierLanding/>}>
-    //         {/* child routes of cashierlanding */}
-    //         <Route path="vieworder" element={<ViewOrders />}></Route>
-    //         <Route path="placeorder" element={<Cashier />}></Route>
-    //         <Route path="home" element={<Home />}></Route>
-    //       </Route>
+          <Route path="/CashierLanding/" element={<Header/>}>
+            {/* child routes of cashierlanding */}
+            <Route path="vieworder" element={<ViewOrders />}></Route>
+            <Route path="placeorder" element={<Cashier/>}></Route>
+            <Route path="home" element={<Home />}></Route>
+          </Route>
 
-    //       <Route path="/Customer" element={<CustomerComp />} />
-    //     </Routes>
-    //   </Router>
-    // </div>
+          <Route path="/Customer" element={<CustomerComp />} />
+        </Routes>
+      </Router>
+    </div>
 
   );
 };

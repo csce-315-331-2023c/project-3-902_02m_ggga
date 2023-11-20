@@ -10,19 +10,19 @@ import './CashierLanding.css'
 export const CashierLanding = () => {
 
     return (
-        // <div>
-        //     <Header/>
-        // </div>
-        <Router>
-        //     <Header />
-        //     <Routes>
-        //         {/* <Route path="/" element={<Header />} /> */}
-        //         <Route index element={<Header />}></Route>
-        //         <Route path="/CashierLanding/placeorder" element={<Cashier />} />
-        //         <Route path="/CashierLanding/vieworder" element={<ViewOrders />} />
-        //         <Route path="/home" element={<Home />} />
-        //     </Routes>
-        // </Router> 
+        <div>
+            <Header/>
+        </div>
+        // <Router>
+        // //     <Header />
+        // //     <Routes>
+        // //         {/* <Route path="/" element={<Header />} /> */}
+        // //         <Route index element={<Header />}></Route>
+        // //         <Route path="/CashierLanding/placeorder" element={<Cashier />} />
+        // //         <Route path="/CashierLanding/vieworder" element={<ViewOrders />} />
+        // //         <Route path="/home" element={<Home />} />
+        // //     </Routes>
+        // // </Router> 
     )
 
 }

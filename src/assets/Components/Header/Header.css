@@ -1,28 +1,31 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Style the header */
 .header_cashier {
-    background-color: #000000;
-    color: #ffffff;
     display: flex;
     justify-content: space-between;
     /* align-items: center; */
-    padding: 10px 20px; /* Adjust padding as needed */
-    position: fixed;
+    background-color: #502929;
+    color: #ffffff;
+    padding: 10px 20px;
     top: 0;
     width: 100%;
-    z-index: 1000; /* Adjust z-index as needed */
+    z-index: 1000;
     height: 80px;
 }
+
+.header_left {
+    display: flex;
+    align-items: center;
+}
+
+.header_right {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
 .sharetea_header {
     font-size: 3rem;
     margin-left: 10px;
     font-weight: bold;
-    
 }
 
 .links {
@@ -45,11 +48,11 @@
 }
 
 .links a {
-    text-decoration: none; /* Remove the default underline */
-    color: #ffffff; /* Set the link color to your desired color (e.g., orange) */
-  }
-  
-  .links a:hover {
-    text-decoration: underline; /* Underline on hover */
+    text-decoration: none;
     color: #ffffff;
-  }
+}
+
+.links a:hover {
+    text-decoration: underline;
+    color: #ffffff;
+}
