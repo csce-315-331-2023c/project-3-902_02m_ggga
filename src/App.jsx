@@ -13,39 +13,35 @@ import { CashierLanding as CashierLanding } from './assets/Components/CashierLan
 function App() {
   // const [count, setCount] = useState(0)
   return (
-    // <div className='test'>
-    //   <p>hi</p>
-    //   <h1>hi
-    //   </h1>
-    // </div>
-    // <LogIn/>
 
-    // <CashierLanding/>
+    <CashierLanding/>
     // <Cashier/>
+    // <Header />
+    
 
 
-    <div className="App">
-      <Router>
-        {/* <Navbar /> */}
-        <Routes>
-          <Route index element={<Home />}></Route>
-          <Route path="/home" element={<Home />} />
-          <Route path="/LogIn" element={<LogIn />}> 
-            <Route path="home" element={<Home />}></Route>
-          </Route>
+    // <div className="App">
+    //   <Router>
+    //     {/* <Navbar /> */}
+    //     <Routes>
+    //       <Route index element={<Home />}></Route>
+    //       <Route path="/home" element={<Home />} />
+    //       <Route path="/LogIn" element={<LogIn />}> 
+    //         <Route path="home" element={<Home/>}></Route>
+    //       </Route>
 
-          <Route path="/CashierLanding/*" element={<Header />}>
-            {/* child routes of cashierlanding */}
-            <Route path="vieworder" element={<ViewOrders />}></Route>
-            <Route path="placeorder" element={<Cashier />}></Route>
-            <Route path="home" element={<Home />}></Route>
-          </Route>
+    //       <Route path="/CashierLanding/" element={<CashierLanding/>}>
+    //         {/* child routes of cashierlanding */}
+    //         <Route path="vieworder" element={<ViewOrders />}></Route>
+    //         <Route path="placeorder" element={<Cashier />}></Route>
+    //         <Route path="home" element={<Home />}></Route>
+    //       </Route>
 
-          <Route path="/Customer" element={<CustomerComp />} />
-        </Routes>
-      </Router>
-    </div>
+    //       <Route path="/Customer" element={<CustomerComp />} />
+    //     </Routes>
+    //   </Router>
+    // </div>
 
   );
-}
+};
 export default App;

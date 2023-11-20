@@ -52,39 +52,54 @@ export const Cashier = () => {
     const [selectedButton, setSelectedButton] = useState("");
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(0.0);
+    const [name, setName] = useState("empty");
     const [selectedLabels, setSelectedLabels] = useState([]);
     const [cart, setCart] = useState([]);
     const [currentProd, setCurrentProd] = useState({ name: "", qty: 1, price: 0.0, ingredients: [] });
+    const [orderPrice, setOrderPrice] = useState(0.0);
     const [totalPrice, setTotalPrice] = useState(0.0);
 
     const handleLabelChange = (label) => {
         if (label === 'clearAll') {
             // Clear all selected labels
-            setSelectedLabels([]);
-            setCart([])
-            setTotalPrice(0.0)
-            setQuantity(1)
+            setSelectedLabels([])
+            setSelectedButton("")
+            setCart([]);
+            setOrderPrice(0.0);
+            setTotalPrice(0.0);
+            setPrice(0.0);
+            setQuantity(1);
+            setCurrentProd({
+                name: "empty",
+                quantity: 1,
+                price: 0.0,
+                ingredients: []
+            })
         } else if (selectedLabels.includes(label)) {
             // If the item is selected, then we will remove it
-            setSelectedLabels(selectedLabels.filter(item => item !== label));
-            setCurrentProd({
-                name: currentProd.name,
-                quantity: currentProd.quantity,
-                price: currentProd.price,
-                ingredients: currentProd.ingredients +  selectedLabels
-            })
+            setSelectedLabels(selectedLabels.filter((selectedLabel) => selectedLabel !== label));
+            setQuantity(currentProd.qty);
+            setName(currentProd.name);
+            setPrice(currentProd.price);
+            // setSelectedLabels(selectedLabels.filter(item => item !== label));
+            // setCurrentProd({
+            //     name: name,
+            //     qty: quantity,
+            //     price: currentProd.price,
+            //     ingredients: [...currentProd.ingredients, ...selectedLabels]
+            // })
         } else {
             // If the item was not selected, then we will add it
             setSelectedLabels([...selectedLabels, label]);
-            setCurrentProd({
-                name: currentProd.name,
-                quantity: currentProd.quantity,
-                price: currentProd.price,
-                ingredients: currentProd.ingredients + selectedLabels
-            })
+            // setCurrentProd({
+            //     name: currentProd.name,
+            //     qty: currentProd.quantity,
+            //     price: currentProd.price,
+            //     ingredients: [...currentProd.ingredients, ...selectedLabels]
+            // })
         }
 
-        setCurrentProd({ name: selectedButton, qty: quantity, price: price, ingredients: selectedLabels });
+        // setCurrentProd({ name: selectedButton, qty: quantity, price: price, ingredients: selectedLabels });
     };
 
     const handleClear = () => {
@@ -97,17 +112,30 @@ export const Cashier = () => {
     };
 
     const handleCartChange = () => {
-        setCart([...cart, currentProd])
-        setTotalPrice(Number(totalPrice) + Number(currentProd.price))
+        // setCurrentProd({
+        //     name: selectedButton,
+        //     qty: quantity,
+        //     price: totalPrice,
+        //     ingredients: selectedLabels
+        // })
+        const newProduct = {name: selectedButton, qty: quantity, price: totalPrice, ingredients: selectedLabels};
+        setCart([...cart, newProduct]);
+        //update the entire order price by adding the current drinks price to the old sum
+        console.log("updated cart with ", {newProduct});
+        setOrderPrice(Number(orderPrice) + totalPrice);
         // setQuantity(1)
     }
 
     const handleQuantityChange = (e) => {
         // Update the quantity state with the input value
-        setQuantity(e.target.value);
+        // Update the quantity state with the input value
+        const newQuantity = parseInt(e.target.value, 10);
+        setQuantity(newQuantity);
+        const new_price = price * newQuantity;
+        setTotalPrice(new_price);
         setCurrentProd({
-            name: currentProd.name,
-            qty: e.target.value, price: currentProd.price, ingredients: currentProd.ingredients
+            name: selectedButton,
+            qty: quantity, price: totalPrice, ingredients: selectedLabels
         });
     };
 
@@ -116,12 +144,16 @@ export const Cashier = () => {
     const handleButtonClick = (buttonName, btn_price) => {
         setSelectedButton(buttonName);
         setPrice(btn_price);
-        setCurrentProd({
-            name: buttonName,
-            qty: quantity,
-            price: btn_price,
-            ingredients: selectedLabels
-        })
+        // setCurrentProd({
+        //     name: buttonName,
+        //     qty: quantity,
+        //     price: price,
+        //     ingredients: selectedLabels
+        // })
+        // console.log(selectedButton)
+        // console.log(price)
+        // console.log(currentProd.qty)
+        // console.log(currentProd.ingredients)
     }
     const handleViewChange = (view) => {
         setCurrentView(view);
@@ -136,7 +168,7 @@ export const Cashier = () => {
     // -------------populating buttons-----------------
     const [products, setProducts] = useState([]);
 
-    useEffect(() => {   
+    useEffect(() => {
         axios
             .get("http://localhost:5000/api/products")
             .then((response) => setProducts(response.data))
@@ -179,7 +211,7 @@ export const Cashier = () => {
                             <p>Quantity: {quantity} </p>
 
                         </div>
-                        <div>
+                        <div className='checkbox_container'>
                             <label className='mod_label'>Modifications</label>
                             {/* forms made using boostrap */}
                             <Form className='horizontal_checks'>
@@ -215,8 +247,11 @@ export const Cashier = () => {
                         </div>
                     </div>
                     <div className='selectedAttributes'>
-                        <h1>Selected Item: {currentProd.name} </h1>
-                        <h1>Price: {currentProd.price}</h1>
+                        <h1>Selected Item: {selectedButton} </h1>
+                        <h1>Price per Item: {price}</h1>
+                        <h1>Total price: {totalPrice}</h1>
+                        <h1>Ingredients: {selectedLabels} </h1>
+                        <h1>Quantity: {quantity} </h1>
                         <h1>Cart:</h1>
                         <ul>
                             {cart.map((item) => (
@@ -229,7 +264,7 @@ export const Cashier = () => {
                         </ul>
                     </div>
                     <DenseTable data={cart} />
-                    <h1>Total Price: {totalPrice} </h1>
+                    <h1>Order Price: {orderPrice} </h1>
                     <div className='order_placing_btns'>
                         <button onClick={() => handleCartChange()}> Add to Cart</button>
                         <button onClick={() => handleLabelChange("clearAll")}>Clear</button>

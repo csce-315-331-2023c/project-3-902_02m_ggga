@@ -18,15 +18,11 @@
     display: flex;
     width: 100%;
     justify-content: space-evenly;
-    /* margin-top: 20px; */
+    margin-top: 20px;
     margin-left: 10px;
     margin-right: 10px;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-}
 
 .place_left_side {
     width: 60%;
@@ -64,7 +60,7 @@ body {
 }
 
 .grid-button {
-    background-color: #007BFF;
+    background-color: #032f5e;
     color: #fff;
     border: none;
     cursor: pointer;
@@ -75,7 +71,7 @@ body {
 }
 
 .grid-button:hover {
-    background-color: #073566;
+    background-color: #016ada;
 }
 
 .menu-title {

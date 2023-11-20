@@ -16,7 +16,7 @@ export const Header = () => {
     // }
 
     return (
-        <nav className='header'>
+        <nav className='header_cashier'>
             <div className='sharetea_header'>
                 ShareTea
             </div>
