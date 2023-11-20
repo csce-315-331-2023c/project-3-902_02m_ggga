@@ -64,7 +64,7 @@ function LogIn() {
                 <button onClick={handleLogIn}>Log In</button>
                 <button onClick={handleClear}>Clear</button>
                 {/* <button>home</button> */}
-                {/* <Link to="home"><button>Back</button></Link> */}
+                <Link to="home"><button>Back</button></Link>
             </div>
         </div>
     );

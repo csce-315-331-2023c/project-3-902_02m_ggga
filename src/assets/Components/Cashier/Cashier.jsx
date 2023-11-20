@@ -58,6 +58,8 @@ export const Cashier = () => {
     const [currentProd, setCurrentProd] = useState({ name: "", qty: 1, price: 0.0, ingredients: [] });
     const [orderPrice, setOrderPrice] = useState(0.0);
     const [totalPrice, setTotalPrice] = useState(0.0);
+    const ingredients = [];
+
 
     const handleLabelChange = (label) => {
         if (label === 'clearAll') {
@@ -118,13 +120,29 @@ export const Cashier = () => {
         //     price: totalPrice,
         //     ingredients: selectedLabels
         // })
-        const newProduct = {name: selectedButton, qty: quantity, price: totalPrice, ingredients: selectedLabels};
+        const newProduct = { name: selectedButton, qty: quantity, price: totalPrice, ingredients: selectedLabels };
         setCart([...cart, newProduct]);
         //update the entire order price by adding the current drinks price to the old sum
-        console.log("updated cart with ", {newProduct});
+        console.log("updated cart with ", { newProduct });
         setOrderPrice(Number(orderPrice) + totalPrice);
         // setQuantity(1)
     }
+    const id = 49;
+    const placeOrder = async () => {
+        try {
+            await axios.post('http://localhost:5000/api/placeOrder', {
+                id,
+                selectedButton,
+                quantity,
+                orderPrice,
+            });
+            console.log("order placed")
+
+        } catch (error) {
+            console.error('Error placing order in cashier', error);
+            // setOrderStatus('Error placing order. Please try again.');
+        }
+    };
 
     const handleQuantityChange = (e) => {
         // Update the quantity state with the input value
@@ -167,14 +185,22 @@ export const Cashier = () => {
     const bottom_labels = ["Extra Milk ", "Extra Sugar ", "Extra Boba "]
 
     // -------------populating buttons-----------------
-    const [products, setProducts] = useState([]);
+    const [products_from_db, setProducts] = useState([]);
 
     useEffect(() => {
         axios
-            .get("http://localhost:5000/api/products")
+            .get("https://mocktea.onrender.com/products")
             .then((response) => setProducts(response.data))
-            .catch((error) => console.error("Error fetching products", error));
+            .catch((error) => console.error("Error fetching products in cashier", error));
     }, []);
+
+
+
+    products_from_db.map((product) => (
+        ingredients.push({ name: product.name, ingredients: product.ingredients })
+    ))
+
+    // console.log(ingredients);
 
     return (
         <div className='page_container' >
@@ -187,7 +213,7 @@ export const Cashier = () => {
                 <div className='place_left_side'>
                     <h1 className='menu-title'>Menu Items</h1>
                     <div className='grid-container'>
-                        {prodArray.map((product) => (
+                        {products_from_db.map((product) => (
                             <button
                                 key={product.name}
                                 className="grid-button"
@@ -269,7 +295,7 @@ export const Cashier = () => {
                     <div className='order_placing_btns'>
                         <button onClick={() => handleCartChange()}> Add to Cart</button>
                         <button onClick={() => handleLabelChange("clearAll")}>Clear</button>
-                        <button>Place Orders</button>
+                        <button onClick={() => placeOrder()}>Place Orders</button>
                     </div>
                 </div>
             </div>
