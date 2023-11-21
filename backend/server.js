@@ -37,6 +37,10 @@ app.get("/pastorders/", async (req, res) => {
   }
 });
 
+app.post("/placeorder/", async (req, res) => {
+res.send("hello this is a test")
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

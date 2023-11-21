@@ -130,13 +130,14 @@ export const Cashier = () => {
     const id = 49;
     const placeOrder = async () => {
         try {
-            await axios.post('http://localhost:5000/api/placeOrder', {
+            await axios.post('https://mocktea.onrender.com/placeorder/', {
                 id,
                 selectedButton,
                 quantity,
                 orderPrice,
             });
-            console.log("order placed")
+            console.log("order placed");
+            window.alert("order placed");
 
         } catch (error) {
             console.error('Error placing order in cashier', error);
@@ -281,8 +282,8 @@ export const Cashier = () => {
                         <h1>Quantity: {quantity} </h1>
                         <h1>Cart:</h1>
                         <ul>
-                            {cart.map((item) => (
-                                <li key={item.id}>
+                            {cart.map((item, index) => (
+                                <li key={index}>
                                     <p>Name: {item.name}</p>
                                     <p>Price: {item.price}</p>
                                     <p>Quantity: {item.qty}</p>
@@ -318,7 +319,7 @@ function DenseTable({ data }) {
                 <TableBody>
                     {data.map((row) => (
                         <TableRow
-                            key={row.name}
+                            key={row.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
