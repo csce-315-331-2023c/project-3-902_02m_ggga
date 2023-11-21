@@ -4,8 +4,13 @@ import './LogIn.css'
 import { Link } from 'react-router-dom';
 
 
+const CLIENT_ID = "c1e2a3c233d9b16112ee";
+
 export const LogIn = () =>  {
-    const [username, setUsername] = useState('');
+    const GithubLogIn = () => {
+        window.location.assign("https://github.com/login/oauth/authorize?client_id="+ CLIENT_ID);
+    };
+    /*const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleUsernameChange = (e) => {
@@ -51,6 +56,17 @@ export const LogIn = () =>  {
                 <button className='login_btn' onClick={handleClear}>Clear</button>
                 <Link to="/home"><button className='login_btn'>Back</button></Link>
             </div>
+        </div>
+    );
+}*/
+
+    return (
+        <div className='LogIn'>
+            <header className='buttons'>
+                <button onClick={GithubLogIn}>
+                    Login with Github
+                </button>
+            </header>
         </div>
     );
 }
