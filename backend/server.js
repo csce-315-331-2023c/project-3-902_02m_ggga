@@ -37,8 +37,20 @@ app.get("/pastorders/", async (req, res) => {
   }
 });
 
-app.post("/placeorder/", async (req, res) => {
-res.send("hello this is a test")
+app.post("/placeorder", async (req, res) => {
+  const { productName, quantity, totalPrice } = req.body;
+
+  try {
+    await pool.query(
+      "INSERT INTO orders (product_name, quantity, total_price) VALUES ($1, $2, $3)",
+      [productName, quantity, totalPrice]
+    );
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error adding order", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.listen(port, () => {
