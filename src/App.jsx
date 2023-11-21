@@ -3,7 +3,7 @@ import { Cashier as Cashier } from './assets/Components/Cashier/Cashier'
 import { Home as Home } from './assets/Components/Home/Home'
 import { Header as Header } from './assets/Components/Header/Header'
 import { BrowserRouter as Router, Routes, Route, BrowserRouter, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
-import { LogIn as LogIn } from './assets/Components/LogIn/LogIn'
+import { LogInComp as LogIn } from './assets/Components/LogIn/LogInComp'
 import { ViewOrders as ViewOrders } from './assets/Components/ViewOrders/ViewOrders'
 import CustomerInput from './assets/CustomerInput';
 import { Navbar as Navbar } from './assets/Components/Navbar';

@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react'
 import React from 'react'
 import './LogIn.css'
 import { Link } from 'react-router-dom';
+import { loginWithGithub } from '../../../../backend/githubOAuth';
 
-
-const CLIENT_ID = "c1e2a3c233d9b16112ee";
-
-export const LogIn = () =>  {
-    const GithubLogIn = () => {
-        window.location.assign("https://github.com/login/oauth/authorize?client_id="+ CLIENT_ID);
-    };
+function LogIn()  {
+    useEffect(() => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const codeParams = urlParams.get("code");
+        console.log(codeParams);
+    }, []);
     /*const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -63,10 +64,12 @@ export const LogIn = () =>  {
     return (
         <div className='LogIn'>
             <header className='buttons'>
-                <button onClick={GithubLogIn}>
+                <button onClick={loginWithGithub}>
                     Login with Github
                 </button>
             </header>
         </div>
     );
 }
+
+export default LogIn;
