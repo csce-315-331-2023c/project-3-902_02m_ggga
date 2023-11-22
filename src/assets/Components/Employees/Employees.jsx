@@ -34,7 +34,7 @@ export const Employees = () => {
               <td>{employee.hours_worked}</td>
               <td>${employee.salary}</td>
               <td>{employee.position}</td>
-              <td>{employee.is_manager == true ? 'Yes' : 'No'}</td>
+              <td>{employee.manager == true ? 'Yes' : 'No'}</td>
             </tr>
           ))}
         </tbody>

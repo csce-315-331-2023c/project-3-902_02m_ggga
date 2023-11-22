@@ -1,11 +1,40 @@
-/* In your CSS file */
 .centered-container-employees {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  flex-direction: column;
+  max-width: 80%; /* Limit the max width of the table */
+  margin: auto; /* Center the table on the page */
+  padding: 20px; /* Add some padding around the table */
+  background-color: #f9f9f9; /* Light grey background for the container */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add a subtle shadow for depth */
 }
 
+table {
+  width: 100%; /* Make the table use all available space */
+  border-collapse: collapse; /* Collapse borders */
+  margin-top: 20px; /* Add space above the table */
+}
 
-  
+th, td {
+  padding: 15px; /* Add more padding for table cells */
+  text-align: left; /* Align text to the left */
+  border-bottom: 1px solid #ddd; /* Add a bottom border to each cell */
+}
+
+th {
+  background-color: #f2f2f2; /* Light grey background for headers */
+  color: #333; /* Dark grey text for headers */
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Zebra striping for rows */
+}
+
+tr:hover {
+  background-color: #f1f1f1; /* Highlight row on hover */
+}
+
+/* Responsive table design */
+@media screen and (max-width: 600px) {
+  table {
+    display: block;
+    overflow-x: auto; /* Allows table to be scrollable horizontally */
+  }
+}
