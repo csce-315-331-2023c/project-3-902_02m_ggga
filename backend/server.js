@@ -32,7 +32,39 @@ app.get("/pastorders/", async (req, res) => {
     );
     res.json(result.rows);
   } catch (error) {
-    console.error("Error fetching products", error);
+    console.error("Error fetching past orders", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/inventory/", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM inventory");
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching inventory", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.post("/addtocart/", async (req, res) => {
+  const cartData = req.body;
+  try {
+    await pool.query(
+      "INSERT INTO orders (tip, price, order_date, order_time, items) VALUES ($1, $2, $3, $4, $5)",
+      [
+        cartData.id,
+        cartData.tip,
+        cartData.price,
+        cartData.order_date,
+        cartData.order_time,
+        cartData.items,
+      ]
+    );
+
+    res.json({ success: true, message: "Order added successfully" });
+  } catch (error) {
+    console.error("Error adding order", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

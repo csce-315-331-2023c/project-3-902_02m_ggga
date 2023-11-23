@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Customer.css";
 import tea from "./assets/MilkTea_ClassicPearl_Black.jpg";
 import Modal from "react-modal";
+import Weather from "./Weather";
 
 Modal.setAppElement("#root");
 
@@ -86,13 +87,31 @@ function Customer() {
   };
 
   const addToCart = (product) => {
+    const cartData = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      // sugar: /* get sugar value */,
+      // milk: /* get milk value */,
+      // boba: /* get boba value */,
+    };
+
+    axios
+      .post("http://mocktea.onrender.com/addtocart/", cartData)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error adding product to cart", error);
+      });
+
     setCart((prevCart) => {
       const updatedCart = [...prevCart, product];
       console.log(updatedCart);
       return updatedCart;
     });
+
     closeModal();
-    console.log(cart);
   };
 
   return (
@@ -131,6 +150,7 @@ function Customer() {
           )}
         </div>
       </div>
+      {/*<Weather/>*/}
     </div>
   );
 }
