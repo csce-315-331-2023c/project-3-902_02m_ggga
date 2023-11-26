@@ -53,7 +53,6 @@ app.post("/neworder/", async (req, res) => {
     await pool.query(
       "INSERT INTO orders (tip, price, order_date, order_time, items) VALUES ($1, $2, $3, $4, $5)",
       [
-        cartData.id,
         cartData.tip,
         cartData.price,
         cartData.order_date,

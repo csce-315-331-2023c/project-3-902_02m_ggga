@@ -143,13 +143,18 @@ function Customer() {
       {isCartOpen && (
         <div className="cart-dropdown">
           <h3>Shopping Cart</h3>
-          <ul>
-            {cart.map((item) => (
-              <li key={item.id}>
-                {item.name} - ${item.price}
-              </li>
-            ))}
-          </ul>
+          {cart.length === 0 ? (
+            <p>Cart is Empty</p>
+          ) : (
+            <ul>
+              {cart.map((item) => (
+                <li key={item.id}>
+                  {item.name} - ${item.price}
+                </li>
+              ))}
+            </ul>
+          )}
+          {cart.length > 0 && <button>Place Order</button>}
         </div>
       )}
       {/*<Weather/>*/}
