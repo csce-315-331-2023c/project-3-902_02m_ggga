@@ -140,7 +140,7 @@ export const Cashier = () => {
         console.log(cartData);
 
         axios
-            .post("http://mocktea.onrender.com/addtocart/", cartData)
+            .post("http://mocktea.onrender.com/neworder/", cartData)
             .then((response) => {
                 console.log("here is the response");
                 console.log(response.data);
@@ -219,6 +219,7 @@ export const Cashier = () => {
             {currentView === 'placeOrders' && <PlaceOrders />};
             {currentView === 'viewOrders' && <ViewOrders />};
             <div className='placeorders_page'>
+                {/* <p>hello test</p> */}
                 <div className='place_left_side'>
                     <h1 className='menu-title'>Menu Items</h1>
                     <div className='grid-container'>
@@ -237,28 +238,21 @@ export const Cashier = () => {
                     </div>
                 </div>
                 <div id='place_right_side'>
-                    {/* <div id='google_translate'></div>
-
-                    <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
-                    <script>
-                        function googleTranslateElementInit() {  
-                            new google.translate.TranslateElement("google_element"
-                            )
-                        }
-                    </script> */}
                     <div className='order_mods'>
                         <div>
-                            <label className='quant_label'>Quantity</label>
-                            <input
-                                type="number"
-                                onChange={handleQuantityChange}
-                            />
-                            <p>Quantity: {quantity} </p>
+                            <label className='quant_label'>
+                                Quantity
+                                <input
+                                    type="number"
+                                    id="quantityInput"
+                                    onChange={handleQuantityChange}
+                                />
+                            </label>
 
+                            <p>Quantity: {quantity} </p>
                         </div>
                         <div className='checkbox_container'>
                             <label className='mod_label'>Modifications</label>
-                            {/* forms made using boostrap */}
                             <Form className='horizontal_checks'>
                                 {top_labels.map((label, index) => (
                                     <div key={index} className="mb-3">
@@ -318,7 +312,6 @@ export const Cashier = () => {
                 </div>
             </div>
         </div>
-
     );
 }
 function DenseTable({ data }) {
@@ -334,9 +327,9 @@ function DenseTable({ data }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.map((row) => (
+                    {data.map((row, index) => (
                         <TableRow
-                            key={row.id}
+                            key={index}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
