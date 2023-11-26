@@ -32,7 +32,7 @@ export const Header = () => {
                 </div>
             </header>
             <div className='outlet_content'>
-                {/* this section is for linkage. everything will display below the header */}
+                {/* this section is for linkage. everything will display below the */}
                 <Outlet />
             </div>
         </div>

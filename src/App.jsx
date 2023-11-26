@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Cashier as Cashier } from './assets/Components/Cashier/Cashier'
+import { Translate as Translate } from './assets/Components/Translate/Translate'
 import { Home as Home } from './assets/Components/Home/Home'
 import { Header as Header } from './assets/Components/Header/Header'
 import { BrowserRouter as Router, Routes, Route, BrowserRouter, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
@@ -18,7 +19,7 @@ function App() {
     // <Cashier/>
     // <Header />
     
-
+    // <Translate />
 
     <div className="App">
       <Router>

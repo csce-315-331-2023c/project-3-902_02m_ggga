@@ -20,6 +20,7 @@
     align-items: flex-start; /* Align items at the start of the cross-axis */
     margin-left: 10px;
     margin-right: 10px;
+    gap: 10px;
 }
 
 
@@ -114,3 +115,7 @@
     display: flex;
     gap: 20px; /* Adjust the gap as needed */
   }
+
+.selectedAttributes h1{
+    font-size: large;
+}

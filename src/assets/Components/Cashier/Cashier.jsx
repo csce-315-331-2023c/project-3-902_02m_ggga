@@ -124,26 +124,32 @@ export const Cashier = () => {
         setCart([...cart, newProduct]);
         //update the entire order price by adding the current drinks price to the old sum
         console.log("updated cart with ", { newProduct });
-        setOrderPrice(Number(orderPrice) + totalPrice);
+        setOrderPrice((Number(totalPrice) + Number(orderPrice)).toFixed(2));
         // setQuantity(1)
     }
     const id = 49;
-    const placeOrder = async () => {
-        try {
-            await axios.post('https://mocktea.onrender.com/placeorder/', {
-                id,
-                selectedButton,
-                quantity,
-                orderPrice,
-            });
-            console.log("order placed");
-            window.alert("order placed");
+    const placeOrder = () => {
+        const currentDate = new Date();
+        const cartData = {
+            tip: 0,
+            price: orderPrice,
+            order_date: currentDate.toLocaleDateString(),
+            order_time: currentDate.toLocaleTimeString(),
+            items: cart.map(item => item.name)
+        };
+        console.log(cartData);
 
-        } catch (error) {
-            console.error('Error placing order in cashier', error);
-            // setOrderStatus('Error placing order. Please try again.');
-        }
+        axios
+            .post("http://mocktea.onrender.com/addtocart/", cartData)
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error("Error adding product to cart in cashier", error);
+            });
+        // cart current holds all the things in the cart
     };
+
 
     const handleQuantityChange = (e) => {
         // Update the quantity state with the input value
@@ -164,6 +170,7 @@ export const Cashier = () => {
         setSelectedButton(buttonName);
         setPrice(btn_price);
         setTotalPrice(btn_price * quantity);
+        // setQuantity(1);
         // setCurrentProd({
         //     name: buttonName,
         //     qty: quantity,
@@ -228,7 +235,16 @@ export const Cashier = () => {
                         ))}
                     </div>
                 </div>
-                <div className='place_right_side'>
+                <div id='place_right_side'>
+                    {/* <div id='google_translate'></div>
+
+                    <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+                    <script>
+                        function googleTranslateElementInit() {  
+                            new google.translate.TranslateElement("google_element"
+                            )
+                        }
+                    </script> */}
                     <div className='order_mods'>
                         <div>
                             <label className='quant_label'>Quantity</label>
@@ -277,7 +293,7 @@ export const Cashier = () => {
                     <div className='selectedAttributes'>
                         <h1>Selected Item: {selectedButton} </h1>
                         <h1>Price per Item: {price}</h1>
-                        <h1>Total price: {totalPrice}</h1>
+                        <h1>Total price: {totalPrice.toFixed(2)}</h1>
                         <h1>Ingredients: {selectedLabels} </h1>
                         <h1>Quantity: {quantity} </h1>
                         <h1>Cart:</h1>
