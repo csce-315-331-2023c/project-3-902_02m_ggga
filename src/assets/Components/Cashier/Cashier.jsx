@@ -142,6 +142,7 @@ export const Cashier = () => {
         axios
             .post("http://mocktea.onrender.com/addtocart/", cartData)
             .then((response) => {
+                console.log("here is the response");
                 console.log(response.data);
             })
             .catch((error) => {
