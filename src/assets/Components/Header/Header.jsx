@@ -15,6 +15,10 @@ export const Header = () => {
     //     setCurrentView(view);
     // }
 
+    const toggleAcc = () => {
+        const [currentMode, setCurrMode] = useState(false);
+    }
+
     return (
         <div>
             <header className='header_cashier'>
@@ -24,12 +28,14 @@ export const Header = () => {
                     </div>
                 </div>
                 <div className='header_right'>
+                    <button className='header_button' onClick={toggleAcc}>change Accesibility</button>
                     <ul className='links'>
                         <li><NavLink to="/CashierLanding/vieworder">View Orders</NavLink></li>
                         <li><NavLink to='/CashierLanding/placeorder'>Place Orders</NavLink></li>
                         <li><NavLink to='/home'>Log Out</NavLink></li>
                     </ul>
                 </div>
+
             </header>
             <div className='outlet_content'>
                 {/* this section is for linkage. everything will display below the */}

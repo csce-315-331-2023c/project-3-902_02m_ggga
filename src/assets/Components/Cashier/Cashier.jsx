@@ -216,8 +216,6 @@ export const Cashier = () => {
             {/* <div className='header'>
                 <Header />
             </div> */}
-            {currentView === 'placeOrders' && <PlaceOrders />};
-            {currentView === 'viewOrders' && <ViewOrders />};
             <div className='placeorders_page'>
                 {/* <p>hello test</p> */}
                 <div className='place_left_side'>
@@ -286,11 +284,15 @@ export const Cashier = () => {
                         </div>
                     </div>
                     <div className='selectedAttributes'>
-                        <h1>Selected Item: {selectedButton} </h1>
-                        <h1>Price per Item: {price}</h1>
-                        <h1>Total price: {totalPrice.toFixed(2)}</h1>
-                        <h1>Ingredients: {selectedLabels} </h1>
-                        <h1>Quantity: {quantity} </h1>
+                        <div className='row_box'>
+                            <h1>Selected Item: {selectedButton} </h1>
+                            <h1>Price per Item: {price}</h1>
+                        </div>
+                        <div className='row_box'>
+                            <h1>Total price: {totalPrice.toFixed(2)}</h1>
+                            <h1>Ingredients: {selectedLabels} </h1>
+                        </div>
+                        <h1 id='quantity_header'>Quantity: {quantity} </h1>
                         <h1>Cart:</h1>
                         <ul>
                             {cart.map((item, index) => (
@@ -303,7 +305,7 @@ export const Cashier = () => {
                         </ul>
                     </div>
                     <DenseTable data={cart} />
-                    <h1>Order Price: {orderPrice} </h1>
+                    <h1 id='order_price_header'>Order Price: {orderPrice} </h1>
                     <div className='order_placing_btns'>
                         <button onClick={() => handleCartChange()}> Add to Cart</button>
                         <button onClick={() => handleLabelChange("clearAll")}>Clear</button>

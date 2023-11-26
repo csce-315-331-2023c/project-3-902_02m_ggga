@@ -22,11 +22,20 @@
     margin-left: auto;
 }
 
-.sharetea_header {
+.header_button {
+    background-color: #f7f7f7;
+    color: #502929;
+}
+
+.header_button:hover {
+    background-color: #a89f9f;
+}
+
+/* .sharetea_header {
     font-size: 3rem;
     margin-left: 10px;
     font-weight: bold;
-}
+} */
 
 .links {
     list-style: none;
