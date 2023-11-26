@@ -6,7 +6,7 @@ import {BrowserRouter as Router, Routes, Route, BrowserRouter} from "react-route
 import {LogIn as LogIn} from './assets/Components/LogIn/LogIn'
 import { ViewOrders as ViewOrders } from './assets/Components/ViewOrders/ViewOrders'
 import { Navbar as Navbar} from './assets/Components/Navbar';
-import { CustomerComp } from './assets/Components/Customer/CustomerComp';
+import  Customer  from './assets/Components/Customer/Customer';
 
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
      <Route path="/" element={<Home/>} />
      <Route path="/LogIn" element={<LogIn/>} />
      <Route path="/Cashier" element={<Cashier/>}/>
-     <Route path="/Customer" element={<CustomerComp/>}/>
+     <Route path="/Customer" element={<Customer/>}/>
      
      </Routes>
     </Router>

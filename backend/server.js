@@ -47,7 +47,7 @@ app.get("/inventory/", async (req, res) => {
   }
 });
 
-app.post("/addtocart/", async (req, res) => {
+app.post("/neworder/", async (req, res) => {
   const cartData = req.body;
   try {
     await pool.query(

@@ -70,6 +70,7 @@ function Customer() {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     axios
@@ -80,6 +81,7 @@ function Customer() {
 
   const openModal = (product) => {
     setSelectedProduct(product);
+    setIsCartOpen(false);
   };
 
   const closeModal = () => {
@@ -96,22 +98,11 @@ function Customer() {
       // boba: /* get boba value */,
     };
 
-    axios
-      .post("http://mocktea.onrender.com/addtocart/", cartData)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error adding product to cart", error);
-      });
-
-    setCart((prevCart) => {
-      const updatedCart = [...prevCart, product];
-      console.log(updatedCart);
-      return updatedCart;
-    });
-
     closeModal();
+  };
+
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
   };
 
   return (
@@ -119,9 +110,8 @@ function Customer() {
       <nav className="header">
         <div className="sharetea_header">ShareTea</div>
         <ul className="links">
-          <li onClick={() => handleViewChange("viewOrders")}> View Orders</li>
-          <li onClick={() => handleViewChange("placeOrders")}>Place Orders</li>
-          <li>Log Out</li>
+          <li onClick={toggleCart}>View Cart</li>
+          <li>Back</li>
         </ul>
       </nav>
       <div className="body">
@@ -150,6 +140,18 @@ function Customer() {
           )}
         </div>
       </div>
+      {isCartOpen && (
+        <div className="cart-dropdown">
+          <h3>Shopping Cart</h3>
+          <ul>
+            {cart.map((item) => (
+              <li key={item.id}>
+                {item.name} - ${item.price}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       {/*<Weather/>*/}
     </div>
   );
