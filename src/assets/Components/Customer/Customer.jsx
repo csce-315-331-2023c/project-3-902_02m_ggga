@@ -114,8 +114,9 @@ function Customer() {
     try {
       console.log(orderData);
       const response = await axios.post(
-        "https://mocktea.onrender.com/neworder/",
-        orderData
+        "https://mocktea.onrender.com/neworder",
+        orderData,
+        { headers: { "Content-Type": "application/json" } }
       );
       console.log("Order placed successfully:", response.data);
       setCart([]);

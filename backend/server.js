@@ -14,6 +14,7 @@ const pool = new Pool({
 });
 
 app.use(cors());
+app.use(express.json());
 
 app.get("/products/", async (req, res) => {
   try {
@@ -48,16 +49,16 @@ app.get("/inventory/", async (req, res) => {
 });
 
 app.post("/neworder/", async (req, res) => {
-  const cartData = req.body;
+  const orderData = req.body;
   try {
     await pool.query(
       "INSERT INTO orders (tip, price, order_date, order_time, items) VALUES ($1, $2, $3, $4, $5)",
       [
-        cartData.tip,
-        cartData.price,
-        cartData.order_date,
-        cartData.order_time,
-        cartData.items,
+        orderData.tip,
+        orderData.price,
+        orderData.order_date,
+        orderData.order_time,
+        orderData.items,
       ]
     );
 
