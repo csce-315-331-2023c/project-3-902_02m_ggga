@@ -75,7 +75,7 @@ function Customer() {
 
   useEffect(() => {
     axios
-      .get("https://mocktea.onrender.com/maxorderid")
+      .get("https://mocktea.onrender.com/orderid")
       .then((response) => setMaxOrderId(response.data))
       .catch((error) => console.error("Error fetching max order ID", error));
   }, []);
