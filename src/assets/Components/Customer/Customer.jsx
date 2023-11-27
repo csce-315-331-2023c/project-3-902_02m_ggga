@@ -89,20 +89,40 @@ function Customer() {
   };
 
   const addToCart = (product) => {
-    const cartData = {
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      // sugar: /* get sugar value */,
-      // milk: /* get milk value */,
-      // boba: /* get boba value */,
-    };
-
+    setCart([
+      ...cart,
+      { name: product.name, price: product.price, quantity: 1 },
+    ]);
     closeModal();
   };
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
+  };
+
+  const placeOrder = async () => {
+    const orderData = {
+      tip: 0,
+      price: cart
+        .reduce((total, item) => total + item.price * item.quantity, 0)
+        .toFixed(2),
+      order_date: new Date().toLocaleDateString(),
+      order_time: new Date().toLocaleTimeString(),
+      items: cart.map((item) => item.name),
+    };
+
+    try {
+      console.log(orderData);
+      const response = await axios.post(
+        "https://mocktea.onrender.com/neworder/",
+        orderData
+      );
+      console.log("Order placed successfully:", response.data);
+      setCart([]);
+      setIsCartOpen(false);
+    } catch (error) {
+      console.error("Error placing order", error);
+    }
   };
 
   return (
@@ -146,15 +166,26 @@ function Customer() {
           {cart.length === 0 ? (
             <p>Cart is Empty</p>
           ) : (
-            <ul>
-              {cart.map((item) => (
-                <li key={item.id}>
-                  {item.name} - ${item.price}
-                </li>
-              ))}
-            </ul>
+            <div>
+              <ul>
+                {cart.map((item, index) => (
+                  <li key={index}>
+                    {item.name} - ${item.price}
+                  </li>
+                ))}
+              </ul>
+              <p className="price-total">
+                Total: $
+                {cart
+                  .reduce(
+                    (total, item) => total + item.price * item.quantity,
+                    0
+                  )
+                  .toFixed(2)}
+              </p>
+            </div>
           )}
-          {cart.length > 0 && <button>Place Order</button>}
+          {cart.length > 0 && <button onClick={placeOrder}>Place Order</button>}
         </div>
       )}
       {/*<Weather/>*/}
