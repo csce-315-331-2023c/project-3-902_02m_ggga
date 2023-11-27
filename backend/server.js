@@ -48,12 +48,23 @@ app.get("/inventory/", async (req, res) => {
   }
 });
 
+app.get("/orderid/", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT MAX(id) FROM orders;");
+    res.json(result.rows[0].max);
+  } catch (error) {
+    console.error("Error fetching order id", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.post("/neworder/", async (req, res) => {
   const orderData = req.body;
   try {
     await pool.query(
-      "INSERT INTO orders (tip, price, order_date, order_time, items) VALUES ($1, $2, $3, $4, $5)",
+      "INSERT INTO orders (id, tip, price, order_date, order_time, items) VALUES ($1, $2, $3, $4, $5, $6)",
       [
+        orderData.orderID,
         orderData.tip,
         orderData.price,
         orderData.order_date,

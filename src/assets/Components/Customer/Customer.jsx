@@ -71,6 +71,14 @@ function Customer() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [maxOrderId, setMaxOrderId] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("https://mocktea.onrender.com/maxorderid")
+      .then((response) => setMaxOrderId(response.data))
+      .catch((error) => console.error("Error fetching max order ID", error));
+  }, []);
 
   useEffect(() => {
     axios
@@ -102,6 +110,7 @@ function Customer() {
 
   const placeOrder = async () => {
     const orderData = {
+      orderID: maxOrderId + 1,
       tip: 0,
       price: cart
         .reduce((total, item) => total + item.price * item.quantity, 0)
