@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Customer.css";
 import tea from "./assets/MilkTea_ClassicPearl_Black.jpg";
 import Modal from "react-modal";
+import Weather from "./Weather";
 
 Modal.setAppElement("#root");
 
@@ -65,20 +66,54 @@ const ProductModal = ({ isOpen, onClose, addToCart, product }) => {
   );
 };
 
-function Customer() {
+const OrderSuccessModal = ({ isOpen, onClose }) => {
+  return (
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      contentLabel="Order Success Modal"
+      className="order-success-modal"
+      overlayClassName="order-success-overlay"
+    >
+      <div className="order-success-container">
+        <h2>Order Successfully Placed!</h2>
+        <p>
+          Your order has been placed successfully. Thank you for choosing
+          ShareTea!
+        </p>
+        <button onClick={onClose} className="close-button">
+          Close
+        </button>
+      </div>
+    </Modal>
+  );
+};
+
+export const Customer = ()  => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [maxOrderId, setMaxOrderId] = useState(null);
+  const [isOrderSuccessOpen, setIsOrderSuccessOpen] = useState(false);
 
   useEffect(() => {
     axios
-      .get("https://mocktea.onrender.com/")
+      .get("https://mocktea.onrender.com/orderid")
+      .then((response) => setMaxOrderId(response.data))
+      .catch((error) => console.error("Error fetching max order ID", error));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("https://mocktea.onrender.com/products")
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products", error));
   }, []);
 
   const openModal = (product) => {
     setSelectedProduct(product);
+    setIsCartOpen(false);
   };
 
   const closeModal = () => {
@@ -86,13 +121,43 @@ function Customer() {
   };
 
   const addToCart = (product) => {
-    setCart((prevCart) => {
-      const updatedCart = [...prevCart, product];
-      console.log(updatedCart);
-      return updatedCart;
-    });
+    setCart([
+      ...cart,
+      { name: product.name, price: product.price, quantity: 1 },
+    ]);
     closeModal();
-    console.log(cart);
+  };
+
+  const clearCart = () => {
+    setCart([]);
+  };
+
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
+
+  const placeOrder = async () => {
+    const orderData = {
+      orderID: maxOrderId + 1,
+      tip: 0,
+      price: cart
+        .reduce((total, item) => total + item.price * item.quantity, 0)
+        .toFixed(2),
+      order_date: new Date().toLocaleDateString(),
+      order_time: new Date().toLocaleTimeString(),
+      items: cart.map((item) => item.name),
+    };
+
+    try {
+      await axios.post("https://mocktea.onrender.com/neworder", orderData, {
+        headers: { "Content-Type": "application/json" },
+      });
+      setCart([]);
+      setIsCartOpen(false);
+      setIsOrderSuccessOpen(true);
+    } catch (error) {
+      console.error("Error placing order", error);
+    }
   };
 
   return (
@@ -100,9 +165,8 @@ function Customer() {
       <nav className="header">
         <div className="sharetea_header">ShareTea</div>
         <ul className="links">
-          <li onClick={() => handleViewChange("viewOrders")}> View Orders</li>
-          <li onClick={() => handleViewChange("placeOrders")}>Place Orders</li>
-          <li>Log Out</li>
+          <li onClick={toggleCart}>View Cart</li>
+          <li>Back</li>
         </ul>
       </nav>
       <div className="body">
@@ -131,6 +195,44 @@ function Customer() {
           )}
         </div>
       </div>
+      {isCartOpen && (
+        <div className="cart-dropdown">
+          <h3>Shopping Cart</h3>
+          {cart.length === 0 ? (
+            <p>Cart is Empty</p>
+          ) : (
+            <div>
+              <ul>
+                {cart.map((item, index) => (
+                  <li key={index}>
+                    {item.name} - ${item.price}
+                  </li>
+                ))}
+              </ul>
+              <p className="price-total">
+                Total: $
+                {cart
+                  .reduce(
+                    (total, item) => total + item.price * item.quantity,
+                    0
+                  )
+                  .toFixed(2)}
+              </p>
+            </div>
+          )}
+          {cart.length > 0 && (
+            <div>
+              <button onClick={placeOrder}>Place Order</button>
+              <button onClick={clearCart}>Clear Cart</button>
+            </div>
+          )}
+        </div>
+      )}
+      <OrderSuccessModal
+        isOpen={isOrderSuccessOpen}
+        onClose={() => setIsOrderSuccessOpen(false)}
+      />
+      {/*<Weather/>*/}
     </div>
   );
 }
