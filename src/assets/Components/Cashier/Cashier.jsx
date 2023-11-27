@@ -122,7 +122,7 @@ export const Cashier = () => {
         //     price: totalPrice,
         //     ingredients: selectedLabels
         // })
-        const newProduct = { name: selectedButton, qty: quantity, price: totalPrice, ingredients: selectedLabels };
+        const newProduct = { name: `${selectedButton} (${selectedLabels.join(', ')} )`, qty: quantity, price: totalPrice, ingredients: selectedLabels };
         setCart([...cart, newProduct]);
         //update the entire order price by adding the current drinks price to the old sum
         console.log("updated cart with ", { newProduct });
@@ -143,7 +143,7 @@ export const Cashier = () => {
             price: orderPrice,
             order_date: new Date().toLocaleDateString(),
             order_time: new Date().toLocaleTimeString(),
-            items: cart.map((item) => item.name),
+            items: [cart.map((item) => item.name).join(', ')]
         };
 
         try {
@@ -155,6 +155,9 @@ export const Cashier = () => {
             );
             console.log("Order placed successfully:", response.data);
             setCart([]);
+            setOrderPrice(0);
+            handleLabelChange("clearAll");
+
         } catch (error) {
             console.error("Error placing order", error);
         }
