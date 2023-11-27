@@ -28,7 +28,7 @@ export const Header = () => {
                     </div>
                 </div>
                 <div className='header_right'>
-                    <button className='header_button' onClick={toggleAcc}>change Accesibility</button>
+                    <button className='header_button' onClick={toggleAcc}>change Accessibility</button>
                     <ul className='links'>
                         <li><NavLink to="/CashierLanding/vieworder">View Orders</NavLink></li>
                         <li><NavLink to='/CashierLanding/placeorder'>Place Orders</NavLink></li>
