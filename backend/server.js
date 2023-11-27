@@ -28,7 +28,7 @@ app.get("/products/", async (req, res) => {
 app.get("/pastorders/", async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT * FROM orders ORDER BY id DESC LIMIT 20;"
+      "SELECT * FROM orders ORDER BY id DESC LIMIT 40;"
     );
     res.json(result.rows);
   } catch (error) { 

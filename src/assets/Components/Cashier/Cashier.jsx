@@ -59,6 +59,8 @@ export const Cashier = () => {
     const [orderPrice, setOrderPrice] = useState(0.0);
     const [totalPrice, setTotalPrice] = useState(0.0);
     const ingredients = [];
+    const [maxOrderId, setMaxOrderId] = useState(null);
+
 
 
     const handleLabelChange = (label) => {
@@ -127,27 +129,35 @@ export const Cashier = () => {
         setOrderPrice((Number(totalPrice) + Number(orderPrice)).toFixed(2));
         // setQuantity(1)
     }
-    const id = 49;
-    const placeOrder = () => {
-        const currentDate = new Date();
-        const cartData = {
+    useEffect(() => {
+        axios
+            .get("https://mocktea.onrender.com/orderid")
+            .then((response) => setMaxOrderId(response.data))
+            .catch((error) => console.error("Error fetching max order ID", error));
+    }, []);
+    const placeOrder = async () => {
+
+        const orderData = {
+            orderID: maxOrderId + 1,
             tip: 0,
             price: orderPrice,
-            order_date: currentDate.toLocaleDateString(),
-            order_time: currentDate.toLocaleTimeString(),
-            items: cart.map(item => item.name)
+            order_date: new Date().toLocaleDateString(),
+            order_time: new Date().toLocaleTimeString(),
+            items: cart.map((item) => item.name),
         };
-        console.log(cartData);
 
-        axios
-            .post("http://mocktea.onrender.com/neworder/", cartData)
-            .then((response) => {
-                console.log("here is the response");
-                console.log(response.data);
-            })
-            .catch((error) => {
-                console.error("Error adding product to cart in cashier", error);
-            });
+        try {
+            console.log(orderData);
+            const response = await axios.post(
+                "https://mocktea.onrender.com/neworder",
+                orderData,
+                { headers: { "Content-Type": "application/json" } }
+            );
+            console.log("Order placed successfully:", response.data);
+            setCart([]);
+        } catch (error) {
+            console.error("Error placing order", error);
+        }
         // cart current holds all the things in the cart
     };
 
