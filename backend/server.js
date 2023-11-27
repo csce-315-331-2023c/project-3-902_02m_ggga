@@ -4,7 +4,7 @@ const { Pool } = require("pg");
 
 const app = express();
 const port = 5000;
-
+app.use(express.json());
 const pool = new Pool({
   user: "csce331_902_gabrielmarshall327",
   host: "csce-315-db.engr.tamu.edu",
@@ -35,6 +35,22 @@ app.get("/api/employees", async (req, res) => {
   }
 });
 
+app.post("/api/employees", async (req, res) => {
+  try {
+    const { name, hours_worked, salary, position, manager } = req.body;
+    const newEmployeeQuery = `
+      INSERT INTO employees (name, hours_worked, salary, position, manager)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING *;`;
+
+    const result = await pool.query(newEmployeeQuery, [name, hours_worked, salary, position, manager]);
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error("Error adding new employee", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 app.get("/api/inventory", async (req, res) => {
   try {
@@ -42,6 +58,23 @@ app.get("/api/inventory", async (req, res) => {
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching inventory", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.delete("/api/employees/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteQuery = 'DELETE FROM employees WHERE employee_id = $1 RETURNING *;';
+
+    const result = await pool.query(deleteQuery, [id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+
+    res.json({ message: "Employee deleted successfully", employee: result.rows[0] });
+  } catch (error) {
+    console.error("Error deleting employee", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
