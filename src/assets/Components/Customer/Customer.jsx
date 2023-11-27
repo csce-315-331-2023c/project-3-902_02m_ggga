@@ -66,12 +66,36 @@ const ProductModal = ({ isOpen, onClose, addToCart, product }) => {
   );
 };
 
+const OrderSuccessModal = ({ isOpen, onClose }) => {
+  return (
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      contentLabel="Order Success Modal"
+      className="order-success-modal"
+      overlayClassName="order-success-overlay"
+    >
+      <div className="order-success-container">
+        <h2>Order Successfully Placed!</h2>
+        <p>
+          Your order has been placed successfully. Thank you for choosing
+          ShareTea!
+        </p>
+        <button onClick={onClose} className="close-button">
+          Close
+        </button>
+      </div>
+    </Modal>
+  );
+};
+
 function Customer() {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [maxOrderId, setMaxOrderId] = useState(null);
+  const [isOrderSuccessOpen, setIsOrderSuccessOpen] = useState(false);
 
   useEffect(() => {
     axios
@@ -104,6 +128,10 @@ function Customer() {
     closeModal();
   };
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
@@ -121,15 +149,12 @@ function Customer() {
     };
 
     try {
-      console.log(orderData);
-      const response = await axios.post(
-        "https://mocktea.onrender.com/neworder",
-        orderData,
-        { headers: { "Content-Type": "application/json" } }
-      );
-      console.log("Order placed successfully:", response.data);
+      await axios.post("https://mocktea.onrender.com/neworder", orderData, {
+        headers: { "Content-Type": "application/json" },
+      });
       setCart([]);
       setIsCartOpen(false);
+      setIsOrderSuccessOpen(true);
     } catch (error) {
       console.error("Error placing order", error);
     }
@@ -195,9 +220,18 @@ function Customer() {
               </p>
             </div>
           )}
-          {cart.length > 0 && <button onClick={placeOrder}>Place Order</button>}
+          {cart.length > 0 && (
+            <div>
+              <button onClick={placeOrder}>Place Order</button>
+              <button onClick={clearCart}>Clear Cart</button>
+            </div>
+          )}
         </div>
       )}
+      <OrderSuccessModal
+        isOpen={isOrderSuccessOpen}
+        onClose={() => setIsOrderSuccessOpen(false)}
+      />
       {/*<Weather/>*/}
     </div>
   );
