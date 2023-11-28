@@ -96,6 +96,7 @@ function Customer() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [maxOrderId, setMaxOrderId] = useState(null);
   const [isOrderSuccessOpen, setIsOrderSuccessOpen] = useState(false);
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
     axios
@@ -163,9 +164,15 @@ function Customer() {
   return (
     <div>
       <nav className="header">
+        <Weather/>
         <div className="sharetea_header">ShareTea</div>
         <ul className="links">
-          <li onClick={toggleCart}>View Cart</li>
+          <li onClick={toggleCart}>
+            View Cart{" "}
+            {cartCount > 0 && (
+              <span className="cart-counter">- {cartCount}</span>
+            )}
+          </li>
           <li>Back</li>
         </ul>
       </nav>
@@ -196,10 +203,13 @@ function Customer() {
         </div>
       </div>
       {isCartOpen && (
-        <div className="cart-dropdown">
+        <div
+          className="cart-dropdown"
+          style={{ minWidth: cart.length > 0 ? "300px" : "auto" }}
+        >
           <h3>Shopping Cart</h3>
           {cart.length === 0 ? (
-            <p>Cart is Empty</p>
+            <p style={{ textAlign: "center" }}>Cart is Empty</p>
           ) : (
             <div>
               <ul>
@@ -221,9 +231,13 @@ function Customer() {
             </div>
           )}
           {cart.length > 0 && (
-            <div>
-              <button onClick={placeOrder}>Place Order</button>
-              <button onClick={clearCart}>Clear Cart</button>
+            <div className="cart-button-container">
+              <button className="cart-buttons b2" onClick={placeOrder}>
+                Place Order
+              </button>
+              <button className="cart-buttons b1" onClick={clearCart}>
+                Clear Cart
+              </button>
             </div>
           )}
         </div>

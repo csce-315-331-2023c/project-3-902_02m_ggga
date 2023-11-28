@@ -15,15 +15,13 @@ const Weather = () => {
 
   return (
     <div>
-      <h2>Current Weather</h2>
       {weatherData ? (
-        <div>
-          <p>Temperature: {weatherData.main.temp} &deg;F</p>
-          <p>Description: {weatherData.weather[0].description}</p>
+        <div style={{display: "flex", alignItems: "center"}}>
           <img
             src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
             alt="Weather Icon"
           />
+          <p>{Math.round(weatherData?.main.temp)} &deg;F</p>
         </div>
       ) : (
         <p>Loading...</p>
