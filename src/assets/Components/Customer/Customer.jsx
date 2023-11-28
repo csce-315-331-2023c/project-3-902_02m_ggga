@@ -4,6 +4,7 @@ import "./Customer.css";
 import tea from "./assets/MilkTea_ClassicPearl_Black.jpg";
 import Modal from "react-modal";
 import Weather from "./Weather";
+import { Link } from "react-router-dom";
 
 Modal.setAppElement("#root");
 
@@ -164,7 +165,9 @@ function Customer() {
   return (
     <div>
       <nav className="header">
-        <Weather/>
+        <div className="weather-container">
+          <Weather />
+        </div>
         <div className="sharetea_header">ShareTea</div>
         <ul className="links">
           <li onClick={toggleCart}>
@@ -173,7 +176,9 @@ function Customer() {
               <span className="cart-counter">- {cartCount}</span>
             )}
           </li>
-          <li>Back</li>
+          <li>
+            <Link to="/logout">Log Out</Link>
+          </li>
         </ul>
       </nav>
       <div className="body">

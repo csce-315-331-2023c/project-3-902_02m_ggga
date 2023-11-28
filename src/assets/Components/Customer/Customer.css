@@ -10,13 +10,20 @@
   z-index: 1;
 }
 
+.weather-container {
+  margin: 0 10px;
+}
+
 .sharetea_header {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 3rem;
-  margin-left: 10px;
-  flex-grow: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-left: 0;
 }
 
 .links {
@@ -170,6 +177,8 @@
 
 .modal-container-left {
   width: 50%;
+  display: flex;
+  align-items: center;
 }
 
 .modal-container-left img {
