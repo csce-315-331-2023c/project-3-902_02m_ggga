@@ -2,72 +2,81 @@ import { useState, useEffect } from 'react'
 import React from 'react'
 import './LogIn.css'
 import { Link } from 'react-router-dom';
-import { loginWithGithub } from '../../../../backend/githubOAuth';
+
+
+const CLIENT_ID = "c1e2a3c233d9b16112ee";
+const CLIENT_SECRET = "a24ff8ff78fb3910d162c62667d21c0a336526f5";
+
+
 
 function LogIn()  {
+    const [rerender, setRerender] = useState(false);
+    const [userData, setUserData] = useState({});
     useEffect(() => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const codeParams = urlParams.get("code");
         console.log(codeParams);
+
+        if(codeParams && (localStorage.getItem("accessToken") === null)) {
+            async function getAccessToken() {
+                await fetch("http://localhost:5000/getAccessToken?code=" + codeParams, {
+                    method: "GET"
+                }).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    console.log("access token: " + data.access_token);
+                    if(data.access_token) {
+                        localStorage.setItem("accessToken", data.access_token);
+                        //setRerender(!rerender);
+                    }
+                }).then(() => {
+                    getUserData();
+                    setRerender(!rerender);
+                })
+            }
+            getAccessToken();
+        }
     }, []);
-    /*const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
 
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
-    };
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleLogIn = () => {
-        // Implement your login logic here
-        console.log('Logging in with Username:', username, 'Password:', password);
-    };
-
-    const handleClear = () => {
-        setUsername('');
-        setPassword('');
-    };
-
-    
-    return (
-        <div className='login_container'>
-            <p>Log In Please</p>
-            <div className='username'>
-                <label>Username:</label>
-                <input
-                    type="text"
-                    value={username}
-                    onChange={handleUsernameChange}
-                />
-            </div>
-            <div className='password'>
-                <label>Password:</label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                />
-            </div>
-            <div className='button'>
-                <button className='login_btn' onClick={handleLogIn}>Log In</button>
-                <button className='login_btn' onClick={handleClear}>Clear</button>
-                <Link to="/home"><button className='login_btn'>Back</button></Link>
-            </div>
-        </div>
-    );
-}*/
-
+    //function used to login with github
+    function loginWithGithub() {
+    return window.location.assign("https://github.com/login/oauth/authorize?client_id="+ CLIENT_ID);
+    }
+    async function getUserData()  {
+        await fetch("http://localhost:5000/getUserData", {
+            method: "GET",
+            headers: {
+                "Authorization" : "Bearer " + localStorage.getItem("accessToken")
+            }
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log("user data:" + data);
+            console.log(data);
+            setUserData(data);
+        })
+    }
     return (
         <div className='LogIn'>
-            <header className='buttons'>
-                <button onClick={loginWithGithub}>
+                {localStorage.getItem("accessToken") ?
+                    <b>
+                        you are logged in!
+                        <button onClick={() => {localStorage.clear("accessToken"); setRerender(!rerender);}}>log out</button>
+                        {Object.keys(userData).length !== 0 ?
+                        <>
+                            <b>Hey there {userData.login}</b>
+                        </>
+                        :
+                        <>
+                        </>}
+                    </b>
+                :
+                    <button onClick={loginWithGithub}>
                     Login with Github
-                </button>
-            </header>
+                    </button>
+                }
         </div>
     );
 }
