@@ -7,6 +7,7 @@
     padding: 10px 20px;
     top: 0;
     width: 100%;
+    position: fixed;
     z-index: 1000;
     height: 80px;
 }
@@ -14,12 +15,14 @@
 .header_left {
     display: flex;
     align-items: center;
+    float: left;
 }
 
 .header_right {
     display: flex;
     align-items: center;
     margin-left: auto;
+    float:right;
 }
 
 .header_button {
@@ -31,15 +34,14 @@
     background-color: #a89f9f;
 }
 
-/* .sharetea_header {
+.sharetea_header {
     font-size: 3rem;
     margin-left: 10px;
     font-weight: bold;
-} */
+}
 
 .links {
     list-style: none;
-    display: flex;
     gap: 10px;
     margin-right: 10px;
     line-height: 1;
@@ -64,4 +66,8 @@
 .links a:hover {
     text-decoration: underline;
     color: #ffffff;
+}
+
+.outlet_content{
+    padding-top: 70px;
 }
