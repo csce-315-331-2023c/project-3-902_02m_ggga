@@ -35,6 +35,7 @@ app.get("/products/", async (req, res) => {
   }
 });
 
+
 app.get("/pastorders/", async (req, res) => {
   try {
     const result = await pool.query(
@@ -91,4 +92,13 @@ app.get('/getUserData', async function (req, res) {
       console.log(data)
       res.json(data);
   })
-})
+});
+
+
+app.get('/employees', async function (req, res) {
+  const gitidValue = req.query.gitid;
+  const query = 'SELECT manager FROM employees WHERE gitid = $1';
+  const result = await pool.query(query, [gitidValue]);
+  res.json(result.rows);
+  console.log(result)
+});

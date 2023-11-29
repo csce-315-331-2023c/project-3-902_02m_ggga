@@ -28,7 +28,7 @@ export const Home = () => {
                     </div>
                     <div className='button-container'>
                         <button className='home_buttons'>Log In</button>
-                        <button className='home_buttons' >Start Ordering</button>
+                        <Link to='/Customer'><button className='home_buttons' >Start Ordering</button></Link>
                     </div>
                 </div>
             </div>

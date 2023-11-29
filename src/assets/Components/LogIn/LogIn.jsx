@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import React from 'react'
 import './LogIn.css'
+import {Navbar as Navbar} from '../Navbar';
 import { Link } from 'react-router-dom';
 
 
@@ -17,6 +18,7 @@ function LogIn()  {
         const urlParams = new URLSearchParams(queryString);
         const codeParams = urlParams.get("code");
         console.log(codeParams);
+        getUserData();
 
         if(codeParams && (localStorage.getItem("accessToken") === null)) {
             async function getAccessToken() {
@@ -44,6 +46,46 @@ function LogIn()  {
     function loginWithGithub() {
     return window.location.assign("https://github.com/login/oauth/authorize?client_id="+ CLIENT_ID);
     }
+
+    function checkEmployee(gitId) {
+        fetch ("http://localhost:5000/getUserData?gitid="+gitId, {
+            method: "GET",
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            // Assuming the data received is an array of objects with a 'manager' field
+            if (data.length > 0) {
+                console.log('This user is an employee.');
+                return true;
+                // Perform actions for a manager user
+            } else {
+                console.log('This user is not an employee.');
+                // Perform actions for a non-manager user
+            }
+            console.log(data)
+            return false;
+        })
+    }
+
+    function checkPrivleges(gitId) {
+        fetch ("http://localhost:5000/getUserData?gitid="+gitId, {
+            method: "GET",
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            // Assuming the data received is an array of objects with a 'manager' field
+            if (data.length > 0 && data[0].manager === true) {
+                console.log('This user is a manager.');
+                return true;
+                // Perform actions for a manager user
+            } else {
+                console.log('This user is not a manager.');
+                // Perform actions for a non-manager user
+            }
+            return false;
+        })
+    }
+
     async function getUserData()  {
         await fetch("http://localhost:5000/getUserData", {
             method: "GET",
@@ -60,23 +102,43 @@ function LogIn()  {
     }
     return (
         <div className='LogIn'>
-                {localStorage.getItem("accessToken") ?
-                    <b>
-                        you are logged in!
-                        <button onClick={() => {localStorage.clear("accessToken"); setRerender(!rerender);}}>log out</button>
-                        {Object.keys(userData).length !== 0 ?
-                        <>
-                            <b>Hey there {userData.login}</b>
-                        </>
-                        :
-                        <>
-                        </>}
-                    </b>
-                :
-                    <button onClick={loginWithGithub}>
-                    Login with Github
-                    </button>
-                }
+            <div className='home_header'>
+                <Navbar />
+            </div>
+                <div className='body'>
+                    {localStorage.getItem("accessToken") ?
+                        <body>
+                            {Object.keys(userData).length !== 0 ?
+                            <>  
+                                {checkEmployee(userData.id) ?
+                                <>
+                                    <body>Welcome {userData.name}!</body>
+                                    {checkPrivleges(userData.id) ?
+                                        <button>Manager</button>
+                                        :
+                                        <></>
+                                    }
+                                    <Link to='/CashierLanding'><button>Cashier</button></Link>
+                                </>
+                                    :
+                                    <body>
+                                        You are not a member of the staff here.
+                                    </body>
+                                }
+                            </>
+                            :
+                            <>
+                                <body>An error occured while logging in. please retry logging in and if that doesnt work contact an employee</body>
+                            </>}
+                            <button onClick={() => {localStorage.clear("accessToken"); setRerender(!rerender);}}>log out</button>
+
+                        </body>
+                    :
+                        <button onClick={loginWithGithub}>
+                        Login with Github
+                        </button>
+                    }
+                </div>
         </div>
     );
 }
