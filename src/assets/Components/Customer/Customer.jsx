@@ -127,7 +127,12 @@ function Customer() {
   const addToCart = (product) => {
     setCart([
       ...cart,
-      { name: product.name, price: product.price, quantity: 1 },
+      {
+        name: product.name,
+        price: product.price,
+        ingredients: product.ingredients,
+        quantity: 1,
+      },
     ]);
     closeModal();
   };
@@ -153,6 +158,24 @@ function Customer() {
     };
 
     try {
+      for (let i = 0; i < cart.length; i++) {
+        const product = cart[i];
+        const ingredientsArray = product.ingredients.split(",");
+        ingredientsArray.forEach(async (ingredient) => {
+          try {
+            //console.log("Ingredient:", ingredient);
+            axios.post(
+              "https://mocktea.onrender.com/updateInventory",
+              ingredient,
+              {
+                headers: { "Content-Type": "application/json" },
+              }
+            );
+          } catch (error) {
+            console.error("Error processing ingredient", error);
+          }
+        });
+      }
       await axios.post("https://mocktea.onrender.com/neworder", orderData, {
         headers: { "Content-Type": "application/json" },
       });
@@ -167,7 +190,9 @@ function Customer() {
   return (
     <div>
       <nav className="header">
-        <div className="weather-container"></div>
+        <div className="weather-container">
+          <Weather />
+        </div>
         <div className="sharetea_header">
           <img src={headerImage} alt="ShareTea" />
         </div>
@@ -179,7 +204,7 @@ function Customer() {
             )}
           </li>
           <li>
-            <Link to="/logout">Home</Link>
+            <Link to="/">Home</Link>
           </li>
         </ul>
       </nav>
@@ -263,3 +288,24 @@ function Customer() {
 }
 
 export default Customer;
+
+/* query to read order items with the mods
+SELECT
+  id,
+  ARRAY(
+    SELECT
+      regexp_replace(item::text, '\(.*$', '')::text
+    FROM unnest(items) item
+  ) AS processed_items,
+  tip,
+  price,
+  order_date,
+  order_time
+FROM
+  orders;
+
+  date,
+  time
+FROM
+  orders;
+ */

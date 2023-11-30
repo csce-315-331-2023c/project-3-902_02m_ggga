@@ -80,6 +80,21 @@ app.post("/neworder/", async (req, res) => {
   }
 });
 
+app.post("/updateInventory/", async (req, res) => {
+  const { itemId } = req.body;
+  try {
+    await pool.query(
+      "UPDATE inventory SET quantity = quantity - 1 WHERE id = $1",
+      [itemId]
+    );
+
+    res.json({ success: true, message: "Inventory updated successfully" });
+  } catch (error) {
+    console.error("Error updating inventory", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

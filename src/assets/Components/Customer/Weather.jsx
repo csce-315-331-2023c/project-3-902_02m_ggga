@@ -21,7 +21,7 @@ const Weather = () => {
             src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
             alt="Weather Icon"
           />
-          <p style={{marginBottom: 0}}>{Math.round(weatherData?.main.temp)} &deg;F</p>
+          <p style={{marginBottom: 0}}>{Math.round(weatherData.main.temp)} &deg;F</p>
         </div>
       ) : (
         <p>Loading...</p>
