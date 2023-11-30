@@ -163,14 +163,14 @@ function Customer() {
         const ingredientsArray = product.ingredients.split(",");
         ingredientsArray.forEach(async (ingredient) => {
           try {
-            //console.log("Ingredient:", ingredient);
-            axios.post(
-              "https://mocktea.onrender.com/updateInventory",
-              ingredient,
+            await axios.post(
+              "https://mocktea.onrender.com/neworderinventory",
+              { id: ingredient },
               {
                 headers: { "Content-Type": "application/json" },
               }
             );
+            console.log("Ingredient:", ingredient);
           } catch (error) {
             console.error("Error processing ingredient", error);
           }

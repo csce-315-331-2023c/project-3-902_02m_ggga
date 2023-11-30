@@ -80,12 +80,13 @@ app.post("/neworder/", async (req, res) => {
   }
 });
 
-app.post("/updateInventory/", async (req, res) => {
-  const { itemId } = req.body;
+app.post("/neworderinventory/", async (req, res) => {
+  const ingredientID = req.body.id;
+  console.log("Received request to update inventory:", ingredientID);
   try {
     await pool.query(
       "UPDATE inventory SET quantity = quantity - 1 WHERE id = $1",
-      [itemId]
+      [ingredientID]
     );
 
     res.json({ success: true, message: "Inventory updated successfully" });
