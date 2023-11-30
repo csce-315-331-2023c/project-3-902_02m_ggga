@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.get("/products/", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM product");
+    const result = await pool.query("SELECT * FROM product ORDER BY id DESC");
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching products", error);

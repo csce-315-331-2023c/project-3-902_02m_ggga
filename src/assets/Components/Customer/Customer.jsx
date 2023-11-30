@@ -20,7 +20,7 @@ const ProductModal = ({ isOpen, onClose, addToCart, product }) => {
     >
       <div className="modal-container">
         <div className="modal-container-left">
-          <img src={tea} alt={product.name} />
+          <img src={product.image_url || tea} alt={product.name} />
         </div>
         <div className="modal-container-right">
           <h2 style={{ padding: "1rem" }}>{product.name}</h2>
@@ -191,7 +191,11 @@ function Customer() {
               className="product-button"
               onClick={() => openModal(product)}
             >
-              <img src={tea} alt={product.name} className="product-image" />
+              <img
+                src={product.image_url || tea}
+                alt={product.name}
+                className="product-image"
+              />
               <div className="product-info">
                 <div>{product.name}</div>
                 <div>${product.price}</div>
