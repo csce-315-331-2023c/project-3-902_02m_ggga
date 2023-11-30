@@ -56,8 +56,8 @@
 
 .cart-dropdown {
   position: fixed;
-  top: 60px;
-  right: 10%;
+  top: 70px;
+  right: 160px;
   background-color: white;
   border: 1px solid #ddd;
   padding: 10px;
@@ -120,7 +120,7 @@
   gap: 1rem;
   top: 0;
   position: absolute;
-  padding: 6rem 2rem;
+  padding: 8rem 4rem;
 }
 
 .product-button {
