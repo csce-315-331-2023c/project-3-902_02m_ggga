@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Customer.css";
 import tea from "./assets/MilkTea_ClassicPearl_Black.jpg";
+import headerImage from "./assets/ShareTea_Header.png";
 import Modal from "react-modal";
 import Weather from "./Weather";
 import { Link } from "react-router-dom";
@@ -23,7 +24,7 @@ const ProductModal = ({ isOpen, onClose, addToCart, product }) => {
         </div>
         <div className="modal-container-right">
           <h2 style={{ padding: "1rem" }}>{product.name}</h2>
-          <p>Price: ${product.price}</p>
+          <p className="modal-price">Price: ${product.price}</p>
           <div className="dropdown-container">
             <div className="dropdown-mods">
               <label htmlFor="">Sugar Level</label>
@@ -165,10 +166,10 @@ function Customer() {
   return (
     <div>
       <nav className="header">
-        <div className="weather-container">
-          <Weather />
+        <div className="weather-container"></div>
+        <div className="sharetea_header">
+          <img src={headerImage} alt="ShareTea" />
         </div>
-        <div className="sharetea_header">ShareTea</div>
         <ul className="links">
           <li onClick={toggleCart}>
             View Cart{" "}
@@ -177,7 +178,7 @@ function Customer() {
             )}
           </li>
           <li>
-            <Link to="/logout">Log Out</Link>
+            <Link to="/logout">Home</Link>
           </li>
         </ul>
       </nav>
