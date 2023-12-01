@@ -5,17 +5,16 @@ import axios from 'axios';
 
 function generateProducts() {
     const [products, setProducts] = useState([]);
-
-
     useEffect(() => {
         axios
             .get("http://localhost:5000/api/products")
             .then((response) => {
-                const newItem = {
-                    name: response.data.name,
-                    price: response.data.price,
-                    ingredients: response.data.ingredients
-                };
+                // const newItem = {
+                //     name: response.data.name,
+                //     price: response.data.price,
+                //     ingredients: response.data.ingredients
+                // };
+                // setProducts(response.data)
                 prodArray.push(newItem)
             })
             .catch((error) => console.error("Error fetching products", error));

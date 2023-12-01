@@ -10,17 +10,32 @@ import './CashierLanding.css'
 export const CashierLanding = () => {
 
     return (
-        <div className="cashier_landing">
-            <Router>
-                <Header />
-                <Routes>
-                    <Route path="/" element={<Header />} />
-                    <Route path="/placeorder" element={<Cashier />} />
-                    <Route path="/vieworder" element={<ViewOrders />} />
-                </Routes>
-            </Router>
+        <div>
+            <Header/>
         </div>
-
+        // <Router>
+        // //     <Header />
+        // //     <Routes>
+        // //         {/* <Route path="/" element={<Header />} /> */}
+        // //         <Route index element={<Header />}></Route>
+        // //         <Route path="/CashierLanding/placeorder" element={<Cashier />} />
+        // //         <Route path="/CashierLanding/vieworder" element={<ViewOrders />} />
+        // //         <Route path="/home" element={<Home />} />
+        // //     </Routes>
+        // // </Router> 
     )
 
 }
+
+export default CashierLanding
+
+{/* <Router>
+{/* <Header /> */}
+// {/* <Routes>
+//     {/* <Route path="/" element={<Header />} /> */}
+//     <Route index element = {<Header />}></Route>
+//     <Route path="/CashierLanding/placeorder" element={<Cashier />} />
+//     <Route path="/CashierLanding/vieworder" element={<ViewOrders />} />
+//     <Route path="/home" element={<Home />} />
+// </Routes>
+// </Router> */} */}
