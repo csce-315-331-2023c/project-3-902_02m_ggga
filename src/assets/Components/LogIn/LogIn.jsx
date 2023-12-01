@@ -13,6 +13,9 @@ const CLIENT_SECRET = "a24ff8ff78fb3910d162c62667d21c0a336526f5";
 function LogIn()  {
     const [rerender, setRerender] = useState(false);
     const [userData, setUserData] = useState({});
+    //const [isManager, setManager] = useState(false);
+    //const [isEmployee, setEmployee] = useState(true);
+    const [userPrivleges, setPrivleges] = useState([]);
     useEffect(() => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -47,38 +50,31 @@ function LogIn()  {
     return window.location.assign("https://github.com/login/oauth/authorize?client_id="+ CLIENT_ID);
     }
 
-    function checkEmployee(gitId) {
-        fetch ("http://localhost:5000/getUserData?gitid="+gitId, {
-            method: "GET",
-        }).then((response) => {
-            return response.json();
-        }).then((data) => {
-            // Assuming the data received is an array of objects with a 'manager' field
-            if (data.length > 0) {
-                console.log('This user is an employee.');
-                return true;
-                // Perform actions for a manager user
-            } else {
-                console.log('This user is not an employee.');
-                // Perform actions for a non-manager user
-            }
-            console.log(data)
-            return false;
-        })
+    async function checkPrivleges(gitId) {
+        try {
+            checkManager(gitId);
+        }
+        catch(error) {
+            console.log("Not employee");
+            setEmployee(false);
+        }
     }
 
-    function checkPrivleges(gitId) {
-        fetch ("http://localhost:5000/getUserData?gitid="+gitId, {
+    async function checkManager(internalUser) {
+        fetch ("http://localhost:5000/employees?gitid="+ internalUser.id, {
             method: "GET",
         }).then((response) => {
+            setPrivleges("Not current employee. Please log out or contact your supervisor");
             return response.json();
         }).then((data) => {
-            // Assuming the data received is an array of objects with a 'manager' field
-            if (data.length > 0 && data[0].manager === true) {
+            console.log("git id" + internalUser.id);
+            console.log(data.manager);
+            if (data.manager === true) {
+                setPrivleges(<><body>Welcome {internalUser.name}!</body><button>Manager</button><Link to='/CashierLanding'><button>Cashier</button></Link></>)
                 console.log('This user is a manager.');
-                return true;
                 // Perform actions for a manager user
             } else {
+                setPrivleges(<><body>Welcome {internalUser.name}!</body><Link to='/CashierLanding'><button>Cashier</button></Link></>)
                 console.log('This user is not a manager.');
                 // Perform actions for a non-manager user
             }
@@ -98,8 +94,10 @@ function LogIn()  {
             console.log("user data:" + data);
             console.log(data);
             setUserData(data);
+            checkManager(data)
         })
     }
+
     return (
         <div className='LogIn'>
             <div className='home_header'>
@@ -107,32 +105,19 @@ function LogIn()  {
             </div>
                 <div className='body'>
                     {localStorage.getItem("accessToken") ?
-                        <body>
+                        <><body>
                             {Object.keys(userData).length !== 0 ?
                             <>  
-                                {checkEmployee(userData.id) ?
-                                <>
-                                    <body>Welcome {userData.name}!</body>
-                                    {checkPrivleges(userData.id) ?
-                                        <button>Manager</button>
-                                        :
-                                        <></>
-                                    }
-                                    <Link to='/CashierLanding'><button>Cashier</button></Link>
-                                </>
-                                    :
-                                    <body>
-                                        You are not a member of the staff here.
-                                    </body>
-                                }
+                                {userPrivleges}
                             </>
                             :
                             <>
                                 <body>An error occured while logging in. please retry logging in and if that doesnt work contact an employee</body>
                             </>}
-                            <button onClick={() => {localStorage.clear("accessToken"); setRerender(!rerender);}}>log out</button>
 
                         </body>
+                        <button onClick={() => {localStorage.clear("accessToken"); setRerender(!rerender);}}>log out</button>
+                        </>
                     :
                         <button onClick={loginWithGithub}>
                         Login with Github

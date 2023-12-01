@@ -83,13 +83,15 @@ app.get('/getUserData', async function (req, res) {
   await fetch("https://api.github.com/user", {
       method: "GET",
       headers: {
+          clientID: CLIENT_ID,
+          clientSecret: CLIENT_SECRET,
           "Authorization" : req.get("Authorization")
       }
-  }).then((response) => {
+  }).then((response) => { 
       return response.json();
   }).then((data) => {
       console.log("user data: ");
-      console.log(data)
+      console.log(data);
       res.json(data);
   })
 });
@@ -98,7 +100,12 @@ app.get('/getUserData', async function (req, res) {
 app.get('/employees', async function (req, res) {
   const gitidValue = req.query.gitid;
   const query = 'SELECT manager FROM employees WHERE gitid = $1';
-  const result = await pool.query(query, [gitidValue]);
-  res.json(result.rows);
-  console.log(result)
+  const result = await pool.query(query, [gitidValue]).then((response) => {
+    return response.rows;
+  }).then((data) => {
+    console.log("employee verify: ");
+    console.log(data[0]);
+    res.json(data[0]);
+  });
+
 });
