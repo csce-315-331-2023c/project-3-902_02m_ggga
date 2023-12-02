@@ -232,13 +232,15 @@ function Customer() {
     if (boba == 2) {
       mods.push("Extra Boba");
     } else if (
-      product.name.toLowerCase().includes("pearls") ||
-      (product.name.toLowerCase().includes("pearl") && boba == 0)
+      (product.name.toLowerCase().includes("pearls") ||
+        product.name.toLowerCase().includes("pearl")) &&
+      boba == 0
     ) {
       mods.push("No Boba");
     } else if (
-      !product.name.toLowerCase().includes("pearls") ||
-      (!product.name.toLowerCase().includes("pearl") && boba == 1)
+      (!product.name.toLowerCase().includes("pearls") ||
+        !product.name.toLowerCase().includes("pearl")) &&
+      boba == 1
     ) {
       mods.push("Boba");
     }

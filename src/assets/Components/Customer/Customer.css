@@ -126,7 +126,7 @@
 .product-button {
   width: 300px;
   height: 300px;
-  background-color: rgb(194, 207, 212);
+  background-color: rgb(233, 233, 233);
   align-items: center;
   justify-content: center;
   color: white;
@@ -156,7 +156,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgb(163, 163, 163);
+  background-color: rgb(233, 233, 233);
   color: white;
   padding: 20px;
   border-radius: 10px;
