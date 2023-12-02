@@ -98,8 +98,8 @@
 .cart-buttons {
   padding: 10px;
   background-color: #fff;
-  color: #000; 
-  border: 2px solid #000; 
+  color: #000;
+  border: 2px solid #000;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
@@ -126,12 +126,13 @@
 .product-button {
   width: 300px;
   height: 300px;
-  background-color: rgb(171, 204, 175);
+  background-color: rgb(194, 207, 212);
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 16px;
   border: none;
+  color: #000;
 }
 
 .product-button:hover {
@@ -155,12 +156,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #ca6363;
+  background-color: rgb(163, 163, 163);
   color: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  color: #000;
 }
 
 .product-overlay {
@@ -204,7 +206,7 @@
 }
 
 .dropdown-container {
-  padding: 1.5rem;
+  padding: 0 1.5rem 1.5rem;
 }
 
 .dropdown-mods {
@@ -233,21 +235,35 @@
   margin: auto;
 }
 
+.quantity-button-container {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  bottom: 0;
+  width: 40%;
+  margin: auto;
+}
+
+.quantity {
+  font-size: 24px;
+}
+
 .modal-buttons {
   padding: 0.5rem;
-  background-color: white; 
+  background-color: white;
   color: black;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease; 
+  transition: background-color 0.3s ease;
 }
 
 .b1:hover {
-  background-color: rgb(240, 72, 72); 
+  background-color: rgb(240, 72, 72);
 }
 
 .b2:hover {
-  background-color: #45a049; 
+  background-color: #45a049;
 }
 
 /*order success window*/

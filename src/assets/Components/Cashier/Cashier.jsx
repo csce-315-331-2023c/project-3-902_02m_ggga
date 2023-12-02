@@ -24,7 +24,7 @@ function populateButtons(handleClick) {
 
     useEffect(() => {
       axios
-        .get("https://mocktea.onrender.com/products")
+        .get("http://localhost:5000/api/products")
         .then((response) => setProducts(response.data))
         .catch((error) => console.error("Error fetching products", error));
     }, []);
@@ -50,6 +50,7 @@ export const Cashier = () => {
   const [selectedButton, setSelectedButton] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(0.0);
+  const [name, setName] = useState("empty");
   const [selectedLabels, setSelectedLabels] = useState([]);
   const [cart, setCart] = useState([]);
   const [currentProd, setCurrentProd] = useState({
@@ -58,41 +59,54 @@ export const Cashier = () => {
     price: 0.0,
     ingredients: [],
   });
+  const [orderPrice, setOrderPrice] = useState(0.0);
   const [totalPrice, setTotalPrice] = useState(0.0);
+  const ingredients = [];
+  const [maxOrderId, setMaxOrderId] = useState(null);
 
   const handleLabelChange = (label) => {
     if (label === "clearAll") {
       // Clear all selected labels
       setSelectedLabels([]);
+      setSelectedButton("");
       setCart([]);
+      setOrderPrice(0.0);
       setTotalPrice(0.0);
+      setPrice(0.0);
       setQuantity(1);
+      setCurrentProd({
+        name: "empty",
+        quantity: 1,
+        price: 0.0,
+        ingredients: [],
+      });
     } else if (selectedLabels.includes(label)) {
       // If the item is selected, then we will remove it
-      setSelectedLabels(selectedLabels.filter((item) => item !== label));
-      setCurrentProd({
-        name: currentProd.name,
-        quantity: currentProd.quantity,
-        price: currentProd.price,
-        ingredients: currentProd.ingredients + selectedLabels,
-      });
+      setSelectedLabels(
+        selectedLabels.filter((selectedLabel) => selectedLabel !== label)
+      );
+      setQuantity(currentProd.qty);
+      setName(currentProd.name);
+      setPrice(currentProd.price);
+      // setSelectedLabels(selectedLabels.filter(item => item !== label));
+      // setCurrentProd({
+      //     name: name,
+      //     qty: quantity,
+      //     price: currentProd.price,
+      //     ingredients: [...currentProd.ingredients, ...selectedLabels]
+      // })
     } else {
       // If the item was not selected, then we will add it
       setSelectedLabels([...selectedLabels, label]);
-      setCurrentProd({
-        name: currentProd.name,
-        quantity: currentProd.quantity,
-        price: currentProd.price,
-        ingredients: currentProd.ingredients + selectedLabels,
-      });
+      // setCurrentProd({
+      //     name: currentProd.name,
+      //     qty: currentProd.quantity,
+      //     price: currentProd.price,
+      //     ingredients: [...currentProd.ingredients, ...selectedLabels]
+      // })
     }
 
-    setCurrentProd({
-      name: selectedButton,
-      qty: quantity,
-      price: price,
-      ingredients: selectedLabels,
-    });
+    // setCurrentProd({ name: selectedButton, qty: quantity, price: price, ingredients: selectedLabels });
   };
 
   const handleClear = () => {
@@ -105,19 +119,69 @@ export const Cashier = () => {
   };
 
   const handleCartChange = () => {
-    setCart([...cart, currentProd]);
-    setTotalPrice(Number(totalPrice) + Number(currentProd.price));
+    // setCurrentProd({
+    //     name: selectedButton,
+    //     qty: quantity,
+    //     price: totalPrice,
+    //     ingredients: selectedLabels
+    // })
+    const newProduct = {
+      name: `${selectedButton} (${selectedLabels.join(", ")} )`,
+      qty: quantity,
+      price: totalPrice,
+      ingredients: selectedLabels,
+    };
+    setCart([...cart, newProduct]);
+    //update the entire order price by adding the current drinks price to the old sum
+    console.log("updated cart with ", { newProduct });
+    setOrderPrice((Number(totalPrice) + Number(orderPrice)).toFixed(2));
     // setQuantity(1)
+  };
+  useEffect(() => {
+    axios
+      .get("https://mocktea.onrender.com/orderid")
+      .then((response) => setMaxOrderId(response.data))
+      .catch((error) => console.error("Error fetching max order ID", error));
+  }, []);
+  const placeOrder = async () => {
+    const orderData = {
+      orderID: maxOrderId + 1,
+      tip: 0,
+      price: orderPrice,
+      order_date: new Date().toLocaleDateString(),
+      order_time: new Date().toLocaleTimeString(),
+      items: [cart.map((item) => item.name).join(", ")],
+    };
+
+    try {
+      console.log(orderData);
+      const response = await axios.post(
+        "https://mocktea.onrender.com/neworder",
+        orderData,
+        { headers: { "Content-Type": "application/json" } }
+      );
+      console.log("Order placed successfully:", response.data);
+      setCart([]);
+      setOrderPrice(0);
+      handleLabelChange("clearAll");
+    } catch (error) {
+      console.error("Error placing order", error);
+    }
+    // cart current holds all the things in the cart
   };
 
   const handleQuantityChange = (e) => {
     // Update the quantity state with the input value
-    setQuantity(e.target.value);
+    // Update the quantity state with the input value
+    const newQuantity = parseInt(e.target.value, 10);
+    setQuantity(newQuantity);
+    const new_price = price * newQuantity;
+    setTotalPrice(new_price);
     setCurrentProd({
-      name: currentProd.name,
-      qty: e.target.value,
-      price: currentProd.price,
-      ingredients: currentProd.ingredients,
+      name: selectedButton,
+      qty: quantity,
+      price: totalPrice,
+      ingredients: selectedLabels,
     });
   };
 
@@ -126,12 +190,18 @@ export const Cashier = () => {
   const handleButtonClick = (buttonName, btn_price) => {
     setSelectedButton(buttonName);
     setPrice(btn_price);
-    setCurrentProd({
-      name: buttonName,
-      qty: quantity,
-      price: btn_price,
-      ingredients: selectedLabels,
-    });
+    setTotalPrice(btn_price * quantity);
+    // setQuantity(1);
+    // setCurrentProd({
+    //     name: buttonName,
+    //     qty: quantity,
+    //     price: price,
+    //     ingredients: selectedLabels
+    // })
+    // console.log(selectedButton)
+    // console.log(price)
+    // console.log(currentProd.qty)
+    // console.log(currentProd.ingredients)
   };
   const handleViewChange = (view) => {
     setCurrentView(view);
@@ -144,27 +214,34 @@ export const Cashier = () => {
   const bottom_labels = ["Extra Milk ", "Extra Sugar ", "Extra Boba "];
 
   // -------------populating buttons-----------------
-  const [products, setProducts] = useState([]);
+  const [products_from_db, setProducts] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get("https://mocktea.onrender.com/products")
       .then((response) => setProducts(response.data))
-      .catch((error) => console.error("Error fetching products", error));
+      .catch((error) =>
+        console.error("Error fetching products in cashier", error)
+      );
   }, []);
 
+  products_from_db.map((product) =>
+    ingredients.push({ name: product.name, ingredients: product.ingredients })
+  );
+
+  // console.log(ingredients);
+
   return (
-    <div>
-      <div className="header">
-        <Header />
-      </div>
-      {currentView === "placeOrders" && <PlaceOrders />};
-      {currentView === "viewOrders" && <ViewOrders />};
+    <div className="page_container">
+      {/* <div className='header'>
+                <Header />
+            </div> */}
       <div className="placeorders_page">
+        {/* <p>hello test</p> */}
         <div className="place_left_side">
           <h1 className="menu-title">Menu Items</h1>
           <div className="grid-container">
-            {prodArray.map((product) => (
+            {products_from_db.map((product) => (
               <button
                 key={product.name}
                 className="grid-button"
@@ -178,16 +255,22 @@ export const Cashier = () => {
             ))}
           </div>
         </div>
-        <div className="place_right_side">
+        <div id="place_right_side">
           <div className="order_mods">
             <div>
-              <label className="quant_label">Quantity</label>
-              <input type="number" onChange={handleQuantityChange} />
+              <label className="quant_label">
+                Quantity
+                <input
+                  type="number"
+                  id="quantityInput"
+                  onChange={handleQuantityChange}
+                />
+              </label>
+
               <p>Quantity: {quantity} </p>
             </div>
-            <div>
+            <div className="checkbox_container">
               <label className="mod_label">Modifications</label>
-              {/* forms made using boostrap */}
               <Form className="horizontal_checks">
                 {top_labels.map((label, index) => (
                   <div key={index} className="mb-3">
@@ -220,12 +303,19 @@ export const Cashier = () => {
             </div>
           </div>
           <div className="selectedAttributes">
-            <h1>Selected Item: {currentProd.name} </h1>
-            <h1>Price: {currentProd.price}</h1>
+            <div className="row_box">
+              <h1>Selected Item: {selectedButton} </h1>
+              <h1>Price per Item: {price}</h1>
+            </div>
+            <div className="row_box">
+              <h1>Total price: {totalPrice.toFixed(2)}</h1>
+              <h1>Ingredients: {selectedLabels} </h1>
+            </div>
+            <h1 id="quantity_header">Quantity: {quantity} </h1>
             <h1>Cart:</h1>
             <ul>
-              {cart.map((item) => (
-                <li key={item.id}>
+              {cart.map((item, index) => (
+                <li key={index}>
                   <p>Name: {item.name}</p>
                   <p>Price: {item.price}</p>
                   <p>Quantity: {item.qty}</p>
@@ -234,11 +324,11 @@ export const Cashier = () => {
             </ul>
           </div>
           <DenseTable data={cart} />
-          <h1>Total Price: {totalPrice} </h1>
+          <h1 id="order_price_header">Order Price: {orderPrice} </h1>
           <div className="order_placing_btns">
             <button onClick={() => handleCartChange()}> Add to Cart</button>
             <button onClick={() => handleLabelChange("clearAll")}>Clear</button>
-            <button>Place Orders</button>
+            <button onClick={() => placeOrder()}>Place Orders</button>
           </div>
         </div>
       </div>
@@ -258,9 +348,9 @@ function DenseTable({ data }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => (
+          {data.map((row, index) => (
             <TableRow
-              key={row.name}
+              key={index}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">

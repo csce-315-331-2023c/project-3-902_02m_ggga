@@ -10,6 +10,37 @@ import { Link } from "react-router-dom";
 Modal.setAppElement("#root");
 
 const ProductModal = ({ isOpen, onClose, addToCart, product }) => {
+  const [quantity, setQuantity] = useState(1);
+  const [sugarLevel, setSugarLevel] = useState("1"); // Default to "Normal"
+  const [milk, setMilk] = useState(
+    product.name.toLowerCase().includes("milk") ? "1" : "0"
+  );
+  const [boba, setBoba] = useState(
+    product.name.toLowerCase().includes("pearls") ||
+      product.name.toLowerCase().includes("pearl")
+      ? "1"
+      : "0"
+  );
+
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity, sugarLevel, milk, boba);
+    onClose();
+    setQuantity(1);
+    setSugarLevel("1"); // Reset sugar level to default
+    setMilk("1"); // Reset milk to default
+    setBoba("0"); // Reset boba to default
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -23,12 +54,24 @@ const ProductModal = ({ isOpen, onClose, addToCart, product }) => {
           <img src={product.image_url || tea} alt={product.name} />
         </div>
         <div className="modal-container-right">
-          <h2 style={{ padding: "1rem" }}>{product.name}</h2>
+          <h2
+            style={{
+              margin: "1rem 1rem 0",
+              paddingBottom: "1rem",
+              borderBottom: "black 1px solid",
+            }}
+          >
+            {product.name}
+          </h2>
           <p className="modal-price">Price: ${product.price}</p>
           <div className="dropdown-container">
             <div className="dropdown-mods">
               <label htmlFor="">Sugar Level</label>
-              <select name="sugar" className="select-menu">
+              <select
+                name="sugar"
+                className="select-menu"
+                onChange={(e) => setSugarLevel(e.target.value)}
+              >
                 <option value="1">Normal</option>
                 <option value="2">Extra Sugar</option>
                 <option value="0">No Sugar</option>
@@ -36,29 +79,65 @@ const ProductModal = ({ isOpen, onClose, addToCart, product }) => {
             </div>
             <div className="dropdown-mods">
               <label htmlFor="">Milk</label>
-              <select name="milk" className="select-menu">
-                <option value="1">Normal</option>
-                <option value="2">Extra Milk</option>
-                <option value="0">No Milk</option>
+              <select
+                name="milk"
+                className="select-menu"
+                onChange={(e) => setMilk(e.target.value)}
+              >
+                {product.name.toLowerCase().includes("milk") ? (
+                  <>
+                    <option value="1">Normal</option>
+                    <option value="2">Extra Milk</option>
+                    <option value="0">No Milk</option>
+                  </>
+                ) : (
+                  <>
+                    <option value="0">No Milk</option>
+                    <option value="1">Milk</option>
+                    <option value="2">Extra Milk</option>
+                  </>
+                )}
               </select>
             </div>
             <div className="dropdown-mods">
               <label htmlFor="">Boba</label>
-              <select name="boba" className="select-menu">
-                <option value="0">No Boba</option>
-                <option value="1">Boba</option>
-                <option value="2">Extra Boba</option>
+              <select
+                name="boba"
+                className="select-menu"
+                onChange={(e) => setBoba(e.target.value)}
+              >
+                {product.name.toLowerCase().includes("pearls") ? (
+                  <>
+                    <option value="1">Boba</option>
+                    <option value="2">Extra Boba</option>
+                  </>
+                ) : (
+                  <>
+                    <option value="0">No Boba</option>
+                    <option value="1">Boba</option>
+                    <option value="2">Extra Boba</option>
+                  </>
+                )}
               </select>
+            </div>
+            <div className="dropdown-mods">
+              <label htmlFor="">Quantity</label>
+              <div className="quantity-button-container">
+                <button onClick={decreaseQuantity} className="modal-buttons b1">
+                  -
+                </button>
+                <span className="quantity">{quantity}</span>
+                <button onClick={increaseQuantity} className="modal-buttons b2">
+                  +
+                </button>
+              </div>
             </div>
           </div>
           <div className="modal-button-container">
             <button onClick={onClose} className="modal-buttons b1">
               Close
             </button>
-            <button
-              onClick={() => addToCart(product)}
-              className="modal-buttons b2"
-            >
+            <button onClick={handleAddToCart} className="modal-buttons b2">
               Add to Cart
             </button>
           </div>
@@ -76,6 +155,17 @@ function Customer() {
   const [maxOrderId, setMaxOrderId] = useState(null);
   const [isOrderSuccessOpen, setIsOrderSuccessOpen] = useState(false);
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+  const [quantity, setQuantity] = useState(1);
+
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
 
   useEffect(() => {
     axios
@@ -124,17 +214,58 @@ function Customer() {
     setSelectedProduct(null);
   };
 
-  const addToCart = (product) => {
-    setCart([
-      ...cart,
-      {
-        name: product.name,
+  const addToCart = (product, quantity, sugarLevel, milk, boba) => {
+    let mods = [];
+    if (sugarLevel == 2) {
+      mods.push("Extra Sugar");
+    }
+    if (sugarLevel == 0) {
+      mods.push("No Sugar");
+    }
+    if (milk == 2) {
+      mods.push("Extra Milk");
+    } else if (product.name.toLowerCase().includes("milk") && milk == 0) {
+      mods.push("No Milk");
+    } else if (!product.name.toLowerCase().includes("milk") && milk == 1) {
+      mods.push("Milk");
+    }
+    if (boba == 2) {
+      mods.push("Extra Boba");
+    } else if (
+      product.name.toLowerCase().includes("pearls") ||
+      (product.name.toLowerCase().includes("pearl") && boba == 0)
+    ) {
+      mods.push("No Boba");
+    } else if (
+      !product.name.toLowerCase().includes("pearls") ||
+      (!product.name.toLowerCase().includes("pearl") && boba == 1)
+    ) {
+      mods.push("Boba");
+    }
+    if (quantity > 1) {
+      const itemsToAdd = Array.from({ length: quantity }, (_, index) => ({
+        name: `${product.name} ${mods.length == 0 ? "" : "(" + mods + ")"}`,
         price: product.price,
         ingredients: product.ingredients,
         quantity: 1,
-      },
-    ]);
+      }));
+
+      setCart([...cart, ...itemsToAdd]);
+      setQuantity(1);
+    } else {
+      setCart([
+        ...cart,
+        {
+          name: `${product.name} ${mods.length == 0 ? "" : "(" + mods + ")"}`,
+          price: product.price,
+          ingredients: product.ingredients,
+          quantity: quantity,
+        },
+      ]);
+    }
+
     closeModal();
+    setQuantity(1);
   };
 
   const clearCart = () => {
@@ -143,6 +274,27 @@ function Customer() {
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
+  };
+
+  const getGroupedCartItems = () => {
+    const groupedItems = cart.reduce((result, item) => {
+      const existingItem = result.find(
+        (groupedItem) => groupedItem.name === item.name
+      );
+      if (existingItem) {
+        existingItem.quantity += item.quantity;
+        existingItem.totalPrice += item.price * item.quantity;
+      } else {
+        result.push({
+          name: item.name,
+          quantity: item.quantity,
+          totalPrice: item.price * item.quantity,
+        });
+      }
+      return result;
+    }, []);
+
+    return groupedItems;
   };
 
   const placeOrder = async () => {
@@ -190,9 +342,7 @@ function Customer() {
   return (
     <div>
       <nav className="header">
-        <div className="weather-container">
-          <Weather />
-        </div>
+        <div className="weather-container"></div>
         <div className="sharetea_header">
           <img src={headerImage} alt="ShareTea" />
         </div>
@@ -234,6 +384,9 @@ function Customer() {
               onClose={closeModal}
               product={selectedProduct}
               addToCart={addToCart}
+              quantity={quantity}
+              increaseQuantity={increaseQuantity}
+              decreaseQuantity={decreaseQuantity}
             />
           )}
         </div>
@@ -249,9 +402,10 @@ function Customer() {
           ) : (
             <div>
               <ul>
-                {cart.map((item, index) => (
+                {getGroupedCartItems().map((groupedItem, index) => (
                   <li key={index}>
-                    {item.name} - ${item.price}
+                    {groupedItem.quantity} {groupedItem.name} - $
+                    {groupedItem.totalPrice.toFixed(2)}
                   </li>
                 ))}
               </ul>
@@ -268,11 +422,11 @@ function Customer() {
           )}
           {cart.length > 0 && (
             <div className="cart-button-container">
-              <button className="cart-buttons b2" onClick={placeOrder}>
-                Place Order
-              </button>
               <button className="cart-buttons b1" onClick={clearCart}>
                 Clear Cart
+              </button>
+              <button className="cart-buttons b2" onClick={placeOrder}>
+                Place Order
               </button>
             </div>
           )}
@@ -308,4 +462,7 @@ FROM
   time
 FROM
   orders;
+
+
+  
  */
