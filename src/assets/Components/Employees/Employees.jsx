@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Employees.css'; // Assuming you have a CSS file for styling
-import Popup from './popup';
+import Popup from './../Popup/Popup';
 import { toUnitless } from '@mui/material/styles/cssUtils';
 import { Checkbox } from '@mui/material';
 export const Employees = () => {

@@ -6,10 +6,10 @@
     height: 100vh;
     flex-direction: column;
     padding-top: 35%;
+    width: 82%;
+    position: relative;
+    left: 17%;
+    padding-top: 77%;
   }
   
 
-.centered-container-menu button{
-  
-  width: 25%;
-}

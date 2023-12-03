@@ -1,8 +1,14 @@
 /* In your CSS file */
-.centered-container {
+.centered-container-data {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    flex-direction: column;
   }
   
+
+.chart{
+  height: 50%;
+  width: 50%;
+}
