@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/Switch';
 import { Link } from "react-router-dom"
 import { NavLink, Outlet } from 'react-router-dom'
-// import headerImage from "./assets/ShareTea_Header.png";
+import headerImage from "./ShareTea_Header.png";
 import { Accessibility } from '../Accessibility/Accessibility'
 
 export const Header = () => {
@@ -18,7 +18,7 @@ export const Header = () => {
         // document.documentElement.style[styleName] = currentStyle ? "" : value;
         element.style[styleName] = chosenStyle ? "" : value;
     };
-    
+
     // const [currentView, setCurrentView] = useState("");
 
     // const handleViewChange = (view) => {
@@ -32,20 +32,20 @@ export const Header = () => {
         const leftSide = document.querySelector(".place_left_side");
         switch (option) {
             case "biggerText":
-                toggleStyle(modLabel,"font-size", "1.3rem");
+                toggleStyle(modLabel, "font-size", "1.3rem");
                 break;
             case "highContrast":
                 // toggleStyle("placeorders_page","backgroundColor", "#000");
                 // toggleStyle("placeorders_page", "color", "#fff");
-                toggleStyle(enlarge, "color", "#fff"); 
-                toggleStyle(enlarge, "background-color", "#000"); 
-                toggleStyle(leftSide, "background-color", "#000"); 
-                toggleStyle(leftSide, "color", "#000"); 
-                toggleStyle(checkbox, "color", "#fff"); 
-                toggleStyle(checkbox, "background-color", "#000"); 
-                toggleStyle(modLabel, "color", "#fff"); 
-                toggleStyle(modLabel, "background-color", "#000"); 
-                toggleStyle(menuTitle, "color", "#fff"); 
+                toggleStyle(enlarge, "color", "#fff");
+                toggleStyle(enlarge, "background-color", "#000");
+                toggleStyle(leftSide, "background-color", "#000");
+                toggleStyle(leftSide, "color", "#000");
+                toggleStyle(checkbox, "color", "#fff");
+                toggleStyle(checkbox, "background-color", "#000");
+                toggleStyle(modLabel, "color", "#fff");
+                toggleStyle(modLabel, "background-color", "#000");
+                toggleStyle(menuTitle, "color", "#fff");
                 break;
             case "legibleText":
                 toggleStyle(enlarge, "font-family", "Times New Roman, Times, serif");
@@ -66,8 +66,8 @@ export const Header = () => {
         <div>
             <header className='header_cashier'>
                 <div className='header_left'>
-                    <div className='sharetea_header'>
-                        ShareTea
+                    <div className="sharetea_header">
+                        <img src={headerImage} alt="ShareTea" />
                     </div>
                 </div>
                 <div className='header_right'>
