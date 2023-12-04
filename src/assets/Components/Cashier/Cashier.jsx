@@ -123,8 +123,9 @@ export const Cashier = () => {
         //     qty: quantity,
         //     price: totalPrice,
         //     ingredients: selectedLabels
-        // })
-        const newProduct = { name: `${selectedButton} (${selectedLabels.join(', ')} )`, qty: quantity, price: totalPrice, ingredients: selectedLabels };
+        // })]
+        // `${selectedButton} ${selectedLabels.length == 0 ? "" : "(" + selectedLabels + ")"}`
+        const newProduct = { name: `${selectedButton} ${selectedLabels.length == 0 ? "" : "(" + selectedLabels + ")"}`, qty: quantity, price: totalPrice, ingredients: selectedLabels };
         setCart([...cart, newProduct]);
         //update the entire order price by adding the current drinks price to the old sum
         console.log("updated cart with ", { newProduct });
