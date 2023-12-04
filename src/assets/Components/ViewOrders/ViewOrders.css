@@ -7,8 +7,13 @@
 
 /* .orders_table{
     font-size: 2rem;
-}
-
-.orders_table .table_labels {
-    font-size: 2rem;
 } */
+
+/* .orders_table .table_labels {
+    font-size: 2rem;
+}  */
+.orders_table .table_entry {
+    color: #000000;
+    background-color: #ffffff;
+    /* font-size: 2rem; */
+} 

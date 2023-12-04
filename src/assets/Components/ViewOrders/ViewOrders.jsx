@@ -37,7 +37,8 @@ export const ViewOrders = () => {
         const tableText = document.querySelectorAll(".orders_table .table_entry");
         const orderButtons = document.querySelector(".order_placing_btns");
         const pastOrders = document.querySelector(".past_orders");
-
+        // console.log(tableLabels); // Check if it's not null or undefined
+        // console.log(tableEntries); // Check if it's not null or undefined
         const rightSide = document.querySelector(".place_right_side");
         switch (option) {
             case "biggerText":
@@ -47,36 +48,33 @@ export const ViewOrders = () => {
                 // toggleStyle(rightSide, "font-size", "1.5rem");
                 tableLabels.forEach((label) => {
                     toggleStyle(label, "font-size", "1.5rem");
-                }); 
+                });
                 tableText.forEach((entry) => {
                     toggleStyle(entry, "font-size", "1.3rem");
-                }); 
+                });
                 break;
             case "highContrast":
-                // toggleStyle("placeorders_page","backgroundColor", "#000");
-                // toggleStyle("placeorders_page", "color", "#fff");
-                // toggleStyle(enlarge, "color", "#fff");
-                // toggleStyle(enlarge, "backgroundColor", "#000");
-                // toggleStyle(leftSide, "background-color", "#000");
-                // toggleStyle(leftSide, "color", "#fff");
-                // toggleStyle(rightSide, "color", "#fff");
-                // toggleStyle(rightSide, "background-color", "#000");
-                // toggleStyle(modLabel, "color", "#fff");
-                // toggleStyle(modLabel, "background-color", "#000");
-                // toggleStyle(menuTitle, "color", "#fff");
-                toggleStyle(table, "color", "#fff");
-                toggleStyle(tableLabels, "color", "#fff");
-                toggleStyle(table, "background-color", "#000");
                 toggleStyle(pastOrders, "color", "#fff");
                 toggleStyle(pastOrders, "background-color", "#000");
-                // toggleStyle(orderButtons, "background-color", "#000");
-                // toggleStyle(orderButtons, "color", "#fff");
 
+                tableLabels.forEach((label) => {
+                    toggleStyle(label, "color", "#fff");
+                    toggleStyle(label, "background-color", "#000");
+
+                });
+                tableText.forEach((entry) => {
+                    toggleStyle(entry, "color", "#fff");
+                    toggleStyle(entry, "background-color", "#000");
+                });
                 break;
             case "legibleText":
-                toggleStyle(rightSide, "font-family", "Times New Roman, Times, serif");
-                toggleStyle(leftSide, "font-family", "Times New Roman, Times, serif");
-                toggleStyle(modLabel, "font-family", "Times New Roman, Times, serif");
+                toggleStyle(pastOrders, "font-family", "Times New Roman, Times, serif");
+                tableLabels.forEach((label) => {
+                    toggleStyle(label, "font-family", "Times New Roman, Times, serif");
+                });
+                tableText.forEach((entry) => {
+                    toggleStyle(entry, "font-family", "Times New Roman, Times, serif");
+                });
                 break;
             default:
                 document.documentElement.style.fontSize = "";
