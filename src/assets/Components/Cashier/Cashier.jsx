@@ -59,7 +59,7 @@ export const Cashier = () => {
     const [currentProd, setCurrentProd] = useState({ name: "", qty: 1, price: 0.0, ingredients: [] });
     const [orderPrice, setOrderPrice] = useState(0.0);
     const [totalPrice, setTotalPrice] = useState(0.0);
-    const ingredients = [];
+    const ingredients_array = [];
     const [maxOrderId, setMaxOrderId] = useState(null);
 
 
@@ -137,11 +137,14 @@ export const Cashier = () => {
         if (quantity > 0) {
             // Iterate based on the quantity
             for (let i = 0; i < quantity; i++) {
+                const product = ingredients_array.find(product => product.name === selectedButton);
+                const current_ingredients = product.ingredients;
+                console.log(current_ingredients);
                 const newProduct = {
                     name: `${selectedButton}${selectedLabels.length === 0 ? "" : "(" + selectedLabels + ")"}`,
                     qty: 1, // Set quantity to 1 for each iteration
                     price: price, //using unit price
-                    ingredients: selectedLabels
+                    ingredients: current_ingredients
                 };
 
                 // Add the product to the cart
@@ -149,13 +152,14 @@ export const Cashier = () => {
 
                 // Update the order price by adding the current drink's price to the old sum
                 setOrderPrice((Number(totalPrice) + Number(orderPrice)).toFixed(2));
+                console.log("Updated cart with", { newProduct });
+
             }
 
             // Reset the quantity to 1
             setQuantity(1);
 
             // Log information about the updated cart
-            console.log("Updated cart with", { newProduct });
         }
     };
 
@@ -169,6 +173,8 @@ export const Cashier = () => {
             .then((response) => setMaxOrderId(response.data))
             .catch((error) => console.error("Error fetching max order ID", error));
     }, []);
+
+
     const placeOrder = async () => {
 
         const orderData = {
@@ -181,18 +187,53 @@ export const Cashier = () => {
         };
 
         try {
-            console.log(orderData);
-            const response = await axios.post(
+            for (let i = 0; i < cart.length; i++) {
+                const product = cart[i];
+                const curr_ing_array = product.ingredients.split(",");
+                curr_ing_array.forEach(async (ingredient) => {
+                    let quantityQuery = 1;
+                    if (
+                        (product.name.toLowerCase().includes("extra boba") && ingredient == 1) || (product.name.toLowerCase().includes("extra boba") && ingredient == 7)
+                    ) {
+                        quantityQuery = 2;
+                    }
+                    if (
+                        (product.name.toLowerCase().includes("extra sugar") && ingredient == 10)
+                    ) {
+                        quantityQuery = 2;
+                    }
+                    if (
+                        (product.name.toLowerCase().includes("extra milk") && ingredient == 20)
+                    ) {
+                        quantityQuery = 2;
+                    }
+                    try {
+                        await axios.post("https://mocktea.onrender.com/neworderinventory",
+                            { quan: quantityQuery, id: ingredient },
+                            {
+                                headers: { "Content-Type": "application/json" },
+                            });
+                        console.log("ingredients posted to the db: ", ingredient);
+                    }
+                    catch (error) {
+                        console.error("error processing ingredient", error);
+                    }
+
+                });
+            }
+            // console.log(orderData);
+            await axios.post(
                 "https://mocktea.onrender.com/neworder",
                 orderData,
                 { headers: { "Content-Type": "application/json" } }
             );
-            console.log("Order placed successfully:", response.data);
+            console.log("Order placed successfully:");
             setCart([]);
             setOrderPrice(0);
             handleLabelChange("clearAll");
 
-        } catch (error) {
+        }
+        catch (error) {
             console.error("Error placing order", error);
         }
         // cart current holds all the things in the cart
@@ -218,17 +259,6 @@ export const Cashier = () => {
         setSelectedButton(buttonName);
         setPrice(btn_price);
         setTotalPrice(btn_price * quantity);
-        // setQuantity(1);
-        // setCurrentProd({
-        //     name: buttonName,
-        //     qty: quantity,
-        //     price: price,
-        //     ingredients: selectedLabels
-        // })
-        // console.log(selectedButton)
-        // console.log(price)
-        // console.log(currentProd.qty)
-        // console.log(currentProd.ingredients)
     }
     const handleViewChange = (view) => {
         setCurrentView(view);
@@ -253,16 +283,93 @@ export const Cashier = () => {
 
 
     products_from_db.map((product) => (
-        ingredients.push({ name: product.name, ingredients: product.ingredients })
+        ingredients_array.push({ name: product.name, ingredients: product.ingredients })
     ))
 
-    // console.log(ingredients);
+
+    const toggleStyle = (element, styleName, value) => {
+        // const currentStyle = document.style[styleName];
+        const chosenStyle = element.style[styleName];
+        // document.body.style[styleName] = currentStyle ? "" : value;
+        // document.documentElement.style[styleName] = currentStyle ? "" : value;
+        element.style[styleName] = chosenStyle ? "" : value;
+    };
+
+    // const [currentView, setCurrentView] = useState("");
+
+    // const handleViewChange = (view) => {
+    //     setCurrentView(view);
+    // }
+    const handleAccessibilityOption = (option) => {
+        const enlarge = document.querySelector(".selectedAttributes");
+        const checkbox = document.querySelector(".checkbox_container");
+        const modLabel = document.querySelector(".order_mods");
+        const quant = document.querySelector(".quant_label");
+        const menuTitle = document.querySelector(".menu-title");
+        const leftSide = document.querySelector(".place_left_side");
+        const table = document.querySelector(".orders_table");
+        const tableLabels = document.querySelectorAll(".table .table_label");
+        const tableText = document.querySelectorAll(".table .table_entry");
+        const orderButtons = document.querySelector(".order_placing_btns");
+        const pastOrders = document.querySelector(".past_orders");
+        // console.log(tableLabels); // Check if it's not null or undefined
+        // console.log(tableEntries); // Check if it's not null or undefined
+        const rightSide = document.querySelector(".place_right_side");
+        switch (option) {
+            case "biggerText":
+                // toggleStyle(modLabel, "font-size", "1.3rem");
+                // toggleStyle(pastOrders, "font-size", "2rem");
+                toggleStyle(leftSide, "font-size", "1.3rem");
+                toggleStyle(rightSide, "font-size", "1.5rem");
+                toggleStyle(quant, "font-size", "1.5rem");
+                tableLabels.forEach((label) => {
+                    toggleStyle(label, "font-size", "1.5rem");
+                });
+                tableText.forEach((entry) => {
+                    toggleStyle(entry, "font-size", "1.3rem");
+                });
+                break;
+            case "highContrast":
+                toggleStyle(leftSide, "background-color", "#000");
+                toggleStyle(leftSide, "color", "#fff");
+                toggleStyle(rightSide, "color", "#fff");
+                toggleStyle(rightSide, "background-color", "#000");
+                toggleStyle(menuTitle, "color", "#fff");
+                tableLabels.forEach((label) => {
+                    toggleStyle(label, "color", "#fff");
+                    toggleStyle(label, "background-color", "#000");
+
+                });
+                tableText.forEach((entry) => {
+                    toggleStyle(entry, "color", "#fff");
+                    toggleStyle(entry, "background-color", "#000");
+                });
+                break;
+            case "legibleText":
+                toggleStyle(leftSide, "font-family", "Times New Roman, Times, serif");
+                toggleStyle(rightSide, "font-family", "Times New Roman, Times, serif");
+                tableLabels.forEach((label) => {
+                    toggleStyle(label, "font-family", "Times New Roman, Times, serif");
+                });
+                tableText.forEach((entry) => {
+                    toggleStyle(entry, "font-family", "Times New Roman, Times, serif");
+                });
+                break;
+            default:
+                document.documentElement.style.fontSize = "";
+                document.documentElement.style.backgroundColor = "";
+                document.documentElement.style.color = "";
+                document.documentElement.style.cursor = "";
+        }
+    };
+    // console.log(ingredients_array);
+
+
 
     return (
         <div className='page_container' >
-            {/* <div className='header'>
-                <Header></Header>
-            </div> */}
+            <div><Accessibility onOptionClick={handleAccessibilityOption} /></div>
+
             <div className='placeorders_page'>
                 {/* <p>hello test</p> */}
                 <div className='place_left_side'>
@@ -284,7 +391,7 @@ export const Cashier = () => {
                 </div>
                 <div className='place_right_side'>
                     <div className='order_mods'>
-                        <div>
+                        <div className='quantity_label'>
                             <label className='quant_label'>
                                 Quantity:
                                 <input
@@ -351,6 +458,7 @@ export const Cashier = () => {
                                     <p>Name: {item.name} ({quantity})</p>
                                     <p>Price: {item.price}</p>
                                     <p>Quantity: {item.qty}</p>
+                                    <p>Ingredients: {item.ingredients}</p>
                                 </li>
                             ))}
                         </ul>
@@ -370,7 +478,7 @@ export const Cashier = () => {
 function DenseTable({ data }) {
     return (
         <TableContainer component={Paper}>
-            <Table className='table' sx={{ minWidth: 630 }} size="" aria-label="a dense table">
+            <Table className='table' sx={{ minWidth: 630 }} size="medium" aria-label="a dense table">
                 <TableHead>
                     <TableRow>
                         <TableCell className='table_label'>Product</TableCell>
