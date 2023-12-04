@@ -31,19 +31,22 @@ export const Header = () => {
         const menuTitle = document.querySelector(".menu-title");
         switch (option) {
             case "biggerText":
-                toggleStyle(modLabel,"font-size", "1.3rem");
+                toggleStyle(modLabel,"font-size", "1.5rem");
+                // toggleStyle(enlarge,"font-size", "1.3rem");
                 break;
             case "highContrast":
                 // toggleStyle("placeorders_page","backgroundColor", "#000");
                 // toggleStyle("placeorders_page", "color", "#fff");
                 toggleStyle(enlarge, "color", "#fff"); 
-                toggleStyle(enlarge, "backgroundColor", "#000"); 
+                toggleStyle(enlarge, "background-color", "#000"); 
                 toggleStyle(checkbox, "color", "#fff"); 
+                toggleStyle(checkbox, "backgrond-color", "#000"); 
                 toggleStyle(modLabel, "color", "#fff"); 
                 toggleStyle(menuTitle, "color", "#fff"); 
                 break;
             case "legibleText":
                 toggleStyle(enlarge, "font-family", "Times New Roman, Times, serif");
+                toggleStyle(modLabel, "font-family", "Times New Roman, Times, serif");
                 break;
             default:
                 document.documentElement.style.fontSize = "";
