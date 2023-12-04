@@ -15,6 +15,8 @@
     top: 100px;
     right: 0px;
     z-index: 1200;
+    color: #fff;
+    background-color: #502929;
   }
   
   .accessibility-option {
