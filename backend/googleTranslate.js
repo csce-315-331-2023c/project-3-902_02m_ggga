@@ -13,7 +13,7 @@ const translate = new Translate({
     credentials: CREDENTIALS,
     projectId: CREDENTIALS.project_id
 });
-
+//agg
 export const detectLanguage = async (text) => {
 
     try {
