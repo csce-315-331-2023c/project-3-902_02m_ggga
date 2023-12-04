@@ -29,6 +29,7 @@ export const Home = () => {
                     <div className='button-container'>
                         <button className='home_buttons'>Log In</button>
                         <button className='home_buttons' >Start Ordering</button>
+                        {/* <button className='home_buttons' >Start Ordering</button> */}
                     </div>
                 </div>
             </div>

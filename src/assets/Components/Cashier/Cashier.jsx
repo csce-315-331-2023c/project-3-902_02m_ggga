@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import './Cashier.css'
+// import './Cashier.css'
+import './AccessibleCashier.css'
 import axios from "axios";
 import { prodArray } from '../productArray';
 import Table from '@mui/material/Table';
@@ -227,7 +228,7 @@ export const Cashier = () => {
     return (
         <div className='page_container' >
             {/* <div className='header'>
-                <Header />
+                <Header></Header>
             </div> */}
             <div className='placeorders_page'>
                 {/* <p>hello test</p> */}
@@ -248,11 +249,11 @@ export const Cashier = () => {
                         ))}
                     </div>
                 </div>
-                <div id='place_right_side'>
+                <div className='place_right_side'>
                     <div className='order_mods'>
                         <div>
                             <label className='quant_label'>
-                                Quantity
+                                Quantity:
                                 <input
                                     type="number"
                                     id="quantityInput"
@@ -263,7 +264,7 @@ export const Cashier = () => {
                             <p>Quantity: {quantity} </p>
                         </div>
                         <div className='checkbox_container'>
-                            <label className='mod_label'>Modifications</label>
+                            <label className='mod_label'>Modifications: </label>
                             <Form className='horizontal_checks'>
                                 {top_labels.map((label, index) => (
                                     <div key={index} className="mb-3">
@@ -292,20 +293,24 @@ export const Cashier = () => {
                                     </div>
                                 ))}
                             </Form>
-                            <p>Mods: {selectedLabels} </p>
-
                         </div>
+
                     </div>
                     <div className='selectedAttributes'>
-                        <div className='row_box'>
-                            <h1>Selected Item: {selectedButton} </h1>
-                            <h1>Price per Item: {price}</h1>
+                        <div className='acc_div'>
+                            <div className='row_box'>
+                                <h1>Selected Item: {selectedButton} </h1>
+                                <h1>Price per Item: {price}</h1>
+                            </div>
+                            <div className='row_box'>
+                                <h1>Total price: {totalPrice.toFixed(2)}</h1>
+                                <h1>Ingredients: {selectedLabels} </h1>
+                            </div>
+                            <div className='row_box'>
+                                <h1>Quantity: {quantity} </h1>
+                                <h1>Mods:{selectedLabels}</h1>
+                            </div>
                         </div>
-                        <div className='row_box'>
-                            <h1>Total price: {totalPrice.toFixed(2)}</h1>
-                            <h1>Ingredients: {selectedLabels} </h1>
-                        </div>
-                        <h1 id='quantity_header'>Quantity: {quantity} </h1>
                         <h1>Cart:</h1>
                         <ul>
                             {cart.map((item, index) => (

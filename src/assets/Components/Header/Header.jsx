@@ -3,7 +3,7 @@ import './Header.css'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import NavDropdown from 'react-bootstrap/Switch';
 import { Link } from "react-router-dom"
 import { NavLink, Outlet } from 'react-router-dom'
 
@@ -28,11 +28,14 @@ export const Header = () => {
                     </div>
                 </div>
                 <div className='header_right'>
-                    <button className='header_button' onClick={toggleAcc}>change Accessibility</button>
                     <ul className='links'>
-                        <li><NavLink to="/CashierLanding/vieworder">View Orders</NavLink></li>
-                        <li><NavLink to='/CashierLanding/placeorder'>Place Orders</NavLink></li>
-                        <li><NavLink to='/home'>Log Out</NavLink></li>
+                        <div className="form-switch">
+                            <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" />
+                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault" id='switchLabel'>Accessible View</label>
+                        </div>
+                        <li><Link to="/CashierLanding/vieworder">View Orders</Link></li>
+                        <li><Link to='/CashierLanding/placeorder'>Place Orders</Link></li>
+                        <li><Link to='/home'>Log Out</Link></li>
                     </ul>
                 </div>
 
@@ -42,19 +45,6 @@ export const Header = () => {
                 <Outlet />
             </div>
         </div>
-        // <nav className='header_cashier'>
-        //     <div className='sharetea_header'>
-        //         ShareTea
-        //     </div>
-        //     <ul className='links'>
-        //         <li><NavLink to ="/CashierLanding/vieworder">View Orders</NavLink></li>
-        //         <li><NavLink to = '/CashierLanding/placeorder'>Place Orders</NavLink></li>
-        //         {/* <li onClick={() => handleViewChange('viewOrders')}> View Orders</li>
-        //         <li onClick={() => handleViewChange('placeOrders')}>Place Orders</li> */}
-        //         <li><NavLink to = '/home'>Log Out</NavLink></li>
-        //     </ul>
-        //     <Outlet/>
-        // </nav>
     )
 
 }

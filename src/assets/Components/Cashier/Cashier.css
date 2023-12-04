@@ -16,7 +16,7 @@
 /*----------------END OF HEADER*-----------------------*/
 .placeorders_page {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: flex-start;
     /* Align items at the start of the cross-axis */
     margin-left: 10px;
@@ -38,15 +38,16 @@
     /* Center-align its contents horizontally */
     color: #000000;
     /* margin-top: 60px; */
-    padding: 20px;
+    /* padding: 20px; */
+    padding-top: 20px;
     flex: 1;
     /* Add padding as needed */
-
 }
 
-.place_right_side h1 {
-    font-size: 1.2rem;
-}
+/* .place_right_side h1 {
+    color: rgb(255, 255, 255);
+    font-size: .2rem;
+} */
 
 .grid-container {
     display: grid;
@@ -139,8 +140,11 @@
 }
 
 .row_box {
-    display: flex;
-    justify-content: space-between;
+    display: inline-block;
+    justify-content: space-around;
+}
+.row_box h1 {
+    margin-right: 100px; /* Adjust the margin as needed for spacing between headers */
 }
 
 #quantity_header{

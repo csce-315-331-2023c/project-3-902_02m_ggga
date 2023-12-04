@@ -12,8 +12,14 @@ import { Customer } from './assets/Components/Customer/Customer';
 import { CashierLanding as CashierLanding } from './assets/Components/CashierLanding/CashierLanding'
 
 function App() {
+
+
   // const [count, setCount] = useState(0)
+
+  const [isAccessible, setAccessible] = useState(false);
+
   return (
+    
 
     // <CashierLanding/>  
     // <Cashier/>
@@ -23,15 +29,15 @@ function App() {
 
     <div className="App">
       <Router>
-        {/* <Navbar /> */}
+        <Navbar />
         <Routes>
-          <Route index element={<Home />}></Route>
+          {/* <Route index element={<Home />}></Route> */}
           <Route path="/home" element={<Home />} />
           <Route path="/LogIn" element={<LogIn />}>
             <Route path="home" element={<Home />}></Route>
           </Route>
           <Route path="/Customer" element={<Customer />} />
-          <Route path="/CashierLanding/" element={<Header />}>
+          <Route path="/CashierLanding" element={<Header />}>
             {/* child routes of cashierlanding */}
             <Route path="vieworder" element={<ViewOrders />}></Route>
             <Route path="placeorder" element={<Cashier />}></Route>
