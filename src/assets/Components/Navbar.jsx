@@ -14,6 +14,7 @@ export const Navbar = () => {
                 </div>
                 <ul className='links'>
                     <li>Menu</li>
+                    <li>Language</li>
                     {/*<li><Link to = '/menu'>Menu</Link></li>*/}
                     <li> <Link to='/Customer'>Start Order</Link></li>
                     <li ><Link to="https://github.com/login/oauth/authorize?client_id=c1e2a3c233d9b16112ee" >Employee</Link></li>

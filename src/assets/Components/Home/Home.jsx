@@ -15,13 +15,24 @@ export const Home = () => {
     // const toggleLogin = () => {
     //     setLoginVisible(!loginVisible);
     // };
-
     return (
         <div>
             <div className='home_header'>
                 <Navbar />
             </div>
             <div className='body'>
+            <div id="google_translate_element"></div>
+            <p>translate this site into your prefered language</p>
+            <script type="text/javascript">
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement(
+                    {pageLanguage: 'en'},
+                    'google_translate_element'
+                    )};
+            </script>
+            <script type="text/javascript"
+                src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+            </script>
                 <div className='container'>
                     <div className='big_logo'>
                         <h1>WELCOME TO SHARE TEA</h1>

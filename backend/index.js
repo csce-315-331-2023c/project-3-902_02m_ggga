@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3001
-
+const {Translate} = require('@google-cloud/translate').v2;
 const order_model = require('./model')
 
 app.use(express.json())

@@ -13,8 +13,6 @@ const CLIENT_SECRET = "a24ff8ff78fb3910d162c62667d21c0a336526f5";
 function LogIn()  {
     const [rerender, setRerender] = useState(false);
     const [userData, setUserData] = useState({});
-    //const [isManager, setManager] = useState(false);
-    //const [isEmployee, setEmployee] = useState(true);
     const [userPrivleges, setPrivleges] = useState([]);
     useEffect(() => {
         const queryString = window.location.search;
@@ -30,13 +28,18 @@ function LogIn()  {
                 }).then((response) => {
                     return response.json();
                 }).then((data) => {
-                    console.log("access token: " + data.access_token);
                     if(data.access_token) {
+                        console.log("access token: " + data.access_token);
                         localStorage.setItem("accessToken", data.access_token);
                         //setRerender(!rerender);
                     }
+                    else {
+                        console.log("error getting acces TOken");
+                    }
                 }).then(() => {
-                    getUserData();
+                    if(localStorage.getItem("accessToken" !== undefined)) {
+                        getUserData();
+                    }
                     setRerender(!rerender);
                 })
             }
@@ -50,16 +53,6 @@ function LogIn()  {
     return window.location.assign("https://github.com/login/oauth/authorize?client_id="+ CLIENT_ID);
     }
 
-    async function checkPrivleges(gitId) {
-        try {
-            checkManager(gitId);
-        }
-        catch(error) {
-            console.log("Not employee");
-            setEmployee(false);
-        }
-    }
-
     async function checkManager(internalUser) {
         fetch ("http://localhost:5000/employees?gitid="+ internalUser.id, {
             method: "GET",
@@ -70,11 +63,11 @@ function LogIn()  {
             console.log("git id" + internalUser.id);
             console.log(data.manager);
             if (data.manager === true) {
-                setPrivleges(<><body>Welcome {internalUser.name}!</body><button>Manager</button><Link to='/CashierLanding'><button>Cashier</button></Link></>)
+                setPrivleges(<div><body>Welcome {internalUser.name}!</body><button>Manager</button><Link to='/CashierLanding'><button>Cashier</button></Link></div>)
                 console.log('This user is a manager.');
                 // Perform actions for a manager user
             } else {
-                setPrivleges(<><body>Welcome {internalUser.name}!</body><Link to='/CashierLanding'><button>Cashier</button></Link></>)
+                setPrivleges(<div><body>Welcome {internalUser.name}!</body><Link to='/CashierLanding'><button>Cashier</button></Link></div>)
                 console.log('This user is not a manager.');
                 // Perform actions for a non-manager user
             }
@@ -105,7 +98,7 @@ function LogIn()  {
             </div>
                 <div className='body'>
                     {localStorage.getItem("accessToken") ?
-                        <><body>
+                        <div>
                             {Object.keys(userData).length !== 0 ?
                             <>  
                                 {userPrivleges}
@@ -115,9 +108,8 @@ function LogIn()  {
                                 <body>An error occured while logging in. please retry logging in and if that doesnt work contact an employee</body>
                             </>}
 
-                        </body>
                         <button onClick={() => {localStorage.clear("accessToken"); setRerender(!rerender);}}>log out</button>
-                        </>
+                        </div>
                     :
                         <button onClick={loginWithGithub}>
                         Login with Github
