@@ -6,8 +6,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/Switch';
 import { Link } from "react-router-dom"
 import { NavLink, Outlet } from 'react-router-dom'
+// import headerImage from "./assets/ShareTea_Header.png";
 import { Accessibility } from '../Accessibility/Accessibility'
-
 
 export const Header = () => {
 
