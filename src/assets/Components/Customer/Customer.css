@@ -1,4 +1,3 @@
-/* Style the header to go across the entire top of the page */
 .header {
   width: 100%;
   background-color: #333;
@@ -8,14 +7,26 @@
   align-items: center;
   position: fixed;
   z-index: 1;
+  height: 5rem;
+}
+
+.weather-container {
+  margin: 0 10px;
 }
 
 .sharetea_header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  font-size: 3rem;
-  margin-left: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-left: 0;
+}
+
+.sharetea_header img {
+  width: 60%;
 }
 
 .links {
@@ -23,13 +34,16 @@
   display: flex;
   gap: 10px;
   margin-right: 10px;
+  margin-bottom: 0;
+  padding-left: 0;
+  position: relative;
 }
 
 .links li {
   color: #fff;
   cursor: pointer;
   font-size: 1.6rem;
-  margin: 0 1rem;
+  padding: 0 1rem;
 }
 
 .links li:hover {
@@ -37,6 +51,62 @@
 }
 
 /*header end*/
+
+/*dropdown cart*/
+
+.cart-dropdown {
+  position: fixed;
+  top: 70px;
+  right: 160px;
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  z-index: 999;
+  max-height: 500px;
+  overflow-y: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.cart-dropdown h3 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.cart-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: black;
+  text-align: right;
+}
+
+.cart-dropdown li {
+  margin-bottom: 5px;
+}
+
+.price-total {
+  text-align: right;
+  border-top: #000 1px solid;
+}
+
+.cart-button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.cart-buttons {
+  padding: 10px;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+/*body of site*/
 
 .body {
   padding: 6rem;
@@ -48,17 +118,21 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  top: 0;
+  position: absolute;
+  padding: 8rem 4rem;
 }
 
 .product-button {
   width: 300px;
   height: 300px;
-  background-color: grey;
+  background-color: rgb(233, 233, 233);
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 16px;
   border: none;
+  color: #000;
 }
 
 .product-button:hover {
@@ -82,12 +156,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #333; /* Dark background color */
+  background-color: rgb(233, 233, 233);
   color: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  color: #000;
 }
 
 .product-overlay {
@@ -109,6 +184,8 @@
 
 .modal-container-left {
   width: 50%;
+  display: flex;
+  align-items: center;
 }
 
 .modal-container-left img {
@@ -123,8 +200,13 @@
   justify-content: center;
 }
 
+.modal-price {
+  font-size: 24px;
+  margin-bottom: 0;
+}
+
 .dropdown-container {
-  padding: 1.5rem;
+  padding: 0 1.5rem 1.5rem;
 }
 
 .dropdown-mods {
@@ -153,19 +235,69 @@
   margin: auto;
 }
 
+.quantity-button-container {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  bottom: 0;
+  width: 40%;
+  margin: auto;
+}
+
+.quantity {
+  font-size: 24px;
+}
+
 .modal-buttons {
   padding: 0.5rem;
-  background-color: white; /* Green background color */
+  background-color: white;
   color: black;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Smooth transition for background color */
+  transition: background-color 0.3s ease;
 }
 
 .b1:hover {
-  background-color: rgb(240, 72, 72); /* Darker green on hover */
+  background-color: rgb(240, 72, 72);
 }
 
 .b2:hover {
-  background-color: #45a049; /* Darker green on hover */
+  background-color: #45a049;
+}
+
+/*order success window*/
+.order-success-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.order-success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.close-button {
+  background-color: #f00;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.close-button:hover {
+  background-color: #d00;
 }

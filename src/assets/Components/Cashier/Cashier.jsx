@@ -302,13 +302,19 @@ export const Cashier = () => {
         <div className="place_right_side">
           <div className="order_mods">
             <div>
-              <label className="quant_label">Quantity</label>
-              <input type="number" onChange={handleQuantityChange} />
+              <label className="quant_label">
+                Quantity
+                <input
+                  type="number"
+                  id="quantityInput"
+                  onChange={handleQuantityChange}
+                />
+              </label>
+
               <p>Quantity: {quantity} </p>
             </div>
-            <div>
+            <div className="checkbox_container">
               <label className="mod_label">Modifications</label>
-              {/* forms made using boostrap */}
               <Form className="horizontal_checks">
                 {top_labels.map((label, index) => (
                   <div key={index} className="mb-3">
@@ -341,12 +347,19 @@ export const Cashier = () => {
             </div>
           </div>
           <div className="selectedAttributes">
-            <h1>Selected Item: {currentProd.name} </h1>
-            <h1>Price: {currentProd.price}</h1>
+            <div className="row_box">
+              <h1>Selected Item: {selectedButton} </h1>
+              <h1>Price per Item: {price}</h1>
+            </div>
+            <div className="row_box">
+              <h1>Total price: {totalPrice.toFixed(2)}</h1>
+              <h1>Ingredients: {selectedLabels} </h1>
+            </div>
+            <h1 id="quantity_header">Quantity: {quantity} </h1>
             <h1>Cart:</h1>
             <ul>
-              {cart.map((item) => (
-                <li key={item.id}>
+              {cart.map((item, index) => (
+                <li key={index}>
                   <p>Name: {item.name}</p>
                   <p>Price: {item.price}</p>
                   <p>Quantity: {item.qty}</p>
@@ -355,11 +368,11 @@ export const Cashier = () => {
             </ul>
           </div>
           <DenseTable data={cart} />
-          <h1>Total Price: {totalPrice} </h1>
+          <h1 id="order_price_header">Order Price: {orderPrice} </h1>
           <div className="order_placing_btns">
             <button onClick={() => handleCartChange()}> Add to Cart</button>
             <button onClick={() => handleLabelChange("clearAll")}>Clear</button>
-            <button>Place Orders</button>
+            <button onClick={() => placeOrder()}>Place Orders</button>
           </div>
         </div>
       </div>
