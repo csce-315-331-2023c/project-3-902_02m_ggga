@@ -29,6 +29,7 @@ export const Header = () => {
         const checkbox = document.querySelector(".checkbox_container");
         const modLabel = document.querySelector(".order_mods");
         const menuTitle = document.querySelector(".menu-title");
+        const leftSide = document.querySelector(".place_left_side");
         switch (option) {
             case "biggerText":
                 toggleStyle(modLabel,"font-size", "1.3rem");
@@ -37,9 +38,13 @@ export const Header = () => {
                 // toggleStyle("placeorders_page","backgroundColor", "#000");
                 // toggleStyle("placeorders_page", "color", "#fff");
                 toggleStyle(enlarge, "color", "#fff"); 
-                toggleStyle(enlarge, "backgroundColor", "#000"); 
+                toggleStyle(enlarge, "background-color", "#000"); 
+                toggleStyle(leftSide, "background-color", "#000"); 
+                toggleStyle(leftSide, "color", "#000"); 
                 toggleStyle(checkbox, "color", "#fff"); 
+                toggleStyle(checkbox, "background-color", "#000"); 
                 toggleStyle(modLabel, "color", "#fff"); 
+                toggleStyle(modLabel, "background-color", "#000"); 
                 toggleStyle(menuTitle, "color", "#fff"); 
                 break;
             case "legibleText":
