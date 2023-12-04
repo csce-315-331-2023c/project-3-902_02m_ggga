@@ -3,12 +3,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     flex-direction: column;
+    position: relative;
+    left: 8%;
+    
   }
   
 
 .chart{
-  height: 50%;
+  height: auto;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+}
+
+.buttons{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
   width: 50%;
+  flex-direction: row;
 }

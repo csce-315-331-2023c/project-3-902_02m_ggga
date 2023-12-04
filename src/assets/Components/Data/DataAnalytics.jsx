@@ -28,13 +28,14 @@ ChartJS.register(
 
 export const DataAnalytics = () => {
 
-
+  const [productName, setProductName] = useState('');
   const [salesData, setSalesData] = useState([]);
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/sales-data")
       .then((response) => {
         setSalesData(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("Error fetching sales data", error);
@@ -43,7 +44,7 @@ export const DataAnalytics = () => {
 
 
   const lineChartData = {
-    labels: salesData.map(data => data.day.substring(0, 10)), // Just the date, not the time
+    labels: salesData.map(data => new Date(data.day).toLocaleDateString()), // Assuming 'day' is in a date-compatible format
     datasets: [
       {
         label: 'Total Sales',
@@ -56,16 +57,52 @@ export const DataAnalytics = () => {
   };
 
 
+  const fetchTotalSalesData = () => {
+    axios.get("http://localhost:5000/api/sales-data")
+      .then((response) => {
+        setSalesData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching total sales data", error);
+      });
+  };
+
+
+
+  const fetchProductSalesData = () => {
+    axios.get(`http://localhost:5000/api/product-sales-data?productName=${productName}`)
+      .then((response) => {
+        setSalesData(response.data);
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.error("Error fetching product sales data", error);
+      });
+  };
+
+  useEffect(() => {
+    fetchTotalSalesData();
+  }, []);
+
 
   return (
+  
     <div className="centered-container-data">
-        <h1>Data Analytics</h1>
+      <h1>Data Analytics</h1>
 
-        <div className='chart'>
-          <Line data={lineChartData} />
-        </div>
+      <input 
+        type="text" 
+        value={productName} 
+        onChange={(e) => setProductName(e.target.value)} 
+        placeholder="Enter product name"
+      />
+      <button onClick={fetchProductSalesData}>Show Sales Data for Product</button>
 
-
+      <div className='chart'>
+        <Line data={lineChartData} options={{ responsive: true }} />
+        
+      </div>
     </div>
-  )
+    )
+  
 }

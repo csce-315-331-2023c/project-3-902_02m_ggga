@@ -154,6 +154,8 @@ app.delete("/api/products/:id", async (req, res) => {
   }
 });
 
+
+
 app.get("/api/sales-data", async (req, res) => {
   try {
     const result = await pool.query(`
@@ -168,6 +170,24 @@ app.get("/api/sales-data", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+app.get("/api/product-sales-data", async (req, res) => {
+  const productName = req.query.productName;
+  try {
+    const result = await pool.query(`
+      SELECT date_trunc('day', order_date) AS day, COUNT(*) AS number_of_sales
+      FROM orders
+      WHERE items @> $1::text[] -- Assuming items is a text array and contains the product names
+      GROUP BY day
+      ORDER BY day;
+    `, [`{"${productName}"}`]); // This binds the productName as an array element for the query
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching sales data for product", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 
 
