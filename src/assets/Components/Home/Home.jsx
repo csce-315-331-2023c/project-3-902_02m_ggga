@@ -26,7 +26,6 @@ export const Home = () => {
         );
         document.body.appendChild(addScript);
         window.googleTranslateElementInit = googleTranslateElementInit;
-        setTranslateCount(translateCount + 1);
             // Cleanup function to remove the added script when component unmounts
         return () => {
         document.body.removeChild(addScript);
