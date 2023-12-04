@@ -371,7 +371,7 @@ export const Cashier = () => {
 function DenseTable({ data }) {
     return (
         <TableContainer component={Paper}>
-            <Table className='table' sx={{ minWidth: 630 }} size="" aria-label="a dense table">
+            <Table className='table' sx={{ minWidth: 630 }} size="medium" aria-label="a dense table">
                 <TableHead>
                     <TableRow>
                         <TableCell className='table_label'>Product</TableCell>

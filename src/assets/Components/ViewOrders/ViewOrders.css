@@ -1,4 +1,14 @@
 .past_orders {
     text-align: center;
     padding-top: 20px;
+    color: black;
+    background-color: #fff;
 }
+
+/* .orders_table{
+    font-size: 2rem;
+}
+
+.orders_table .table_labels {
+    font-size: 2rem;
+} */
