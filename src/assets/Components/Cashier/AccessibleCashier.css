@@ -13,7 +13,6 @@
 .place_left_side {
     width: 100%;
     order: 2;
-    margin: 0 10px;
 }
 
 .place_right_side {
@@ -25,6 +24,8 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .menu-title {
@@ -52,6 +53,7 @@
     flex-direction: column;
     align-items: center;
     font-size: x-large;
+    color: #fff;
 }
 
 /* Style for the right side */
@@ -67,6 +69,7 @@
     justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
+
 }
 
 .order_placing_btns button {
@@ -137,4 +140,15 @@
 .row_box h1 {
     font-size: 2rem;
     /* Remove default margin on h1 elements */
+}
+
+/* --------------------table stuff ----------- */
+
+
+.table .table_label {
+    font-size: 1.4rem;
+}
+
+.table .table_entry {
+    font-size: 1.2rem;
 }

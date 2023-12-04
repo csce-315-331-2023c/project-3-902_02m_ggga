@@ -337,13 +337,13 @@ export const Cashier = () => {
 function DenseTable({ data }) {
     return (
         <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+            <Table className='table' sx={{ minWidth: 630 }} size="" aria-label="a dense table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Product</TableCell>
-                        <TableCell align="right">Quantity</TableCell>
-                        <TableCell align="right">Modifications</TableCell>
-                        <TableCell align="right">Price</TableCell>
+                        <TableCell className='table_label'>Product</TableCell>
+                        <TableCell className='table_label'>Quantity</TableCell>
+                        <TableCell className='table_label'>Modifications</TableCell>
+                        <TableCell className='table_label'>Price</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -352,12 +352,12 @@ function DenseTable({ data }) {
                             key={index}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <TableCell component="th" scope="row">
+                            <TableCell component="th" scope="row" className='table_entry'>
                                 {row.name}
                             </TableCell>
-                            <TableCell align="right">{row.qty}</TableCell>
-                            <TableCell align="right">{row.ingredients}</TableCell>
-                            <TableCell align="right">{row.price}</TableCell>
+                            <TableCell className='table_entry'>{row.qty}</TableCell>
+                            <TableCell className='table_entry'>{row.ingredients}</TableCell>
+                            <TableCell className='table_entry'>{row.price}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
