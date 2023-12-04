@@ -36,6 +36,18 @@ app.get("/api/employees", async (req, res) => {
   }
 });
 
+app.get("/pastorders/", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM orders ORDER BY id DESC LIMIT 40;"
+    );
+    res.json(result.rows);
+  } catch (error) { 
+    console.error("Error fetching past orders", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.post("/api/employees", async (req, res) => {
   try {
     const { name, hours_worked, salary, position, manager } = req.body;
@@ -48,6 +60,17 @@ app.post("/api/employees", async (req, res) => {
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error("Error adding new employee", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+app.get("/inventory/", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM inventory");
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching past orders", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -80,6 +103,17 @@ app.delete("/api/employees/:id", async (req, res) => {
   }
 });
 
+    
+app.get("/orderid/", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT MAX(id) FROM orders;");
+    res.json(result.rows[0].max);
+  } catch (error) {
+    console.error("Error fetching order id", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 app.post("/api/inventory", async (req, res) => {
   try {
@@ -93,6 +127,28 @@ app.post("/api/inventory", async (req, res) => {
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error("Error adding new inventory item", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }});
+  
+
+app.post("/neworder/", async (req, res) => {
+  const orderData = req.body;
+  try {
+    await pool.query(
+      "INSERT INTO orders (id, tip, price, order_date, order_time, items) VALUES ($1, $2, $3, $4, $5, $6)",
+      [
+        orderData.orderID,
+        orderData.tip,
+        orderData.price,
+        orderData.order_date,
+        orderData.order_time,
+        orderData.items,
+      ]
+    );
+
+    res.json({ success: true, message: "Order added successfully" });
+  } catch (error) {
+    console.error("Error adding order", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -111,6 +167,25 @@ app.delete("/api/inventory/:id", async (req, res) => {
     res.json({ message: "Item deleted successfully", deletedItem: result.rows[0] });
   } catch (error) {
     console.error("Error deleting item", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+
+app.post("/neworderinventory/", async (req, res) => {
+  const ingredientID = req.body.id;
+  const quantity = req.body.quan;
+  console.log("Received request to update inventory:", ingredientID);
+  try {
+    await pool.query(
+      "UPDATE inventory SET quantity = quantity - $1 WHERE id = $2",
+      [quantity, ingredientID]
+    );
+
+    res.json({ success: true, message: "Inventory updated successfully" });
+  } catch (error) {
+    console.error("Error updating inventory", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -194,4 +269,64 @@ app.get("/api/product-sales-data", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+});
+app.post("/placeorder/", async (req, res) => {
+res.send("hello this is a test")
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+//USED FOR LOGIN 
+app.get('/getAccessToken', async function (req, res) {
+  console.log(req.query.code);
+
+  const params = "?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code=" + req.query.code;
+  
+  await fetch("https://github.com/login/oauth/access_token" + params, {
+      method: "POST",
+      headers: {
+          "Accept": "application/json"
+      }
+  }).then((response) => {
+      return response.json();
+  }).then((data) => {
+      console.log("access token");
+      console.log(data)
+      res.json(data);
+  })
+});
+
+//getUserData
+app.get('/getUserData', async function (req, res) {
+  req.get("Authorization"); //access token
+  await fetch("https://api.github.com/user", {
+      method: "GET",
+      headers: {
+          clientID: CLIENT_ID,
+          clientSecret: CLIENT_SECRET,
+          "Authorization" : req.get("Authorization")
+      }
+  }).then((response) => { 
+      return response.json();
+  }).then((data) => {
+      console.log("user data: ");
+      console.log(data);
+      res.json(data);
+  })
+});
+
+
+app.get('/employees', async function (req, res) {
+  const gitidValue = req.query.gitid;
+  const query = 'SELECT manager FROM employees WHERE gitid = $1';
+  const result = await pool.query(query, [gitidValue]).then((response) => {
+    return response.rows;
+  }).then((data) => {
+    console.log("employee verify: ");
+    console.log(data[0]);
+    res.json(data[0]);
+  });
+
 });

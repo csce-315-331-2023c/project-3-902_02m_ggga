@@ -1,0 +1,73 @@
+.header_cashier {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #502929;
+    color: #ffffff;
+    padding: 10px 20px;
+    top: 0;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+    height: 80px;
+}
+
+.header_left {
+    display: flex;
+    align-items: center;
+    /* float: left; */
+}
+
+.header_right {
+    display: flex;
+    align-items: center;
+    /* margin-left: auto;
+    float: right; */
+}
+
+.sharetea_header {
+    color: white;
+    font-size: 4rem;
+    /* margin-left: 10px; */
+    font-weight: bold;
+}
+
+
+.header_right .links {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.links li a {
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1.6rem;
+    text-decoration: none;
+}
+
+.links li a:hover {
+    text-decoration: underline;
+}
+
+.outlet_content {
+    padding-top: 80px;
+}
+
+
+/* switch stuff */
+.links .form-switch {
+    display: flex;
+    align-items: center;
+}
+
+#flexSwitchCheckDefault {
+    /* Add any additional styling for the checkbox if needed */
+    width: 50px;
+}
+
+#switchLabel {
+    margin-left: 10px;
+    /* Adjust the margin as needed for spacing */
+    font-size: 1.6rem;
+}

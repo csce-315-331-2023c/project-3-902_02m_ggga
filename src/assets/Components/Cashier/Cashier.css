@@ -1,0 +1,161 @@
+/* --------------HEADER STUFF----------------- */
+/* * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Kumbh Sans', sans-serif;
+    scroll-behavior: smooth;
+} */
+
+/* .page_container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+} */
+
+/*----------------END OF HEADER*-----------------------*/
+.placeorders_page {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* Align items at the start of the cross-axis */
+    margin-left: 10px;
+    margin-right: 10px;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
+.place_left_side {
+    width: 60%;
+    flex: 2;
+}
+
+.place_right_side {
+    width: 40%;
+    /* Adjust the width as needed */
+    align-items: center;
+    /* Center-align its contents horizontally */
+    color: #000000;
+    /* margin-top: 60px; */
+    /* padding: 20px; */
+    padding-top: 20px;
+    flex: 1;
+    /* Add padding as needed */
+}
+
+/* .place_right_side h1 {
+    color: rgb(255, 255, 255);
+    font-size: .2rem;
+} */
+
+/* .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    justify-content: space-evenly;
+} */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns, each taking 1 fraction of the available space */
+    gap: 10px; /* Adjust the gap between buttons as needed */
+  }
+@media (min-width: 1000px) {
+
+    /* Adjust the media query breakpoint as needed */
+    .grid-container {
+        grid-template-columns: repeat(5, 1fr);
+        /* Ensure at least five buttons per row */
+    }
+}
+
+.grid-button {
+    background-color: #502929;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    padding: 20px;
+    /* Adjust padding for the button size */
+    height: 120px;
+}
+
+.grid-button:hover {
+    background-color: #994d4d;
+}
+
+.menu-title {
+    /* margin-top: 40px; */
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.place_right_side p1 {
+    color: #333;
+    font-size: larger;
+}
+
+.order_mods {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.quant_label {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#quantityInput {
+    width: 100px; /* Adjust the width as needed */
+    /* Add any additional styling as needed */
+  }
+
+.mod_label {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.order_placing_btns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.order_placing_btns button {
+    color: #ffffff;
+    background-color: #502929
+}
+
+.order_placing_btns button:hover {
+    background-color: #994d4d;
+    color: #fff;
+}
+
+.horizontal_checks {
+    display: flex;
+    gap: 20px;
+    /* Adjust the gap as needed */
+}
+
+.selectedAttributes h1{
+    font-size: large;
+    margin-left: 20px;
+    display: flex;
+}
+
+.row_box {
+    display: inline-block;
+    justify-content: space-around;
+}
+.row_box h1 {
+    margin-right: 100px; /* Adjust the margin as needed for spacing between headers */
+
+}
+
+#quantity_header{
+    font-size: large;
+}
+
+#order_price_header{
+    font-size: large;
+}
