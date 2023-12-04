@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Accessibility.css";
 
 export const Accessibility = ({ onOptionClick }) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
+
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
@@ -12,6 +13,7 @@ export const Accessibility = ({ onOptionClick }) => {
     toggleMenu();
     onOptionClick(option);
   };
+
 
   const accessibilityOptions = [
     { label: "Bigger Text", onClick: () => handleOptionClick("biggerText") },

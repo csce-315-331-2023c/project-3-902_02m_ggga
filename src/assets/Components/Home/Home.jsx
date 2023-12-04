@@ -8,6 +8,36 @@ import {Outlet, Link} from 'react-router-dom';
 
 
 export const Home = () => {
+    const [translateCount, setTranslateCount] = useState(0);
+    const googleTranslateElementInit = () => {
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            autoDisplay: false
+          },
+          "google_translate_element"
+        );
+      };
+    useEffect(() => {
+    if((!window.google || !window.google.translate) && translateCount === 0) {
+        var addScript = document.createElement("script");
+        addScript.setAttribute(
+            "src",
+            "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+        );
+        document.body.appendChild(addScript);
+        window.googleTranslateElementInit = googleTranslateElementInit;
+        setTranslateCount(translateCount + 1);
+            // Cleanup function to remove the added script when component unmounts
+        return () => {
+        setTranslateCount(translateCount- 1);
+        document.body.removeChild(addScript);
+        };
+    }
+    else {
+        googleTranslateElementInit();
+      }
+    }, []);
     // initially sets log in as false so not visible
     // const [loginVisible, setLoginVisible] = useState(false);
 
@@ -21,25 +51,16 @@ export const Home = () => {
                 <Navbar />
             </div>
             <div className='body'>
-            {/* <div id="google_translate_element"></div>
-            <p>translate this site into your prefered language</p>
-            <script type="text/javascript">
-                function googleTranslateElementInit() {
-                    new google.translate.TranslateElement(
-                    {pageLanguage: 'en'},
-                    'google_translate_element'
-                    )};
-            </script>
-            <script type="text/javascript"
-                src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-            </script> */}
                 <div className='container'>
-                    <div className='big_logo'>
+                    <div className='big_logo'>      
+                    
                         <h1>WELCOME TO SHARE TEA</h1>
                     </div>
                     <div className='button-container'>
                         <button className='home_buttons'>Log In</button>
                         <Link to='/Customer'><button className='home_buttons' >Start Ordering</button></Link>
+                        <br/>
+                        <div id="google_translate_element"></div>
                     </div>
                 </div>
             </div>
