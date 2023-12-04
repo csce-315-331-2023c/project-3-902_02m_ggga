@@ -49,13 +49,17 @@
     font-size: .2rem;
 } */
 
-.grid-container {
+/* .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
     justify-content: space-evenly;
-}
-
+} */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns, each taking 1 fraction of the available space */
+    gap: 10px; /* Adjust the gap between buttons as needed */
+  }
 @media (min-width: 1000px) {
 
     /* Adjust the media query breakpoint as needed */

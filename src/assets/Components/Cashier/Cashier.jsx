@@ -117,21 +117,53 @@ export const Cashier = () => {
         setCheckboxState(clearedCheckboxes);
     };
 
+    // const handleCartChange = () => {
+    //     // setCurrentProd({
+    //     //     name: selectedButton,
+    //     //     qty: quantity,
+    //     //     price: totalPrice,
+    //     //     ingredients: selectedLabels
+    //     // })]
+    //     // `${selectedButton} ${selectedLabels.length == 0 ? "" : "(" + selectedLabels + ")"}`
+    //     const newProduct = { name: `${selectedButton} ${selectedLabels.length == 0 ? "" : "(" + selectedLabels + ")"}`, qty: quantity, price: totalPrice, ingredients: selectedLabels };
+    //     setCart([...cart, newProduct]);
+    //     //update the entire order price by adding the current drinks price to the old sum
+    //     console.log("updated cart with ", { newProduct });
+    //     setOrderPrice((Number(totalPrice) + Number(orderPrice)).toFixed(2));
+    //     setQuantity(1)
+    // }
+
     const handleCartChange = () => {
-        // setCurrentProd({
-        //     name: selectedButton,
-        //     qty: quantity,
-        //     price: totalPrice,
-        //     ingredients: selectedLabels
-        // })]
-        // `${selectedButton} ${selectedLabels.length == 0 ? "" : "(" + selectedLabels + ")"}`
-        const newProduct = { name: `${selectedButton} ${selectedLabels.length == 0 ? "" : "(" + selectedLabels + ")"}`, qty: quantity, price: totalPrice, ingredients: selectedLabels };
-        setCart([...cart, newProduct]);
-        //update the entire order price by adding the current drinks price to the old sum
-        console.log("updated cart with ", { newProduct });
-        setOrderPrice((Number(totalPrice) + Number(orderPrice)).toFixed(2));
-        // setQuantity(1)
-    }
+        // Check if the quantity is greater than 0
+        if (quantity > 0) {
+            // Iterate based on the quantity
+            for (let i = 0; i < quantity; i++) {
+                const newProduct = {
+                    name: `${selectedButton}${selectedLabels.length === 0 ? "" : "(" + selectedLabels + ")"}`,
+                    qty: 1, // Set quantity to 1 for each iteration
+                    price: price, //using unit price
+                    ingredients: selectedLabels
+                };
+
+                // Add the product to the cart
+                setCart(prevCart => [...prevCart, newProduct]);
+
+                // Update the order price by adding the current drink's price to the old sum
+                setOrderPrice((Number(totalPrice) + Number(orderPrice)).toFixed(2));
+            }
+
+            // Reset the quantity to 1
+            setQuantity(1);
+
+            // Log information about the updated cart
+            console.log("Updated cart with", { newProduct });
+        }
+    };
+
+
+
+
+    // updating the maximum order ID
     useEffect(() => {
         axios
             .get("https://mocktea.onrender.com/orderid")
@@ -317,7 +349,7 @@ export const Cashier = () => {
                         <ul>
                             {cart.map((item, index) => (
                                 <li key={index}>
-                                    <p>Name: {item.name}</p>
+                                    <p>Name: {item.name} ({quantity})</p>
                                     <p>Price: {item.price}</p>
                                     <p>Quantity: {item.qty}</p>
                                 </li>
