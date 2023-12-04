@@ -10,7 +10,7 @@ const pool = new Pool({
   host: "csce-315-db.engr.tamu.edu",
   database: "csce315331_02m_db",
   password: "password123",
-  port: 5432,
+  port: 5000,
 });
 
 app.use(cors());

@@ -10,10 +10,11 @@ import { Navbar as Navbar } from './assets/Components/Navbar';
 import { Customer } from './assets/Components/Customer/Customer';
 import { CashierLanding as CashierLanding } from './assets/Components/CashierLanding/CashierLanding'
 import {NavbarM as Nav} from './assets/Components/Nav/NavbarM';
-import {DataAnalytics as Data} from './assets/Components/Data/DataAnalytics';
+import { DataAnalytics as DataAnalytics } from './assets/Components/Data/DataAnalytics';
 import { Inventory as Inventory } from './assets/Components/Inventory/Inventory';
-import {Menu as Menu } from './assets/Components/Menu/Menu';
-import {Employees as Employees} from './assets/Components/Employees/Employees';
+import { Employees as Employees } from './assets/Components/Employees/Employees';
+import { Menu as Menu } from './assets/Components/Menu/Menu';
+
 import { RadioGroup } from '@mui/material'
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
             <Route path="home" element={<Home />}></Route>
           </Route>
           <Route path="/Nav" element={<Nav />}>
-            <Route path="data" element={<Data />}></Route>
+            <Route path="data" element={<DataAnalytics />}></Route>
             <Route path="inventory" element={<Inventory/>}></Route>
             <Route path="menu" element={<Menu />}></Route>
             <Route path="employees" element={<Employees />}></Route>
