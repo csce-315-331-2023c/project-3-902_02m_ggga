@@ -14,7 +14,7 @@ export const ViewOrders = () => {
   const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:5001/api/pastorders")
+        axios.get("https://mocktea.onrender.com/pastorders/")
             .then((response) => setOrders(response.data))
             .catch((error) => console.error("Error getting past orders", error));
     }, []);

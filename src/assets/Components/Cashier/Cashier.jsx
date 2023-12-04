@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import "./Cashier.css";
+import { useState, useEffect } from 'react'
+import './Cashier.css'
+// import './AccessibleCashier.css'
 import axios from "axios";
 import { prodArray } from "../productArray";
 import Table from "@mui/material/Table";
@@ -10,13 +11,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 // import { NavBar } from "react-bootstrap"
-import "bootstrap/dist/css/bootstrap.min.css";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Form from "react-bootstrap/Form";
-import { Header } from "../Header/Header";
+import "bootstrap/dist/css/bootstrap.min.css"
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Form from 'react-bootstrap/Form';
+import { Header } from '../Header/Header';
+import { Accessibility } from '../Accessibility/Accessibility'
 
 function populateButtons(handleClick) {
     function populateButtons(handleClick) {
@@ -58,6 +60,8 @@ export const Cashier = () => {
     const [orderPrice, setOrderPrice] = useState(0.0);
     const [totalPrice, setTotalPrice] = useState(0.0);
     const ingredients = [];
+    const [maxOrderId, setMaxOrderId] = useState(null);
+
 
 
     const handleLabelChange = (label) => {
@@ -112,37 +116,88 @@ export const Cashier = () => {
         setCheckboxState(clearedCheckboxes);
     };
 
-    const handleCartChange = () => {
-        // setCurrentProd({
-        //     name: selectedButton,
-        //     qty: quantity,
-        //     price: totalPrice,
-        //     ingredients: selectedLabels
-        // })
-        const newProduct = { name: selectedButton, qty: quantity, price: totalPrice, ingredients: selectedLabels };
-        setCart([...cart, newProduct]);
-        //update the entire order price by adding the current drinks price to the old sum
-        console.log("updated cart with ", { newProduct });
-        setOrderPrice(Number(orderPrice) + totalPrice);
-        // setQuantity(1)
-    }
-    const id = 49;
-    const placeOrder = async () => {
-        try {
-            await axios.post('https://mocktea.onrender.com/placeorder/', {
-                id,
-                selectedButton,
-                quantity,
-                orderPrice,
-            });
-            console.log("order placed");
-            window.alert("order placed");
+    // const handleCartChange = () => {
+    //     // setCurrentProd({
+    //     //     name: selectedButton,
+    //     //     qty: quantity,
+    //     //     price: totalPrice,
+    //     //     ingredients: selectedLabels
+    //     // })]
+    //     // `${selectedButton} ${selectedLabels.length == 0 ? "" : "(" + selectedLabels + ")"}`
+    //     const newProduct = { name: `${selectedButton} ${selectedLabels.length == 0 ? "" : "(" + selectedLabels + ")"}`, qty: quantity, price: totalPrice, ingredients: selectedLabels };
+    //     setCart([...cart, newProduct]);
+    //     //update the entire order price by adding the current drinks price to the old sum
+    //     console.log("updated cart with ", { newProduct });
+    //     setOrderPrice((Number(totalPrice) + Number(orderPrice)).toFixed(2));
+    //     setQuantity(1)
+    // }
 
-        } catch (error) {
-            console.error('Error placing order in cashier', error);
-            // setOrderStatus('Error placing order. Please try again.');
+    const handleCartChange = () => {
+        // Check if the quantity is greater than 0
+        if (quantity > 0) {
+            // Iterate based on the quantity
+            for (let i = 0; i < quantity; i++) {
+                const newProduct = {
+                    name: `${selectedButton}${selectedLabels.length === 0 ? "" : "(" + selectedLabels + ")"}`,
+                    qty: 1, // Set quantity to 1 for each iteration
+                    price: price, //using unit price
+                    ingredients: selectedLabels
+                };
+
+                // Add the product to the cart
+                setCart(prevCart => [...prevCart, newProduct]);
+
+                // Update the order price by adding the current drink's price to the old sum
+                setOrderPrice((Number(totalPrice) + Number(orderPrice)).toFixed(2));
+            }
+
+            // Reset the quantity to 1
+            setQuantity(1);
+
+            // Log information about the updated cart
+            console.log("Updated cart with", { newProduct });
         }
     };
+
+
+
+
+    // updating the maximum order ID
+    useEffect(() => {
+        axios
+            .get("https://mocktea.onrender.com/orderid")
+            .then((response) => setMaxOrderId(response.data))
+            .catch((error) => console.error("Error fetching max order ID", error));
+    }, []);
+    const placeOrder = async () => {
+
+        const orderData = {
+            orderID: maxOrderId + 1,
+            tip: 0,
+            price: orderPrice,
+            order_date: new Date().toLocaleDateString(),
+            order_time: new Date().toLocaleTimeString(),
+            items: [cart.map((item) => item.name).join(', ')]
+        };
+
+        try {
+            console.log(orderData);
+            const response = await axios.post(
+                "https://mocktea.onrender.com/neworder",
+                orderData,
+                { headers: { "Content-Type": "application/json" } }
+            );
+            console.log("Order placed successfully:", response.data);
+            setCart([]);
+            setOrderPrice(0);
+            handleLabelChange("clearAll");
+
+        } catch (error) {
+            console.error("Error placing order", error);
+        }
+        // cart current holds all the things in the cart
+    };
+
 
     const handleQuantityChange = (e) => {
         // Update the quantity state with the input value
@@ -163,6 +218,7 @@ export const Cashier = () => {
         setSelectedButton(buttonName);
         setPrice(btn_price);
         setTotalPrice(btn_price * quantity);
+        // setQuantity(1);
         // setCurrentProd({
         //     name: buttonName,
         //     qty: quantity,
@@ -205,11 +261,10 @@ export const Cashier = () => {
     return (
         <div className='page_container' >
             {/* <div className='header'>
-                <Header />
+                <Header></Header>
             </div> */}
-            {currentView === 'placeOrders' && <PlaceOrders />};
-            {currentView === 'viewOrders' && <ViewOrders />};
             <div className='placeorders_page'>
+                {/* <p>hello test</p> */}
                 <div className='place_left_side'>
                     <h1 className='menu-title'>Menu Items</h1>
                     <div className='grid-container'>
@@ -230,17 +285,19 @@ export const Cashier = () => {
                 <div className='place_right_side'>
                     <div className='order_mods'>
                         <div>
-                            <label className='quant_label'>Quantity</label>
-                            <input
-                                type="number"
-                                onChange={handleQuantityChange}
-                            />
-                            <p>Quantity: {quantity} </p>
+                            <label className='quant_label'>
+                                Quantity:
+                                <input
+                                    type="number"
+                                    id="quantityInput"
+                                    onChange={handleQuantityChange}
+                                />
+                            </label>
 
+                            <p>Quantity: {quantity} </p>
                         </div>
                         <div className='checkbox_container'>
-                            <label className='mod_label'>Modifications</label>
-                            {/* forms made using boostrap */}
+                            <label className='mod_label'>Modifications: </label>
                             <Form className='horizontal_checks'>
                                 {top_labels.map((label, index) => (
                                     <div key={index} className="mb-3">
@@ -269,21 +326,29 @@ export const Cashier = () => {
                                     </div>
                                 ))}
                             </Form>
-                            <p>Mods: {selectedLabels} </p>
-
                         </div>
+
                     </div>
                     <div className='selectedAttributes'>
-                        <h1>Selected Item: {selectedButton} </h1>
-                        <h1>Price per Item: {price}</h1>
-                        <h1>Total price: {totalPrice}</h1>
-                        <h1>Ingredients: {selectedLabels} </h1>
-                        <h1>Quantity: {quantity} </h1>
+                        <div className='acc_div'>
+                            <div className='row_box'>
+                                <h1>Selected Item: {selectedButton} </h1>
+                                <h1>Price per Item: {price}</h1>
+                            </div>
+                            <div className='row_box'>
+                                <h1>Total price: {totalPrice.toFixed(2)}</h1>
+                                <h1>Ingredients: {selectedLabels} </h1>
+                            </div>
+                            <div className='row_box'>
+                                <h1>Quantity: {quantity} </h1>
+                                <h1>Mods:{selectedLabels}</h1>
+                            </div>
+                        </div>
                         <h1>Cart:</h1>
                         <ul>
                             {cart.map((item, index) => (
                                 <li key={index}>
-                                    <p>Name: {item.name}</p>
+                                    <p>Name: {item.name} ({quantity})</p>
                                     <p>Price: {item.price}</p>
                                     <p>Quantity: {item.qty}</p>
                                 </li>
@@ -291,117 +356,41 @@ export const Cashier = () => {
                         </ul>
                     </div>
                     <DenseTable data={cart} />
-                    <h1>Order Price: {orderPrice} </h1>
+                    <h1 id='order_price_header'>Order Price: {orderPrice} </h1>
                     <div className='order_placing_btns'>
                         <button onClick={() => handleCartChange()}> Add to Cart</button>
                         <button onClick={() => handleLabelChange("clearAll")}>Clear</button>
                         <button onClick={() => placeOrder()}>Place Orders</button>
                     </div>
                 </div>
-          </div>
-        <div className="place_right_side">
-          <div className="order_mods">
-            <div>
-              <label className="quant_label">
-                Quantity
-                <input
-                  type="number"
-                  id="quantityInput"
-                  onChange={handleQuantityChange}
-                />
-              </label>
-
-              <p>Quantity: {quantity} </p>
             </div>
-            <div className="checkbox_container">
-              <label className="mod_label">Modifications</label>
-              <Form className="horizontal_checks">
-                {top_labels.map((label, index) => (
-                  <div key={index} className="mb-3">
-                    <Form.Check
-                      inline
-                      label={label}
-                      name="group1"
-                      type="checkbox"
-                      checked={selectedLabels.includes(label)} // Ensure correct checked status
-                      onChange={() => handleLabelChange(label)}
-                    />
-                  </div>
-                ))}
-              </Form>
-              <Form className="horizontal_checks">
-                {bottom_labels.map((label, index) => (
-                  <div key={index} className="mb-3">
-                    <Form.Check
-                      inline
-                      label={label}
-                      name="group1"
-                      type="checkbox"
-                      checked={selectedLabels.includes(label)} // Ensure correct checked status
-                      onChange={() => handleLabelChange(label)}
-                    />
-                  </div>
-                ))}
-              </Form>
-              <p>Mods: {selectedLabels} </p>
-            </div>
-          </div>
-          <div className="selectedAttributes">
-            <div className="row_box">
-              <h1>Selected Item: {selectedButton} </h1>
-              <h1>Price per Item: {price}</h1>
-            </div>
-            <div className="row_box">
-              <h1>Total price: {totalPrice.toFixed(2)}</h1>
-              <h1>Ingredients: {selectedLabels} </h1>
-            </div>
-            <h1 id="quantity_header">Quantity: {quantity} </h1>
-            <h1>Cart:</h1>
-            <ul>
-              {cart.map((item, index) => (
-                <li key={index}>
-                  <p>Name: {item.name}</p>
-                  <p>Price: {item.price}</p>
-                  <p>Quantity: {item.qty}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <DenseTable data={cart} />
-          <h1 id="order_price_header">Order Price: {orderPrice} </h1>
-          <div className="order_placing_btns">
-            <button onClick={() => handleCartChange()}> Add to Cart</button>
-            <button onClick={() => handleLabelChange("clearAll")}>Clear</button>
-            <button onClick={() => placeOrder()}>Place Orders</button>
-          </div>
         </div>
-      </div>
-  );
-};
+    );
+}
 function DenseTable({ data }) {
     return (
         <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+            <Table className='table' sx={{ minWidth: 630 }} size="" aria-label="a dense table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Product</TableCell>
-                        <TableCell align="right">Quantity</TableCell>
-                        <TableCell align="right">Modifications</TableCell>
-                        <TableCell align="right">Price</TableCell>
+                        <TableCell className='table_label'>Product</TableCell>
+                        <TableCell className='table_label'>Quantity</TableCell>
+                        <TableCell className='table_label'>Modifications</TableCell>
+                        <TableCell className='table_label'>Price</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.map((row) => (
+                    {data.map((row, index) => (
                         <TableRow
-                            key={row.id}
+                            key={index}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <TableCell component="th" scope="row">
+                            <TableCell component="th" scope="row" className='table_entry'>
                                 {row.name}
                             </TableCell>
-                            <TableCell align="right">{row.qty}</TableCell>
-                            <TableCell align="right">{row.ingredients}</TableCell>
-                            <TableCell align="right">{row.price}</TableCell>
+                            <TableCell className='table_entry'>{row.qty}</TableCell>
+                            <TableCell className='table_entry'>{row.ingredients}</TableCell>
+                            <TableCell className='table_entry'>{row.price}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -410,8 +399,8 @@ function DenseTable({ data }) {
     );
 }
 
-function ViewOrders() {}
-function PlaceOrders() {}
+function ViewOrders() { }
+function PlaceOrders() { }
 
 // function Cashier() {
 //     return (

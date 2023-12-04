@@ -41,8 +41,18 @@ app.get("/products/", async (req, res) => {
 app.get("/pastorders/", async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT * FROM orders ORDER BY id DESC LIMIT 20;"
+      "SELECT * FROM orders ORDER BY id DESC LIMIT 40;"
     );
+    res.json(result.rows);
+  } catch (error) { 
+    console.error("Error fetching past orders", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/inventory/", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM inventory");
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching past orders", error);

@@ -148,7 +148,30 @@ const ProductModal = ({ isOpen, onClose, addToCart, product }) => {
   );
 };
 
-function Customer() {
+const OrderSuccessModal = ({ isOpen, onClose }) => {
+  return (
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      contentLabel="Order Success Modal"
+      className="order-success-modal"
+      overlayClassName="order-success-overlay"
+    >
+      <div className="order-success-container">
+        <h2>Order Successfully Placed!</h2>
+        <p>
+          Your order has been placed successfully. Thank you for choosing
+          ShareTea!
+        </p>
+        <button onClick={onClose} className="close-button">
+          Close
+        </button>
+      </div>
+    </Modal>
+  );
+};
+
+export const Customer = ()  => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);

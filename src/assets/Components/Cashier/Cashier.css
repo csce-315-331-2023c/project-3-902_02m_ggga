@@ -16,10 +16,13 @@
 /*----------------END OF HEADER*-----------------------*/
 .placeorders_page {
     display: flex;
-    justify-content: space-evenly;
-    align-items: flex-start; /* Align items at the start of the cross-axis */
+    justify-content: space-between;
+    align-items: flex-start;
+    /* Align items at the start of the cross-axis */
     margin-left: 10px;
     margin-right: 10px;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 
@@ -33,24 +36,37 @@
     /* Adjust the width as needed */
     align-items: center;
     /* Center-align its contents horizontally */
-    color: #333;
+    color: #000000;
     /* margin-top: 60px; */
-    padding: 20px;
+    /* padding: 20px; */
+    padding-top: 20px;
     flex: 1;
     /* Add padding as needed */
-
 }
 
-.place_right_side h1 {
-    font-size: 1.2rem;
-}
+/* .place_right_side h1 {
+    color: rgb(255, 255, 255);
+    font-size: .2rem;
+} */
 
+/* .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    justify-content: space-evenly;
+} */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-    /* Adjust the gap between buttons as needed */
-    justify-content: flex-start;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns, each taking 1 fraction of the available space */
+    gap: 10px; /* Adjust the gap between buttons as needed */
+  }
+@media (min-width: 1000px) {
+
+    /* Adjust the media query breakpoint as needed */
+    .grid-container {
+        grid-template-columns: repeat(5, 1fr);
+        /* Ensure at least five buttons per row */
+    }
 }
 
 .grid-button {
@@ -90,27 +106,56 @@
     font-size: 20px;
 }
 
+#quantityInput {
+    width: 100px; /* Adjust the width as needed */
+    /* Add any additional styling as needed */
+  }
+
 .mod_label {
     font-weight: bold;
     font-size: 20px;
 }
 
-.order_placing_btns{
+.order_placing_btns {
     display: flex;
     justify-content: space-between;
 }
 
-.order_placing_btns button{
+.order_placing_btns button {
     color: #ffffff;
-    background-color:#502929
+    background-color: #502929
 }
 
-.order_placing_btns button:hover{
+.order_placing_btns button:hover {
     background-color: #994d4d;
     color: #fff;
 }
 
-.horizontal_checks{
+.horizontal_checks {
     display: flex;
-    gap: 20px; /* Adjust the gap as needed */
-  }
+    gap: 20px;
+    /* Adjust the gap as needed */
+}
+
+.selectedAttributes h1{
+    font-size: large;
+    margin-left: 20px;
+    display: flex;
+}
+
+.row_box {
+    display: inline-block;
+    justify-content: space-around;
+}
+.row_box h1 {
+    margin-right: 100px; /* Adjust the margin as needed for spacing between headers */
+
+}
+
+#quantity_header{
+    font-size: large;
+}
+
+#order_price_header{
+    font-size: large;
+}
