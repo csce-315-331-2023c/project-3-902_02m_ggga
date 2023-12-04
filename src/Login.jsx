@@ -27,64 +27,7 @@ function LogIn() {
     const GithubLogIn = () => {
         window.location.assign("https://github.com/oauth/authorize?client_id="+ CLIENT_ID);
     };
-        /*const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
 
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
-    };
-
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleLogIn = () => {
-        // Implement your login logic here
-        console.log('Logging in with Username:', username, 'Password:', password);
-        const handleGitHubAuthhSuccess = (token) => {
-            console.log('Github authentication token:', token);
-        };
-        return (
-            <div>
-                    <h1>
-                        Welcome to the cashier
-                    </h1>
-                    <GitHubOAuth onAuthSuccess={handleGitHubAuthhSuccess} />
-            </div>
-        );
-    };
-
-    const handleClear = () => {
-        setUsername('');
-        setPassword('');
-    };
-    return (
-        <div className='LogIn'>
-            <div className='username'>
-                <label>Username:</label>
-                <input
-                    type="text"
-                    value={username}
-                    onChange={handleUsernameChange}
-                />
-            </div>
-            <div className='password'>
-                <label>Password:</label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                />
-            </div>
-            <div className='buttons'>
-                <button onClick={handleLogIn}>Log In</button>
-                <button onClick={handleClear}>Clear</button>
-                { <button>home</button> }
-                <Link to="home"><button>Back</button></Link>
-            </div>
-        </div>
-    );*/
-    
     return (
         <div className='LogIn'>
             <header className='buttons'>
