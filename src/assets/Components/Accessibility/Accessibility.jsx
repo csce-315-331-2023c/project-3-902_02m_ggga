@@ -14,7 +14,7 @@ export const Accessibility = ({ onOptionClick }) => {
     onOptionClick(option);
   };
 
-
+//creates options for menu
   const accessibilityOptions = [
     { label: "Bigger Text", onClick: () => handleOptionClick("biggerText") },
     {
@@ -22,6 +22,7 @@ export const Accessibility = ({ onOptionClick }) => {
       onClick: () => handleOptionClick("highContrast"),
     },
     { label: "Legible Text", onClick: () => handleOptionClick("legibleText") },
+    {label: "Translate"}
   ];
 
   return (
