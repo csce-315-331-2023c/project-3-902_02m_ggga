@@ -23,15 +23,15 @@
 
 .sharetea_header {
     font-size: 3rem;
-    margin-left: 10px;
+    margin-right: auto;
 }
 
 .links {
     list-style: none;
     display: flex;
     gap: 10px;
-    margin-right: 10px;
-    align-items: center; /* Vertically align the links with the header */
+    margin-left: auto;
+    align-items: center; 
 }
 
 .links li {
