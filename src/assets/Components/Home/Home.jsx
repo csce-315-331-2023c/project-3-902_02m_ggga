@@ -8,7 +8,6 @@ import {Outlet, Link} from 'react-router-dom';
 
 
 export const Home = () => {
-    const [translateCount, setTranslateCount] = useState(0);
     const googleTranslateElementInit = () => {
         new window.google.translate.TranslateElement(
           {
@@ -19,7 +18,7 @@ export const Home = () => {
         );
       };
     useEffect(() => {
-    if((!window.google || !window.google.translate) && translateCount === 0) {
+    if((!window.google || !window.google.translate)) {
         var addScript = document.createElement("script");
         addScript.setAttribute(
             "src",
@@ -30,7 +29,6 @@ export const Home = () => {
         setTranslateCount(translateCount + 1);
             // Cleanup function to remove the added script when component unmounts
         return () => {
-        setTranslateCount(translateCount- 1);
         document.body.removeChild(addScript);
         };
     }
