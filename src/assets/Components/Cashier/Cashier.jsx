@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-// import './Cashier.css'
-import './AccessibleCashier.css'
+import './Cashier.css'
+// import './AccessibleCashier.css'
 import axios from "axios";
 import { prodArray } from '../productArray';
 import Table from '@mui/material/Table';
@@ -18,6 +18,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import { Header } from '../Header/Header';
+import { Accessibility } from '../Accessibility/Accessibility'
 
 
 function populateButtons(handleClick) {

@@ -1,0 +1,39 @@
+.accessibility-menu {
+    position: fixed;
+    top: 140px;
+    right: 0px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+  }
+  
+  .accessibility-button {
+    cursor: pointer;
+    position: fixed;
+    top: 100px;
+    right: 0px;
+    z-index: 1200;
+  }
+  
+  .accessibility-option {
+    margin-bottom: 5px;
+    cursor: pointer;
+    color: #000;
+  }
+  
+  /* .bigger-text {
+    font-size: 1.2em; 
+  }
+  
+  .high-contrast {
+    background-color: #000000;
+    color: #ffffff;
+    
+  }
+  
+  .big-cursor {
+    cursor: pointer;
+    font-size: 1.5em; 
+  } */
