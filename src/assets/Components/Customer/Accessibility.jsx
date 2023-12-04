@@ -1,5 +1,3 @@
-// Accessibility.js
-
 import React, { useState } from "react";
 import "./Accessibility.css";
 
@@ -11,8 +9,8 @@ const Accessibility = ({ onOptionClick }) => {
   };
 
   const handleOptionClick = (option) => {
-    toggleMenu(); // Close the menu after an option is clicked
-    onOptionClick(option); // Execute the callback function from the parent
+    toggleMenu();
+    onOptionClick(option);
   };
 
   const accessibilityOptions = [
@@ -21,7 +19,7 @@ const Accessibility = ({ onOptionClick }) => {
       label: "High Contrast",
       onClick: () => handleOptionClick("highContrast"),
     },
-    { label: "Big Cursor", onClick: () => handleOptionClick("bigCursor") },
+    { label: "Legible Text", onClick: () => handleOptionClick("legibleText") },
   ];
 
   return (

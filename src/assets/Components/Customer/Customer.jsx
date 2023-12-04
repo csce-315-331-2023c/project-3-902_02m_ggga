@@ -364,25 +364,24 @@ function Customer() {
   };
 
   const toggleStyle = (styleName, value) => {
-    const currentStyle = document.documentElement.style[styleName];
+    const currentStyle = document.body.style[styleName];
+    document.body.style[styleName] = currentStyle ? "" : value;
     document.documentElement.style[styleName] = currentStyle ? "" : value;
   };
 
   const handleAccessibilityOption = (option) => {
     switch (option) {
       case "biggerText":
-        toggleStyle("fontSize", "1.2em");
+        toggleStyle("fontSize", "1.3em");
         break;
       case "highContrast":
-        toggleStyle("backgroundColor", "#fff");
-        toggleStyle("color", "#000");
+        toggleStyle("backgroundColor", "#000");
+        toggleStyle("color", "#fff");
         break;
-      case "bigCursor":
-        toggleStyle("cursor", "pointer");
-        toggleStyle("fontSize", "1.5em");
+      case "legibleText":
+        toggleStyle("fontFamily", "Times New Roman, Times, serif");
         break;
       default:
-        // Reset to default styles
         document.documentElement.style.fontSize = "";
         document.documentElement.style.backgroundColor = "";
         document.documentElement.style.color = "";
@@ -409,10 +408,10 @@ function Customer() {
           </li>
         </ul>
       </nav>
+      <div>
+        <Accessibility onOptionClick={handleAccessibilityOption} />
+      </div>
       <div className="body">
-        <div>
-          <Accessibility onOptionClick={handleAccessibilityOption} />
-        </div>
         <div className="button-container">
           {products.map((product) => (
             <button

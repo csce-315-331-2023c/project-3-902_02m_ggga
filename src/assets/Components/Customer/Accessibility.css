@@ -1,5 +1,3 @@
-/* Accessibility.css */
-
 .accessibility-menu {
   position: fixed;
   top: 140px;
@@ -23,8 +21,6 @@
   margin-bottom: 5px;
   cursor: pointer;
 }
-
-/* Add to your CSS file */
 
 .bigger-text {
   font-size: 1.2em; /* Adjust the font size as needed */
