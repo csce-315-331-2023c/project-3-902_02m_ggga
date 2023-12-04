@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Accessibility.css";
+import logo from "./assets/accessibility_icon.png";
 
 const Accessibility = ({ onOptionClick }) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -23,9 +24,9 @@ const Accessibility = ({ onOptionClick }) => {
   ];
 
   return (
-    <div>
+    <div className="accessibility">
       <button className="accessibility-button" onClick={toggleMenu}>
-        Accessibility
+        <img src={logo} alt="" className="accessibility-image" />
       </button>
 
       {isMenuOpen && (
