@@ -363,82 +363,83 @@ export const Cashier = () => {
                         <button onClick={() => placeOrder()}>Place Orders</button>
                     </div>
                 </div>
-          </div>
-        <div className="place_right_side">
-          <div className="order_mods">
-            <div>
-              <label className="quant_label">
-                Quantity
-                <input
-                  type="number"
-                  id="quantityInput"
-                  onChange={handleQuantityChange}
-                />
-              </label>
+            </div>
+            <div className="place_right_side">
+                <div className="order_mods">
+                    <div>
+                        <label className="quant_label">
+                            Quantity
+                            <input
+                                type="number"
+                                id="quantityInput"
+                                onChange={handleQuantityChange}
+                            />
+                        </label>
 
-              <p>Quantity: {quantity} </p>
+                        <p>Quantity: {quantity} </p>
+                    </div>
+                    <div className="checkbox_container">
+                        <label className="mod_label">Modifications</label>
+                        <Form className="horizontal_checks">
+                            {top_labels.map((label, index) => (
+                                <div key={index} className="mb-3">
+                                    <Form.Check
+                                        inline
+                                        label={label}
+                                        name="group1"
+                                        type="checkbox"
+                                        checked={selectedLabels.includes(label)} // Ensure correct checked status
+                                        onChange={() => handleLabelChange(label)}
+                                    />
+                                </div>
+                            ))}
+                        </Form>
+                        <Form className="horizontal_checks">
+                            {bottom_labels.map((label, index) => (
+                                <div key={index} className="mb-3">
+                                    <Form.Check
+                                        inline
+                                        label={label}
+                                        name="group1"
+                                        type="checkbox"
+                                        checked={selectedLabels.includes(label)} // Ensure correct checked status
+                                        onChange={() => handleLabelChange(label)}
+                                    />
+                                </div>
+                            ))}
+                        </Form>
+                        <p>Mods: {selectedLabels} </p>
+                    </div>
+                </div>
+                <div className="selectedAttributes">
+                    <div className="row_box">
+                        <h1>Selected Item: {selectedButton} </h1>
+                        <h1>Price per Item: {price}</h1>
+                    </div>
+                    <div className="row_box">
+                        <h1>Total price: {totalPrice.toFixed(2)}</h1>
+                        <h1>Ingredients: {selectedLabels} </h1>
+                    </div>
+                    <h1 id="quantity_header">Quantity: {quantity} </h1>
+                    <h1>Cart:</h1>
+                    <ul>
+                        {cart.map((item, index) => (
+                            <li key={index}>
+                                <p>Name: {item.name}</p>
+                                <p>Price: {item.price}</p>
+                                <p>Quantity: {item.qty}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <DenseTable data={cart} />
+                <h1 id="order_price_header">Order Price: {orderPrice} </h1>
+                <div className="order_placing_btns">
+                    <button onClick={() => handleCartChange()}> Add to Cart</button>
+                    <button onClick={() => handleLabelChange("clearAll")}>Clear</button>
+                    <button onClick={() => placeOrder()}>Place Orders</button>
+                </div>
             </div>
-            <div className="checkbox_container">
-              <label className="mod_label">Modifications</label>
-              <Form className="horizontal_checks">
-                {top_labels.map((label, index) => (
-                  <div key={index} className="mb-3">
-                    <Form.Check
-                      inline
-                      label={label}
-                      name="group1"
-                      type="checkbox"
-                      checked={selectedLabels.includes(label)} // Ensure correct checked status
-                      onChange={() => handleLabelChange(label)}
-                    />
-                  </div>
-                ))}
-              </Form>
-              <Form className="horizontal_checks">
-                {bottom_labels.map((label, index) => (
-                  <div key={index} className="mb-3">
-                    <Form.Check
-                      inline
-                      label={label}
-                      name="group1"
-                      type="checkbox"
-                      checked={selectedLabels.includes(label)} // Ensure correct checked status
-                      onChange={() => handleLabelChange(label)}
-                    />
-                  </div>
-                ))}
-              </Form>
-              <p>Mods: {selectedLabels} </p>
-            </div>
-          </div>
-          <div className="selectedAttributes">
-            <div className="row_box">
-              <h1>Selected Item: {selectedButton} </h1>
-              <h1>Price per Item: {price}</h1>
-            </div>
-            <div className="row_box">
-              <h1>Total price: {totalPrice.toFixed(2)}</h1>
-              <h1>Ingredients: {selectedLabels} </h1>
-            </div>
-            <h1 id="quantity_header">Quantity: {quantity} </h1>
-            <h1>Cart:</h1>
-            <ul>
-              {cart.map((item, index) => (
-                <li key={index}>
-                  <p>Name: {item.name}</p>
-                  <p>Price: {item.price}</p>
-                  <p>Quantity: {item.qty}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <DenseTable data={cart} />
-          <h1 id="order_price_header">Order Price: {orderPrice} </h1>
-          <div className="order_placing_btns">
-            <button onClick={() => handleCartChange()}> Add to Cart</button>
-            <button onClick={() => handleLabelChange("clearAll")}>Clear</button>
-            <button onClick={() => placeOrder()}>Place Orders</button>
-          </div>
         </div>
     );
 }
@@ -474,8 +475,8 @@ function DenseTable({ data }) {
     );
 }
 
-function ViewOrders() {}
-function PlaceOrders() {}
+function ViewOrders() { }
+function PlaceOrders() { }
 
 // function Cashier() {
 //     return (

@@ -21,7 +21,7 @@ export const Home = () => {
                 <Navbar />
             </div>
             <div className='body'>
-            <div id="google_translate_element"></div>
+            {/* <div id="google_translate_element"></div>
             <p>translate this site into your prefered language</p>
             <script type="text/javascript">
                 function googleTranslateElementInit() {
@@ -32,7 +32,7 @@ export const Home = () => {
             </script>
             <script type="text/javascript"
                 src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-            </script>
+            </script> */}
                 <div className='container'>
                     <div className='big_logo'>
                         <h1>WELCOME TO SHARE TEA</h1>
