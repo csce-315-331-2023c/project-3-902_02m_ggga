@@ -274,10 +274,9 @@ app.post("/placeorder/", async (req, res) => {
 res.send("hello this is a test")
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-
+//used as identification to connect to the login api
+const CLIENT_ID = "c1e2a3c233d9b16112ee";
+const CLIENT_SECRET = "a24ff8ff78fb3910d162c62667d21c0a336526f5";
 //USED FOR LOGIN 
 app.get('/getAccessToken', async function (req, res) {
   console.log(req.query.code);

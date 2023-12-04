@@ -35,7 +35,8 @@ function App() {
             <Route path="placeorder" element={<Cashier />}></Route>
             <Route path="home" element={<Home />}></Route>
           </Route>
-          <Route path="/Nav" element={<Nav />}>
+          {/*Anything under nav path is manager*/}
+          <Route path="/Manager" element={<Nav />}>
             <Route path="data" element={<Data />}></Route>
             <Route path="inventory" element={<Inventory/>}></Route>
             <Route path="menu" element={<Menu />}></Route>
