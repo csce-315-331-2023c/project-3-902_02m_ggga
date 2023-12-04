@@ -6,6 +6,7 @@ import headerImage from "./assets/ShareTea_Header.png";
 import Modal from "react-modal";
 import Weather from "./Weather";
 import { Link } from "react-router-dom";
+import Accessibility from "./Accessibility";
 
 Modal.setAppElement("#root");
 
@@ -362,6 +363,33 @@ function Customer() {
     }
   };
 
+  const toggleStyle = (styleName, value) => {
+    const currentStyle = document.documentElement.style[styleName];
+    document.documentElement.style[styleName] = currentStyle ? "" : value;
+  };
+
+  const handleAccessibilityOption = (option) => {
+    switch (option) {
+      case "biggerText":
+        toggleStyle("fontSize", "1.2em");
+        break;
+      case "highContrast":
+        toggleStyle("backgroundColor", "#fff");
+        toggleStyle("color", "#000");
+        break;
+      case "bigCursor":
+        toggleStyle("cursor", "pointer");
+        toggleStyle("fontSize", "1.5em");
+        break;
+      default:
+        // Reset to default styles
+        document.documentElement.style.fontSize = "";
+        document.documentElement.style.backgroundColor = "";
+        document.documentElement.style.color = "";
+        document.documentElement.style.cursor = "";
+    }
+  };
+
   return (
     <div>
       <nav className="header">
@@ -382,6 +410,9 @@ function Customer() {
         </ul>
       </nav>
       <div className="body">
+        <div>
+          <Accessibility onOptionClick={handleAccessibilityOption} />
+        </div>
         <div className="button-container">
           {products.map((product) => (
             <button
