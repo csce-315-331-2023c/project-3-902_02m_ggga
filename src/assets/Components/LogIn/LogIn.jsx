@@ -23,7 +23,7 @@ function LogIn()  {
 
         if(codeParams && (localStorage.getItem("accessToken") === null)) {
             async function getAccessToken() {
-                await fetch("http://localhost:5000/getAccessToken?code=" + codeParams, {
+                await fetch("https://mocktea.onrender.com/getAccessToken?code=" + codeParams, {
                     method: "GET"
                 }).then((response) => {
                     return response.json();
@@ -54,7 +54,7 @@ function LogIn()  {
     }
 
     async function checkManager(internalUser) {
-        fetch ("http://localhost:5000/employees?gitid="+ internalUser.id, {
+        fetch ("https://mocktea.onrender.com/employees?gitid="+ internalUser.id, {
             method: "GET",
         }).then((response) => {
             setPrivleges("Not current employee. Please log out or contact your supervisor");
@@ -76,7 +76,7 @@ function LogIn()  {
     }
 
     async function getUserData()  {
-        await fetch("http://localhost:5000/getUserData", {
+        await fetch("https://mocktea.onrender.com/getUserData", {
             method: "GET",
             headers: {
                 "Authorization" : "Bearer " + localStorage.getItem("accessToken")
