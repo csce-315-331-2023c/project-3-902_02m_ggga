@@ -60,7 +60,7 @@ export const Cashier = () => {
     const [currentProd, setCurrentProd] = useState({ name: "", qty: 1, price: 0.0, ingredients: [] });
     const [orderPrice, setOrderPrice] = useState(0.0);
     const [totalPrice, setTotalPrice] = useState(0.0);
-    const ingredients = [];
+    const ingredients_array = [];
     const [maxOrderId, setMaxOrderId] = useState(null);
 
 
@@ -138,11 +138,14 @@ export const Cashier = () => {
         if (quantity > 0) {
             // Iterate based on the quantity
             for (let i = 0; i < quantity; i++) {
+                const product = ingredients_array.find(product => product.name === selectedButton);
+                const current_ingredients = product.ingredients;
+                console.log(current_ingredients);
                 const newProduct = {
                     name: `${selectedButton}${selectedLabels.length === 0 ? "" : "(" + selectedLabels + ")"}`,
                     qty: 1, // Set quantity to 1 for each iteration
                     price: price, //using unit price
-                    ingredients: selectedLabels
+                    ingredients: current_ingredients
                 };
 
                 // Add the product to the cart
@@ -150,13 +153,14 @@ export const Cashier = () => {
 
                 // Update the order price by adding the current drink's price to the old sum
                 setOrderPrice((Number(totalPrice) + Number(orderPrice)).toFixed(2));
+                console.log("Updated cart with", { newProduct });
+
             }
 
             // Reset the quantity to 1
             setQuantity(1);
 
             // Log information about the updated cart
-            console.log("Updated cart with", { newProduct });
         }
     };
 
@@ -170,6 +174,8 @@ export const Cashier = () => {
             .then((response) => setMaxOrderId(response.data))
             .catch((error) => console.error("Error fetching max order ID", error));
     }, []);
+
+
     const placeOrder = async () => {
 
         const orderData = {
@@ -182,18 +188,53 @@ export const Cashier = () => {
         };
 
         try {
-            console.log(orderData);
-            const response = await axios.post(
+            for (let i = 0; i < cart.length; i++) {
+                const product = cart[i];
+                const curr_ing_array = product.ingredients.split(",");
+                curr_ing_array.forEach(async (ingredient) => {
+                    let quantityQuery = 1;
+                    if (
+                        (product.name.toLowerCase().includes("extra boba") && ingredient == 1) || (product.name.toLowerCase().includes("extra boba") && ingredient == 7)
+                    ) {
+                        quantityQuery = 2;
+                    }
+                    if (
+                        (product.name.toLowerCase().includes("extra sugar") && ingredient == 10)
+                    ) {
+                        quantityQuery = 2;
+                    }
+                    if (
+                        (product.name.toLowerCase().includes("extra milk") && ingredient == 20)
+                    ) {
+                        quantityQuery = 2;
+                    }
+                    try {
+                        await axios.post("https://mocktea.onrender.com/neworderinventory",
+                            { quan: quantityQuery, id: ingredient },
+                            {
+                                headers: { "Content-Type": "application/json" },
+                            });
+                        console.log("ingredients posted to the db: ", ingredient);
+                    }
+                    catch (error) {
+                        console.error("error processing ingredient", error);
+                    }
+
+                });
+            }
+            // console.log(orderData);
+            await axios.post(
                 "https://mocktea.onrender.com/neworder",
                 orderData,
                 { headers: { "Content-Type": "application/json" } }
             );
-            console.log("Order placed successfully:", response.data);
+            console.log("Order placed successfully:");
             setCart([]);
             setOrderPrice(0);
             handleLabelChange("clearAll");
 
-        } catch (error) {
+        }
+        catch (error) {
             console.error("Error placing order", error);
         }
         // cart current holds all the things in the cart
@@ -219,17 +260,6 @@ export const Cashier = () => {
         setSelectedButton(buttonName);
         setPrice(btn_price);
         setTotalPrice(btn_price * quantity);
-        // setQuantity(1);
-        // setCurrentProd({
-        //     name: buttonName,
-        //     qty: quantity,
-        //     price: price,
-        //     ingredients: selectedLabels
-        // })
-        // console.log(selectedButton)
-        // console.log(price)
-        // console.log(currentProd.qty)
-        // console.log(currentProd.ingredients)
     }
     const handleViewChange = (view) => {
         setCurrentView(view);
@@ -254,7 +284,7 @@ export const Cashier = () => {
 
 
     products_from_db.map((product) => (
-        ingredients.push({ name: product.name, ingredients: product.ingredients })
+        ingredients_array.push({ name: product.name, ingredients: product.ingredients })
     ))
 
 
@@ -333,7 +363,7 @@ export const Cashier = () => {
                 document.documentElement.style.cursor = "";
         }
     };
-    // console.log(ingredients);
+    // console.log(ingredients_array);
 
 
 
@@ -429,6 +459,7 @@ export const Cashier = () => {
                                     <p>Name: {item.name} ({quantity})</p>
                                     <p>Price: {item.price}</p>
                                     <p>Quantity: {item.qty}</p>
+                                    <p>Ingredients: {item.ingredients}</p>
                                 </li>
                             ))}
                         </ul>
