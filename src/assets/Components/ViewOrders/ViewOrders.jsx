@@ -42,10 +42,6 @@ export const ViewOrders = () => {
         const rightSide = document.querySelector(".place_right_side");
         switch (option) {
             case "biggerText":
-                // toggleStyle(modLabel, "font-size", "1.3rem");
-                // toggleStyle(pastOrders, "font-size", "2rem");
-                // toggleStyle(leftSide, "font-size", "1.3rem");
-                // toggleStyle(rightSide, "font-size", "1.5rem");
                 tableLabels.forEach((label) => {
                     toggleStyle(label, "font-size", "1.5rem");
                 });
