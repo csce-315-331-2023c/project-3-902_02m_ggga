@@ -85,7 +85,7 @@ app.post("/neworderinventory/", async (req, res) => {
   console.log("Received request to update inventory:", ingredientID);
   try {
     await pool.query(
-      "UPDATE inventory SET quantity = quantity - 1 WHERE id = $1",
+      "UPDATE inventory SET quantity = quantity - $1 WHERE id = $2",
       [ingredientID]
     );
 

@@ -316,10 +316,30 @@ function Customer() {
         const product = cart[i];
         const ingredientsArray = product.ingredients.split(",");
         ingredientsArray.forEach(async (ingredient) => {
+          let quantityQuery = 1;
+          if (
+            (product.name.toLowerCase.includes("extra boba") &&
+              ingredient == 1) ||
+            (product.name.toLowerCase.includes("extra boba") && ingredient == 7)
+          ) {
+            quantityQuery = 2;
+          }
+          if (
+            product.name.toLowerCase.includes("extra sugar") &&
+            ingredient == 10
+          ) {
+            quantityQuery = 2;
+          }
+          if (
+            product.name.toLowerCase.includes("extra milk") &&
+            ingredient == 20
+          ) {
+            quantityQuery = 2;
+          }
           try {
             await axios.post(
               "https://mocktea.onrender.com/neworderinventory",
-              { id: ingredient },
+              { quantityQuery, id: ingredient },
               {
                 headers: { "Content-Type": "application/json" },
               }
