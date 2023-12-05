@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Menu.css';
-import './../Popup/Popup';
-import Popup from './../Popup/Popup';
+import '../Popup/Popup';
+import Popup from '../Popup/Popup';
 
 export const Menu = () => {
   const [products, setProducts] = useState([]);

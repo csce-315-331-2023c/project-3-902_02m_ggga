@@ -139,9 +139,6 @@ export const Home = () => {
                 <div className='header_banner'>
                     <ul class="nav justify-content-center" id='lower_nav_bar'>
                         <li class="nav-item">
-                            Language
-                        </li>
-                        <li class="nav-item">
                             Menu
                         </li>
                         <li class="nav-item">
@@ -154,7 +151,7 @@ export const Home = () => {
                             <Link to="https://github.com/login/oauth/authorize?client_id=c1e2a3c233d9b16112ee">Employee</Link>
                         </li>
                         <li class="nav-item">
-                            <Link to="/Nav">Manager</Link>
+                            <Link to="/Manager">Manager</Link>
                         </li>
                     </ul>
                 </div>

@@ -29,7 +29,7 @@ export const Navbar = () => {
                         <Link to="https://github.com/login/oauth/authorize?client_id=c1e2a3c233d9b16112ee">Employee</Link>
                     </li>
                     <li class="nav-item">
-                        <Link to="/Nav">Manager</Link>
+                        <Link to="/Manager">Manager</Link>
                     </li>
                 </ul>
             </div>

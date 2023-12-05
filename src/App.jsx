@@ -8,10 +8,11 @@ import { ViewOrders as ViewOrders } from './assets/Components/ViewOrders/ViewOrd
 import { Navbar as Navbar } from './assets/Components/Navbar';
 import { Customer } from './assets/Components/Customer/Customer';
 import { CashierLanding as CashierLanding } from './assets/Components/CashierLanding/CashierLanding'
-import { Menu as Menu } from './assets/Components/Menu/Menu';
-import { Employees as Employees } from './assets/Components/Employees/Employees';
-import { Inventory as Inventory } from './assets/Components/Inventory/Inventory';
-import { DataAnalytics as DataAnalytics } from './assets/Components/Data/DataAnalytics';
+import { Menu as Menu } from './assets/Components/Manager/Menu/Menu';
+import { Employees as Employees } from './assets/Components/Manager/Employees/Employees';
+import { Inventory as Inventory } from './assets/Components/Manager/Inventory/Inventory';
+import { DataAnalytics as DataAnalytics } from './assets/Components/Manager/Data/DataAnalytics';
+import { Navbar as Nav } from './assets/Components/Manager/Nav/Navbar';
 
 function App() {
   const [isAccessible, setAccessible] = useState(false);
@@ -31,14 +32,17 @@ function App() {
             <Route path="vieworder" element={<ViewOrders />}></Route>
             <Route path="placeorder" element={<Cashier />}></Route>
             <Route path="home" element={<Home />}></Route>
-          </Route>
+            </Route>
+          <Route path="/Manager" element={<Nav />}>
+            {/*child routes of manager */}
+            <Route path="Data" element={<DataAnalytics />} />
+            <Route path="Inventory" element={<Inventory/>}/>
+            <Route path="Employees" element={<Employees />}/>
+            <Route path="Menu" element={<Menu />}/>
+            </Route>
         </Routes>
       </Router>
     </div>
-          <Route path="/Data" element={<DataAnalytics/ >} />
-          <Route path="/Inventory" element={<Inventory/>}/>
-          <Route path="/Employees" element={<Employees />}/>
-          <Route path="/Menu" element={<Menu />}/>
 
   );
 };
