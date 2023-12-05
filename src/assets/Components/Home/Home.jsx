@@ -37,13 +37,7 @@ export const Home = () => {
             googleTranslateElementInit();
         }
     }, []);
-    // initially sets log in as false so not visible
-    // const [loginVisible, setLoginVisible] = useState(false);
 
-    // // sets if log in is visible or not
-    // const toggleLogin = () => {
-    //     setLoginVisible(!loginVisible);
-    // };
     return (
         <div className='home_container'>
             <div className='header_page'>
