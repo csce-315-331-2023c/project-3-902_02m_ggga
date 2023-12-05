@@ -22,7 +22,7 @@ export const Inventory = () => {
   useEffect(() => {
     // Fetch the inventory data when the component mounts
     axios
-      .get("http://localhost:5000/api/inventory") // Ensure this URL points to your API endpoint
+      .get("https://mocktea.onrender.com/inventory") // Ensure this URL points to your API endpoint
       .then((response) => {
         // Update state with the fetched inventory items
         setInventoryItems(response.data);
@@ -39,7 +39,7 @@ export const Inventory = () => {
 
   const addInventoryItem = () => {
     axios
-      .post('http://localhost:5000/api/inventory', newItem)
+      .post('https://mocktea.onrender.com/inventory', newItem)
       .then((response) => {
         setInventoryItems([...inventoryItems, response.data]);
         setButtonPopup(false); // Close the popup
@@ -51,7 +51,7 @@ export const Inventory = () => {
 
   const deleteItem = () => {
     axios
-      .delete(`http://localhost:5000/api/inventory/${deleteItemId}`)
+      .delete(`https://mocktea.onrender.com/inventory/${deleteItemId}`)
       .then(() => {
         // Update the state to remove the deleted item
         setInventoryItems(inventoryItems.filter(item => item.id !== deleteItemId));

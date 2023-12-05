@@ -19,7 +19,7 @@ export const Menu = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get("https://mocktea.onrender.com/products")
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products", error));
   }, []);
@@ -33,7 +33,7 @@ export const Menu = () => {
   const addNewProduct = () => {
     // Validate inputs as necessary before sending
     axios
-      .post("http://localhost:5000/api/products", newProduct)
+      .post("https://mocktea.onrender.com/products", newProduct)
       .then((response) => {
         // Add the new product to the products state
         setProducts([...products, response.data]);
@@ -53,7 +53,7 @@ export const Menu = () => {
     const itemIdToDelete = Number(deletedItemId); // Convert to number
   
     axios
-      .delete(`http://localhost:5000/api/products/${itemIdToDelete}`)
+      .delete(`https://mocktea.onrender.com/products/${itemIdToDelete}`)
       .then(() => {
         setProducts(products.filter((product) => product.id !== itemIdToDelete));
         setDeletePopup(false);

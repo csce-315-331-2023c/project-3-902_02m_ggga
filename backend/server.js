@@ -167,7 +167,7 @@ app.get('/employees', async function (req, res) {
 
 });
 
-app.get("/api/products", async (req, res) => {
+app.get("/products", async (req, res) => {
   try {
     // Updated to fetch all columns for each product
     const result = await pool.query("SELECT * FROM product");
@@ -178,7 +178,7 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
-app.get("/api/employees", async (req, res) => {
+app.get("/employees", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM employees");
     res.json(result.rows);
@@ -188,7 +188,7 @@ app.get("/api/employees", async (req, res) => {
   }
 });
 
-app.post("/api/employees", async (req, res) => {
+app.post("/employees", async (req, res) => {
   try {
     const { name, hours_worked, salary, position, manager } = req.body;
     const newEmployeeQuery = `
@@ -205,7 +205,7 @@ app.post("/api/employees", async (req, res) => {
 });
 
 
-app.delete("/api/employees/:id", async (req, res) => {
+app.delete("/employees/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deleteQuery = 'DELETE FROM employees WHERE employee_id = $1 RETURNING *;';
@@ -223,7 +223,7 @@ app.delete("/api/employees/:id", async (req, res) => {
 });
 
 
-app.post("/api/inventory", async (req, res) => {
+app.post("/inventory", async (req, res) => {
   try {
     const { name, price_per_unit, quantity, last_bought_date, minimum } = req.body;
     const newInventoryQuery = `
@@ -240,7 +240,7 @@ app.post("/api/inventory", async (req, res) => {
 });
 
 
-app.delete("/api/inventory/:id", async (req, res) => {
+app.delete("/inventory/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deleteQuery = "DELETE FROM inventory WHERE id = $1 RETURNING *";
@@ -257,7 +257,7 @@ app.delete("/api/inventory/:id", async (req, res) => {
   }
 });
 
-app.post("/api/products", async (req, res) => {
+app.post("/products", async (req, res) => {
   try {
     // Destructure the product information from the request body
     const { name, price, ingredients, image_url } = req.body;
@@ -279,7 +279,7 @@ app.post("/api/products", async (req, res) => {
   }
 });
 
-app.delete("/api/products/:id", async (req, res) => {
+app.delete("/products/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deleteQuery = "DELETE FROM product WHERE id = $1 RETURNING *";
@@ -298,7 +298,7 @@ app.delete("/api/products/:id", async (req, res) => {
 
 
 
-app.get("/api/sales-data", async (req, res) => {
+app.get("/sales-data", async (req, res) => {
   try {
     const result = await pool.query(`
       SELECT date_trunc('day', order_date) AS day, SUM(price + tip) AS total_sales
@@ -313,7 +313,7 @@ app.get("/api/sales-data", async (req, res) => {
   }
 });
 
-app.get("/api/product-sales-data", async (req, res) => {
+app.get("/product-sales-data", async (req, res) => {
   const productName = req.query.productName;
   try {
     const result = await pool.query(`

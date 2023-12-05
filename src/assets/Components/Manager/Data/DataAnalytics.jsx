@@ -32,7 +32,7 @@ export const DataAnalytics = () => {
   const [salesData, setSalesData] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/sales-data")
+    axios.get("https://mocktea.onrender.com/sales-data")
       .then((response) => {
         setSalesData(response.data);
         console.log(response.data);
@@ -58,7 +58,7 @@ export const DataAnalytics = () => {
 
 
   const fetchTotalSalesData = () => {
-    axios.get("http://localhost:5000/api/sales-data")
+    axios.get("https://mocktea.onrender.com/sales-data")
       .then((response) => {
         setSalesData(response.data);
       })
@@ -70,7 +70,7 @@ export const DataAnalytics = () => {
 
 
   const fetchProductSalesData = () => {
-    axios.get(`http://localhost:5000/api/product-sales-data?productName=${productName}`)
+    axios.get(`https://mocktea.onrender.com/product-sales-data?productName=${productName}`)
       .then((response) => {
         setSalesData(response.data);
         console.log(response.data)

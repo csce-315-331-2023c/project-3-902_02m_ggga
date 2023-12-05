@@ -19,7 +19,7 @@ export const Employees = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/employees") // Update this URL to where your API is hosted
+      .get("https://mocktea.onrender.com/employees") // Update this URL to where your API is hosted
       .then((response) => setEmployees(response.data))
       .catch((error) => console.error("Error fetching employees", error));
   }, []);
@@ -33,7 +33,7 @@ export const Employees = () => {
   };
 
   const handleSubmit = () => {
-    axios.post('http://localhost:5000/api/employees', newEmployee)
+    axios.post('https://mocktea.onrender.com/employees', newEmployee)
       .then((response) => {
         setEmployees([...employees, response.data]);
         setButtonPopup(false);
@@ -54,7 +54,7 @@ export const Employees = () => {
   };
 
   const handleDelete = () => {
-    axios.delete(`http://localhost:5000/api/employees/${deleteEmployeeId}`)
+    axios.delete(`https://mocktea.onrender.com/employees/${deleteEmployeeId}`)
       .then(() => {
         setEmployees(employees.filter(employee => employee.employee_id !== parseInt(deleteEmployeeId)));
         setButtonPopup2(false);
