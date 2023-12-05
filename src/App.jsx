@@ -8,6 +8,10 @@ import { ViewOrders as ViewOrders } from './assets/Components/ViewOrders/ViewOrd
 import { Navbar as Navbar } from './assets/Components/Navbar';
 import { Customer } from './assets/Components/Customer/Customer';
 import { CashierLanding as CashierLanding } from './assets/Components/CashierLanding/CashierLanding'
+import { Menu as Menu } from './assets/Components/Menu/Menu';
+import { Employees as Employees } from './assets/Components/Employees/Employees';
+import { Inventory as Inventory } from './assets/Components/Inventory/Inventory';
+import { DataAnalytics as DataAnalytics } from './assets/Components/Data/DataAnalytics';
 
 function App() {
   const [isAccessible, setAccessible] = useState(false);
@@ -31,6 +35,10 @@ function App() {
         </Routes>
       </Router>
     </div>
+          <Route path="/Data" element={<DataAnalytics/ >} />
+          <Route path="/Inventory" element={<Inventory/>}/>
+          <Route path="/Employees" element={<Employees />}/>
+          <Route path="/Menu" element={<Menu />}/>
 
   );
 };

@@ -1,0 +1,15 @@
+/* In your CSS file */
+.centered-container-inventory {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  left: 8%;
+  width: 82%;
+  margin: auto;
+  table-layout: fixed;
+}
+
+
+
