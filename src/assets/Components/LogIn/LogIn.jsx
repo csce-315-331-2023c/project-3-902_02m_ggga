@@ -41,7 +41,7 @@ function LogIn()  {
                         //setRerender(!rerender);
                     }
                     else {
-                        console.log("error getting acces TOken");
+                        console.log("error getting acces Token");
                     }
                 }).then(() => {
                     if(localStorage.getItem("accessToken" !== undefined)) {
@@ -51,9 +51,6 @@ function LogIn()  {
                 })
             }
             getAccessToken();
-        }
-        else{
-            getUserData();
         }
     }, []);
 
@@ -106,8 +103,7 @@ function LogIn()  {
             console.log("user data:" + data);
             console.log(data);
             setUserData(data);
-        }).then(() => {
-            checkManager(userData);
+            checkManager(data)
         })
     }
 
