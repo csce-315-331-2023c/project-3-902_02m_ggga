@@ -92,9 +92,22 @@ export const ViewOrders = () => {
     };
     const [orders, setOrders] = useState([]);
 
+    // useEffect(() => {
+    //     axios.get("https://mocktea.onrender.com/pastorders/")
+    //         .then((response) => setOrders(response.data))
+    //         .catch((error) => console.error("Error getting past orders", error));
+    // }, []);
     useEffect(() => {
         axios.get("https://mocktea.onrender.com/pastorders/")
-            .then((response) => setOrders(response.data))
+            .then((response) => {
+                // Modify order_date in each order
+                const modifiedOrders = response.data.map(order => ({
+                    ...order,
+                    order_date: order.order_date.substring(0, 10) // Keep only the date portion
+                }));
+
+                setOrders(modifiedOrders);
+            })
             .catch((error) => console.error("Error getting past orders", error));
     }, []);
 
