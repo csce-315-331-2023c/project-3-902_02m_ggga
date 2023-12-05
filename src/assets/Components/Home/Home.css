@@ -9,17 +9,14 @@
 
 /* --------------------BODY STUFF ------------------ */
 
-.body_home{
+.body_home {
     width: 100%;
     text-align: center;
-    
+
 }
 
 
-.button-container-home {
-    text-align: center;
-    margin-top: 20px;
-}
+
 
 .big_logo {
     text-align: center;
@@ -27,23 +24,30 @@
     margin-bottom: 40px;
     /* Add margin to create space between the text and buttons */
 }
-.big_logo h1{
+
+.big_logo h1 {
     font-size: 4rem;
+}
+
+.button-container-home {
+    text-align: center;
+    margin-top: 20px;
 }
 
 .home_button {
     padding: 10px 20px;
     font-size: 1.5rem;
-    background-color: #233141;
-    color: #ffffff;
+    background-color: #1f2933;
     border: none;
     cursor: pointer;
     margin: 5px;
+    width: 250px;
 }
 
 .home_button a {
     text-decoration: none;
     color: #ffffff;
+        /* font-size: 2rem; */
 }
 
 button:hover {
@@ -71,7 +75,7 @@ button:hover {
     /* Centers the image in the header_title */
 }
 
-.header_banner{
+.header_banner {
     background-color: #233141;
 }
 
@@ -88,34 +92,34 @@ button:hover {
     /* Removes default list styling */
 }
 
-.nav-item {
+.header_banner .nav-item {
     padding: 10px;
     /* Example padding, adjust as needed */
 }
 
-.nav-item {
+.header_banner .nav-item {
     font-size: 2rem;
     color: rgb(255, 255, 255);
     list-style: none;
 }
 
-.nav-item a {
+.header_banner .nav-item a {
     font-size: 2rem;
     color: rgb(255, 255, 255);
     list-style: none;
-    text-decoration: none;
+    /* text-decoration: none; */
 }
 
-.nav-item:hover{
+.nav-item:hover {
     text-decoration: underline;
 }
 
-.banner img{
+.banner img {
     width: 100%;
 
 }
 
-.home_text{
+.home_text {
     font-size: 1.2rem;
     margin-top: 10px;
     margin-bottom: 10px;
