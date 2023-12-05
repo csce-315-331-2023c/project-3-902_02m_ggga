@@ -1,4 +1,32 @@
-import { useState, useEffect } from 'react'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Cashier/Cashier.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Cashier/Cashier.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState, useEffect } from 'react'
 import './Cashier.css'
 // import './AccessibleCashier.css'
 import axios from "axios";
@@ -40,13 +68,13 @@ import { Accessibility } from '../Accessibility/Accessibility'
 
         const order_buttons = products.map((product, i) => {
             return (
-                <button
+                &lt;button
                     key={i}
                     className='grid-button'
                     onClick={() => handleClick(product.name, product.price)}
                 >
                     {product.name}
-                </button>
+                &lt;/button>
             );
         });
 
@@ -149,7 +177,7 @@ export const Cashier = () => {
         // Check if the quantity is greater than 0
         if (quantity > 0) {
             // Iterate based on the quantity
-            for (let i = 0; i < quantity; i++) {
+            for (let i = 0; i &lt; quantity; i++) {
                 const product = ingredients_array.find(product => product.name === selectedButton);
                 const current_ingredients = product.ingredients;
                 console.log(current_ingredients);
@@ -190,7 +218,7 @@ export const Cashier = () => {
 
     /**
      * this function handles the place order button. 
-     * The function will create an orderData property which handles the ID< price, date and time. These are the parameters that will be posted to the data base.
+     * The function will create an orderData property which handles the ID&lt; price, date and time. These are the parameters that will be posted to the data base.
      * The function will iterate through the cart, grabbing the ingredient array which holds the indecies in the actual ingredient table on the data base. 
      * For each ingredient, it will check if its normal or extra, depending on the modification, it will set the quantity query, then 
      * use axios to update that ingredients inventory on the data base. 
@@ -209,23 +237,23 @@ export const Cashier = () => {
         };
 
         try {
-            for (let i = 0; i < cart.length; i++) {
+            for (let i = 0; i &lt; cart.length; i++) {
                 const product = cart[i];
                 const curr_ing_array = product.ingredients.split(",");
                 curr_ing_array.forEach(async (ingredient) => {
                     let quantityQuery = 1;
                     if (
-                        (product.name.toLowerCase().includes("extra boba") && ingredient == 1) || (product.name.toLowerCase().includes("extra boba") && ingredient == 7)
+                        (product.name.toLowerCase().includes("extra boba") &amp;&amp; ingredient == 1) || (product.name.toLowerCase().includes("extra boba") &amp;&amp; ingredient == 7)
                     ) {
                         quantityQuery = 2;
                     }
                     if (
-                        (product.name.toLowerCase().includes("extra sugar") && ingredient == 10)
+                        (product.name.toLowerCase().includes("extra sugar") &amp;&amp; ingredient == 10)
                     ) {
                         quantityQuery = 2;
                     }
                     if (
-                        (product.name.toLowerCase().includes("extra milk") && ingredient == 20)
+                        (product.name.toLowerCase().includes("extra milk") &amp;&amp; ingredient == 20)
                     ) {
                         quantityQuery = 2;
                     }
@@ -411,48 +439,48 @@ export const Cashier = () => {
 
 
     return (
-        <div className='page_container' >
-            <div><Accessibility onOptionClick={handleAccessibilityOption} /></div>
+        &lt;div className='page_container' >
+            &lt;div>&lt;Accessibility onOptionClick={handleAccessibilityOption} />&lt;/div>
 
-            <div className='placeorders_page'>
-                {/* <p>hello test</p> */}
-                <div className='place_left_side'>
-                    <h1 className='menu-title'>Menu Items</h1>
-                    <div className='grid-container'>
+            &lt;div className='placeorders_page'>
+                {/* &lt;p>hello test&lt;/p> */}
+                &lt;div className='place_left_side'>
+                    &lt;h1 className='menu-title'>Menu Items&lt;/h1>
+                    &lt;div className='grid-container'>
                         {products_from_db.map((product) => (
-                            <button
+                            &lt;button
                                 key={product.name}
                                 className="grid-button"
                                 onClick={() => handleButtonClick(product.name, product.price)}
                             >
-                                <div className="product-info">
-                                    <div>{product.name}</div>
-                                    <div>${product.price}</div>
-                                </div>
-                            </button>
+                                &lt;div className="product-info">
+                                    &lt;div>{product.name}&lt;/div>
+                                    &lt;div>${product.price}&lt;/div>
+                                &lt;/div>
+                            &lt;/button>
                         ))}
-                    </div>
-                </div>
-                <div className='place_right_side'>
-                    <div className='order_mods'>
-                        <div className='quantity_label'>
-                            <label className='quant_label'>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div className='place_right_side'>
+                    &lt;div className='order_mods'>
+                        &lt;div className='quantity_label'>
+                            &lt;label className='quant_label'>
                                 Quantity:
-                                <input
+                                &lt;input
                                     type="number"
                                     id="quantityInput"
                                     onChange={handleQuantityChange}
                                 />
-                            </label>
+                            &lt;/label>
 
-                            <p>Quantity: {quantity} </p>
-                        </div>
-                        <div className='checkbox_container'>
-                            <label className='mod_label'>Modifications: </label>
-                            <Form className='horizontal_checks'>
+                            &lt;p>Quantity: {quantity} &lt;/p>
+                        &lt;/div>
+                        &lt;div className='checkbox_container'>
+                            &lt;label className='mod_label'>Modifications: &lt;/label>
+                            &lt;Form className='horizontal_checks'>
                                 {top_labels.map((label, index) => (
-                                    <div key={index} className="mb-3">
-                                        <Form.Check
+                                    &lt;div key={index} className="mb-3">
+                                        &lt;Form.Check
                                             inline
                                             label={label}
                                             name="group1"
@@ -460,13 +488,13 @@ export const Cashier = () => {
                                             checked={selectedLabels.includes(label)} // Ensure correct checked status
                                             onChange={() => handleLabelChange(label)}
                                         />
-                                    </div>
+                                    &lt;/div>
                                 ))}
-                            </Form>
-                            <Form className='horizontal_checks'>
+                            &lt;/Form>
+                            &lt;Form className='horizontal_checks'>
                                 {bottom_labels.map((label, index) => (
-                                    <div key={index} className="mb-3">
-                                        <Form.Check
+                                    &lt;div key={index} className="mb-3">
+                                        &lt;Form.Check
                                             inline
                                             label={label}
                                             name="group1"
@@ -474,49 +502,49 @@ export const Cashier = () => {
                                             checked={selectedLabels.includes(label)} // Ensure correct checked status
                                             onChange={() => handleLabelChange(label)}
                                         />
-                                    </div>
+                                    &lt;/div>
                                 ))}
-                            </Form>
-                        </div>
+                            &lt;/Form>
+                        &lt;/div>
 
-                    </div>
-                    <div className='selectedAttributes'>
-                        <div className='acc_div'>
-                            <div className='row_box'>
-                                <h1>Selected Item: {selectedButton} </h1>
-                                <h1>Price per Item: {price}</h1>
-                            </div>
-                            <div className='row_box'>
-                                <h1>Total price: {totalPrice.toFixed(2)}</h1>
-                                {/* <h1>Ingredients: {selectedLabels} </h1> */}
-                            </div>
-                            <div className='row_box'>
-                                <h1>Quantity: {quantity} </h1>
-                                <h1>Mods:{selectedLabels}</h1>
-                            </div>
-                        </div>
-                        <h1>Cart:</h1>
-                        <ul>
+                    &lt;/div>
+                    &lt;div className='selectedAttributes'>
+                        &lt;div className='acc_div'>
+                            &lt;div className='row_box'>
+                                &lt;h1>Selected Item: {selectedButton} &lt;/h1>
+                                &lt;h1>Price per Item: {price}&lt;/h1>
+                            &lt;/div>
+                            &lt;div className='row_box'>
+                                &lt;h1>Total price: {totalPrice.toFixed(2)}&lt;/h1>
+                                {/* &lt;h1>Ingredients: {selectedLabels} &lt;/h1> */}
+                            &lt;/div>
+                            &lt;div className='row_box'>
+                                &lt;h1>Quantity: {quantity} &lt;/h1>
+                                &lt;h1>Mods:{selectedLabels}&lt;/h1>
+                            &lt;/div>
+                        &lt;/div>
+                        &lt;h1>Cart:&lt;/h1>
+                        &lt;ul>
                             {cart.map((item, index) => (
-                                <li key={index}>
-                                    <p>Name: {item.name}</p>
-                                    <p>Price: {item.price}</p>
-                                    <p>Quantity: {item.qty}</p>
-                                    <p>Ingredients: {item.ingredients}</p>
-                                </li>
+                                &lt;li key={index}>
+                                    &lt;p>Name: {item.name}&lt;/p>
+                                    &lt;p>Price: {item.price}&lt;/p>
+                                    &lt;p>Quantity: {item.qty}&lt;/p>
+                                    &lt;p>Ingredients: {item.ingredients}&lt;/p>
+                                &lt;/li>
                             ))}
-                        </ul>
-                    </div>
-                    <DenseTable data={cart} />
-                    <h1 id='order_price_header'>Order Price: {orderPrice} </h1>
-                    <div className='order_placing_btns'>
-                        <button onClick={() => handleCartChange()}> Add to Cart</button>
-                        <button onClick={() => handleLabelChange("clearAll")}>Clear</button>
-                        <button onClick={() => placeOrder()}>Place Orders</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        &lt;/ul>
+                    &lt;/div>
+                    &lt;DenseTable data={cart} />
+                    &lt;h1 id='order_price_header'>Order Price: {orderPrice} &lt;/h1>
+                    &lt;div className='order_placing_btns'>
+                        &lt;button onClick={() => handleCartChange()}> Add to Cart&lt;/button>
+                        &lt;button onClick={() => handleLabelChange("clearAll")}>Clear&lt;/button>
+                        &lt;button onClick={() => placeOrder()}>Place Orders&lt;/button>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+        &lt;/div>
     );
 }
 /**
@@ -528,35 +556,58 @@ export const Cashier = () => {
  */
 function DenseTable({ data }) {
     return (
-        <TableContainer component={Paper}>
-            <Table className='table' sx={{ minWidth: 630 }} size="medium" aria-label="a dense table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell className='table_label'>Product</TableCell>
-                        <TableCell className='table_label'>Quantity</TableCell>
-                        <TableCell className='table_label'>Modifications</TableCell>
-                        <TableCell className='table_label'>Price</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
+        &lt;TableContainer component={Paper}>
+            &lt;Table className='table' sx={{ minWidth: 630 }} size="medium" aria-label="a dense table">
+                &lt;TableHead>
+                    &lt;TableRow>
+                        &lt;TableCell className='table_label'>Product&lt;/TableCell>
+                        &lt;TableCell className='table_label'>Quantity&lt;/TableCell>
+                        &lt;TableCell className='table_label'>Modifications&lt;/TableCell>
+                        &lt;TableCell className='table_label'>Price&lt;/TableCell>
+                    &lt;/TableRow>
+                &lt;/TableHead>
+                &lt;TableBody>
                     {data.map((row, index) => (
-                        <TableRow
+                        &lt;TableRow
                             key={index}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            sx={{ '&amp;:last-child td, &amp;:last-child th': { border: 0 } }}
                         >
-                            <TableCell component="th" scope="row" className='table_entry'>
+                            &lt;TableCell component="th" scope="row" className='table_entry'>
                                 {row.name}
-                            </TableCell>
-                            <TableCell className='table_entry'>{row.qty}</TableCell>
-                            <TableCell className='table_entry'>{row.ingredients}</TableCell>
-                            <TableCell className='table_entry'>{row.price}</TableCell>
-                        </TableRow>
+                            &lt;/TableCell>
+                            &lt;TableCell className='table_entry'>{row.qty}&lt;/TableCell>
+                            &lt;TableCell className='table_entry'>{row.ingredients}&lt;/TableCell>
+                            &lt;TableCell className='table_entry'>{row.price}&lt;/TableCell>
+                        &lt;/TableRow>
                     ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                &lt;/TableBody>
+            &lt;/Table>
+        &lt;/TableContainer>
     );
 }
 
 
 export default Cashier;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Accessibility">Accessibility</a></li><li><a href="global.html#Cashier">Cashier</a></li><li><a href="global.html#Customer">Customer</a></li><li><a href="global.html#DenseTable">DenseTable</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#LogIn">LogIn</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#ProductModal">ProductModal</a></li><li><a href="global.html#ViewOrders">ViewOrders</a></li><li><a href="global.html#Weather">Weather</a></li><li><a href="global.html#populateButtons">populateButtons</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 05 2023 13:27:41 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
