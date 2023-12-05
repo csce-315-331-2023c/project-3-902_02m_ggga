@@ -3,13 +3,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     flex-direction: column;
-    padding-top: 35%;
     width: 82%;
     position: relative;
+    top: 50px;
     left: 17%;
-    padding-top: 77%;
   }
   
 

@@ -8,7 +8,7 @@ import { Input } from '@mui/material';
 export const Inventory = () => {
   const [inventoryItems, setInventoryItems] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
-  const [buttonPopup2, setButtonPopup2] = useState(false);
+  const [deletePopup, setDeletePopup] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState('');
   const [newItem, setNewItem] = useState({
     name: '',
@@ -49,13 +49,19 @@ export const Inventory = () => {
       });
   };
 
+  const handleDeleteInputChange = (e) => {
+    setDeleteItemId(e.target.value);
+  };
+
   const deleteItem = () => {
+    const itemIdToDelete = Number(deleteItemId);
     axios
-      .delete(`https://mocktea.onrender.com/inventory/${deleteItemId}`)
+      .delete(`https://mocktea.onrender.com/inventory/${itemIdToDelete}`)
       .then(() => {
         // Update the state to remove the deleted item
-        setInventoryItems(inventoryItems.filter(item => item.id !== deleteItemId));
-        setButtonPopup(false);
+        setInventoryItems(inventoryItems.filter(item => item.id !== itemIdToDelete));
+        setDeletePopup(false);
+        setDeleteItemId('');
       })
       .catch((error) => {
         console.error("Error deleting item", error);
@@ -100,16 +106,16 @@ export const Inventory = () => {
         <button onClick={addInventoryItem}>Enter</button>
       </Popup>
 
-      <Popup trigger={buttonPopup2} setTrigger={setButtonPopup2}>
-      Enter ID to delete
-        <input type="text" value={deleteItemId} onChange={(e) => setDeleteItemId(e.target.value)} />
+      <Popup trigger={deletePopup} setTrigger={setDeletePopup}>
+      <h3>Enter inventory Item</h3>
+        Item ID:<input value={deleteItemId} onChange={handleDeleteInputChange} />
         <button onClick={deleteItem}>Delete Item</button>
       </Popup>
 
 
 
       <button onClick={() => setButtonPopup(true)}>Add New Item</button>
-      <button onClick={() => setButtonPopup2(true)}>Delete Item</button>
+      <button onClick={() => setDeletePopup(true)}>Delete Item</button>
     </div>
   );
 };
