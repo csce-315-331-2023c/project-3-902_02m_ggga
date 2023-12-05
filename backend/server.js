@@ -304,7 +304,7 @@ app.get("/sales-data", async (req, res) => {
       SELECT date_trunc('day', order_date) AS day, SUM(price + tip) AS total_sales
       FROM orders
       GROUP BY day
-      ORDER BY day;
+      ORDER BY day
     `);
     res.json(result.rows);
   } catch (error) {
@@ -321,7 +321,7 @@ app.get("/product-sales-data", async (req, res) => {
       FROM orders
       WHERE items @> $1::text[] -- Assuming items is a text array and contains the product names
       GROUP BY day
-      ORDER BY day;
+      ORDER BY day
     `, [`{"${productName}"}`]); // This binds the productName as an array element for the query
     res.json(result.rows);
   } catch (error) {
