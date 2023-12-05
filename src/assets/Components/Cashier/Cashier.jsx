@@ -20,6 +20,13 @@ import Form from 'react-bootstrap/Form';
 import { Header } from '../Header/Header';
 import { Accessibility } from '../Accessibility/Accessibility'
 
+
+/**
+ * This function serves the populate the button array from the products table on the data base.
+ * The parameter is a function that we assign to the handleClick parameter of each button. 
+ * The function uses Axios to contact the correct data base, then stores results in a list.
+ * @param {*} handleClick 
+ */
 function populateButtons(handleClick) {
     function populateButtons(handleClick) {
         const [products, setProducts] = useState([]);
@@ -46,6 +53,12 @@ function populateButtons(handleClick) {
         return (order_buttons)
     }
 }
+
+/**
+ * 
+ * @returns main function which returns everything on the cashier page. 
+ * Allows ordering and viewing past orders
+ */
 export const Cashier = () => {
 
     // here I have all my states and handlers
@@ -63,7 +76,9 @@ export const Cashier = () => {
     const [maxOrderId, setMaxOrderId] = useState(null);
 
 
-
+/**
+ * this function handles 
+ */
     const handleLabelChange = (label) => {
         if (label === 'clearAll') {
             // Clear all selected labels

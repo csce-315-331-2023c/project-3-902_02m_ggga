@@ -92,7 +92,7 @@ export const ViewOrders = () => {
             {/* <div className='header'>
                 <Header />
             </div> */}
-            <h1>Past 20 Orders</h1>
+            <h1>Past 40 Orders</h1>
             <DenseTable data={orders} />
         </div>
     )

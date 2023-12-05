@@ -7,6 +7,7 @@ import { Navbar as Navbar } from '../Navbar';
 import { Outlet, Link } from 'react-router-dom';
 import headerImage from "../Header/ShareTea_Header.png";
 import banner from "./sharetea_webbanner_2.png"
+import Accessibility from '../Accessibility/Accessibility';
 
 
 export const Home = () => {
@@ -37,6 +38,82 @@ export const Home = () => {
             googleTranslateElementInit();
         }
     }, []);
+
+    const toggleStyle = (element, styleName, value) => {
+        // const currentStyle = document.style[styleName];
+        const chosenStyle = element.style[styleName];
+        // document.body.style[styleName] = currentStyle ? "" : value;
+        // document.documentElement.style[styleName] = currentStyle ? "" : value;
+        element.style[styleName] = chosenStyle ? "" : value;
+    };
+
+    // const [currentView, setCurrentView] = useState("");
+
+    // const handleViewChange = (view) => {
+    //     setCurrentView(view);
+    // }
+    const handleAccessibilityOption = (option) => {
+        const enlarge = document.querySelector(".selectedAttributes");
+        const checkbox = document.querySelector(".checkbox_container");
+        const modLabel = document.querySelector(".order_mods");
+        const quant = document.querySelector(".quant_label");
+        const menuTitle = document.querySelector(".menu-title");
+        const leftSide = document.querySelector(".place_left_side");
+        const table = document.querySelector(".orders_table");
+        const tableLabels = document.querySelectorAll(".table .table_label");
+        const tableText = document.querySelectorAll(".table .table_entry");
+        const orderButtons = document.querySelector(".order_placing_btns");
+        const pastOrders = document.querySelector(".past_orders");
+        // console.log(tableLabels); // Check if it's not null or undefined
+        // console.log(tableEntries); // Check if it's not null or undefined
+        const rightSide = document.querySelector(".place_right_side");
+        switch (option) {
+            case "biggerText":
+                // toggleStyle(modLabel, "font-size", "1.3rem");
+                // toggleStyle(pastOrders, "font-size", "2rem");
+                toggleStyle(leftSide, "font-size", "1.3rem");
+                toggleStyle(rightSide, "font-size", "1.5rem");
+                toggleStyle(quant, "font-size", "1.5rem");
+                tableLabels.forEach((label) => {
+                    toggleStyle(label, "font-size", "1.5rem");
+                });
+                tableText.forEach((entry) => {
+                    toggleStyle(entry, "font-size", "1.3rem");
+                });
+                break;
+            case "highContrast":
+                toggleStyle(leftSide, "background-color", "#000");
+                toggleStyle(leftSide, "color", "#fff");
+                toggleStyle(rightSide, "color", "#fff");
+                toggleStyle(rightSide, "background-color", "#000");
+                toggleStyle(menuTitle, "color", "#fff");
+                tableLabels.forEach((label) => {
+                    toggleStyle(label, "color", "#fff");
+                    toggleStyle(label, "background-color", "#000");
+
+                });
+                tableText.forEach((entry) => {
+                    toggleStyle(entry, "color", "#fff");
+                    toggleStyle(entry, "background-color", "#000");
+                });
+                break;
+            case "legibleText":
+                toggleStyle(leftSide, "font-family", "Times New Roman, Times, serif");
+                toggleStyle(rightSide, "font-family", "Times New Roman, Times, serif");
+                tableLabels.forEach((label) => {
+                    toggleStyle(label, "font-family", "Times New Roman, Times, serif");
+                });
+                tableText.forEach((entry) => {
+                    toggleStyle(entry, "font-family", "Times New Roman, Times, serif");
+                });
+                break;
+            default:
+                document.documentElement.style.fontSize = "";
+                document.documentElement.style.backgroundColor = "";
+                document.documentElement.style.color = "";
+                document.documentElement.style.cursor = "";
+        }
+    };
 
     return (
         <div className='home_container'>
@@ -74,10 +151,13 @@ export const Home = () => {
                 <div className='big_logo'>
                     <h1>WELCOME TO SHARE TEA!</h1>
                 </div>
+
                 <div id="google_translate_element"></div>
                 <div className='banner'>
                     <img src={banner} alt="ShareTea" />
                 </div>
+                <div><Accessibility onOptionClick={handleAccessibilityOption} /></div>
+
                 <div className="home_text">
                     <p>Sharetea serves delivious bubble tea globally.</p>
                     <p>Established in 1992 in Taiwan, we strive to create high quality drinks with fresh ingredients.</p>
