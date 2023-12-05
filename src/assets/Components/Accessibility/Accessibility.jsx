@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Accessibility.css";
 /**
  * used to effect the website through an accessibity menu available on most pages
- * @param {*} onOptionClick  takes in the information regarding the location and if accessibility is open 
+ * @param {*} onOptionClick  takes in the information regarding the location and if accessibility is open
  * @returns accessibility options in a drop down menu.
  */
 export const Accessibility = ({ onOptionClick }) => {
@@ -33,7 +33,7 @@ export const Accessibility = ({ onOptionClick }) => {
       onClick: () => handleOptionClick("highContrast"),
     },
     { label: "Legible Text", onClick: () => handleOptionClick("legibleText") },
-    {label: "Translate"}
+    { label: "Translate" },
   ];
 
   return (
