@@ -9,6 +9,7 @@ export const Inventory = () => {
   const [inventoryItems, setInventoryItems] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
   const [buttonPopup2, setButtonPopup2] = useState(false);
+  const [buttonPopup3, setButtonPopup3] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState('');
   const [newItem, setNewItem] = useState({
     name: '',
@@ -22,7 +23,7 @@ export const Inventory = () => {
   useEffect(() => {
     // Fetch the inventory data when the component mounts
     axios
-      .get("http://localhost:5000/api/inventory") // Ensure this URL points to your API endpoint
+      .get("http://localhost:5000/inventory") // Ensure this URL points to your API endpoint
       .then((response) => {
         // Update state with the fetched inventory items
         setInventoryItems(response.data);
@@ -39,7 +40,7 @@ export const Inventory = () => {
 
   const addInventoryItem = () => {
     axios
-      .post('http://localhost:5000/api/inventory', newItem)
+      .post('http://localhost:5000/inventory', newItem)
       .then((response) => {
         setInventoryItems([...inventoryItems, response.data]);
         setButtonPopup(false); // Close the popup
@@ -51,7 +52,7 @@ export const Inventory = () => {
 
   const deleteItem = () => {
     axios
-      .delete(`http://localhost:5000/api/inventory/${deleteItemId}`)
+      .delete(`http://localhost:5000/${deleteItemId}`)
       .then(() => {
         // Update the state to remove the deleted item
         setInventoryItems(inventoryItems.filter(item => item.id !== deleteItemId));
@@ -86,6 +87,7 @@ export const Inventory = () => {
               <td>{item.quantity}</td>
               <td>{new Date(item.last_bought_date).toLocaleDateString()}</td>
               <td id='min'>{item.minimum}</td>
+              {console.log(item)}
               
             </tr>
           ))}
@@ -97,19 +99,30 @@ export const Inventory = () => {
         Quantity: <input name="quantity" onChange={handleInputChange} />
         Last Bought Date: <input name="last_bought_date" onChange={handleInputChange} />
         Minimum Required: <input name="minimum" onChange={handleInputChange} />
+        <br />
         <button onClick={addInventoryItem}>Enter</button>
       </Popup>
 
       <Popup trigger={buttonPopup2} setTrigger={setButtonPopup2}>
       Enter ID to delete
         <input type="text" value={deleteItemId} onChange={(e) => setDeleteItemId(e.target.value)} />
+        <br />
         <button onClick={deleteItem}>Delete Item</button>
+      </Popup>
+
+      <Popup trigger={buttonPopup3} setTrigger={setButtonPopup3}>
+      Enter ID of Item you wish to edit
+      <input></input>
+      
       </Popup>
 
 
 
-      <button onClick={() => setButtonPopup(true)}>Add New Item</button>
-      <button onClick={() => setButtonPopup2(true)}>Delete Item</button>
+
+
+      <button clasName="popup-button" onClick={() => setButtonPopup(true)}>Add New Item</button>
+      <button  className="popup-button" onClick={() => setButtonPopup2(true)}>Delete Item</button>
+      <button className="popup-button" onClick={() => setButtonPopup3(true)}>Edit Item</button>
     </div>
   );
 };

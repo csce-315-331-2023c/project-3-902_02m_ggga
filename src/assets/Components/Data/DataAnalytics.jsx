@@ -23,32 +23,29 @@ ChartJS.register(
   Legend
 );
 
-
-
-
 export const DataAnalytics = () => {
 
   const [productName, setProductName] = useState('');
-  const [salesData, setSalesData] = useState([]);
+  const [totalSalesData, setTotalSalesData] = useState([]); // Separate state for total sales data
+  const [productSalesData, setProductSalesData] = useState([]); // Separate state for product-specific sales data
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/sales-data")
       .then((response) => {
-        setSalesData(response.data);
+        setTotalSalesData(response.data);
         console.log(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching sales data", error);
+        console.error("Error fetching total sales data", error);
       });
   }, []);
 
-
   const lineChartData = {
-    labels: salesData.map(data => new Date(data.day).toLocaleDateString()), // Assuming 'day' is in a date-compatible format
+    labels: productName ? productSalesData.map(data => new Date(data.day).toLocaleDateString()) : totalSalesData.map(data => new Date(data.day).toLocaleDateString()),
     datasets: [
       {
-        label: 'Total Sales',
-        data: salesData.map(data => data.total_sales),
+        label: productName ? `Sales for ${productName}` : 'Total Sales',
+        data: productName ? productSalesData.map(data => data.number_of_sales) : totalSalesData.map(data => data.total_sales),
         fill: false,
         backgroundColor: 'rgb(75, 192, 192)',
         borderColor: 'rgba(75, 192, 192, 0.2)',
@@ -56,24 +53,21 @@ export const DataAnalytics = () => {
     ],
   };
 
-
   const fetchTotalSalesData = () => {
-    axios.get("http://localhost:5000/api/sales-data")
+    axios.get("http://localhost:5000/sales-data")
       .then((response) => {
-        setSalesData(response.data);
+        setTotalSalesData(response.data);
       })
       .catch((error) => {
         console.error("Error fetching total sales data", error);
       });
   };
 
-
-
   const fetchProductSalesData = () => {
-    axios.get(`http://localhost:5000/api/product-sales-data?productName=${productName}`)
+    axios.get(`http://localhost:5000/product-sales-data?productName=${productName}`)
       .then((response) => {
-        setSalesData(response.data);
-        console.log(response.data)
+        setProductSalesData(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("Error fetching product sales data", error);
@@ -84,9 +78,7 @@ export const DataAnalytics = () => {
     fetchTotalSalesData();
   }, []);
 
-
   return (
-  
     <div className="centered-container-data">
       <h1>Data Analytics</h1>
 
@@ -100,9 +92,7 @@ export const DataAnalytics = () => {
 
       <div className='chart'>
         <Line data={lineChartData} options={{ responsive: true }} />
-        
       </div>
     </div>
-    )
-  
+  );
 }

@@ -8,18 +8,20 @@ export const Menu = () => {
   const [products, setProducts] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
   const [deletePopup, setDeletePopup] = useState(false);
+  const [editPopup, setEditPopup] = useState(false);
   const [deletedItemId, setDeletedItemId] = useState('');
   const [newProduct, setNewProduct] = useState({
       name: '',
       price: '',
       ingredients: '',
       // Add other product properties as needed
+      image_url: '',
     });
     
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get("http://localhost:5000/products")
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products", error));
   }, []);
@@ -33,14 +35,14 @@ export const Menu = () => {
   const addNewProduct = () => {
     // Validate inputs as necessary before sending
     axios
-      .post("http://localhost:5000/api/products", newProduct)
+      .post("http://localhost:5000/products", newProduct)
       .then((response) => {
         // Add the new product to the products state
         setProducts([...products, response.data]);
         // Close the popup
         setButtonPopup(false);
         // Reset the new product state if needed
-        setNewProduct({ name: '', price: '', ingredients: '' });
+        setNewProduct({ name: '', price: '', ingredients: '', image_url: '' });
       })
       .catch((error) => console.error("Error adding product", error));
   };
@@ -53,7 +55,7 @@ export const Menu = () => {
     const itemIdToDelete = Number(deletedItemId); // Convert to number
   
     axios
-      .delete(`http://localhost:5000/api/products/${itemIdToDelete}`)
+      .delete(`http://localhost:5000/${itemIdToDelete}`)
       .then(() => {
         setProducts(products.filter((product) => product.id !== itemIdToDelete));
         setDeletePopup(false);
@@ -66,7 +68,7 @@ export const Menu = () => {
 
   return (
     <div className="centered-container-menu">
-      <h1>Menu</h1>
+      <h1 id="header">Menu</h1>
       <table>
         <thead>
           <tr>
@@ -75,6 +77,7 @@ export const Menu = () => {
             <th>Price</th>
             <th>Ingredients</th>
             {/* Add more headings as per your product data structure */}
+            <th>Image URL</th>
           </tr>
         </thead>
         <tbody>
@@ -84,7 +87,8 @@ export const Menu = () => {
               <td>{product.name}</td>
               <td>{product.price}</td>
               <td>{product.ingredients}</td>
-              
+              <td id="url">{product.image_url}</td>
+              {console.log(product)}
             </tr>
           ))}
         </tbody>
@@ -94,17 +98,32 @@ export const Menu = () => {
           Item Name: <input name="name" value={newProduct.name} onChange={handleInputChange}/>
           Price: <input name="price" value={newProduct.price} onChange={handleInputChange}/>
           Ingredients: <input name="ingredients" value={newProduct.ingredients} onChange={handleInputChange}/>
+          Image URL: <input name="image_url" value={newProduct.image_url} onChange={handleInputChange}/>
+          <br />
           <button onClick={addNewProduct}>Enter</button>
       </Popup>
 
       <Popup trigger={deletePopup} setTrigger={setDeletePopup}>
         <h3>Delete Menu Item</h3>
         Item ID: <input value={deletedItemId} onChange={handleDeleteInputChange}/>
+        <br />
         <button onClick={deleteProduct}>Enter</button>
       </Popup>
 
-      <button onClick={() => setButtonPopup(true)}>Add New Menu Item</button>
-      <button onClick={() => setDeletePopup(true)}>Delete Menu Item</button>
+      <Popup trigger={editPopup} setTrigger={setEditPopup}>
+        <h3>Delete Menu Item</h3>
+        Item ID: <input value={deletedItemId} onChange={handleDeleteInputChange}/>
+        <br />
+        <button onClick={deleteProduct}>Enter</button>
+      </Popup>
+      <br />
+      <br />
+
+      <button className="popup-button" onClick={() => setButtonPopup(true)}>Add New Menu Item</button>
+      <br />
+      <button className="popup-button" onClick={() => setDeletePopup(true)}>Delete Menu Item</button>
+      <br />
+      <button className="popup-button" onClick={() => setEditPopup(true)}>Edit Menu Item</button>
     </div>
   );
 }

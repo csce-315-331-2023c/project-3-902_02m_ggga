@@ -15,7 +15,7 @@ const pool = new Pool({
 
 app.use(cors());
 
-app.get("/api/products", async (req, res) => {
+app.get("/products", async (req, res) => {
   try {
     // Updated to fetch all columns for each product
     const result = await pool.query("SELECT * FROM product");
@@ -26,7 +26,8 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
-app.get("/api/employees", async (req, res) => {
+
+app.get("/employees", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM employees");
     res.json(result.rows);
@@ -36,15 +37,16 @@ app.get("/api/employees", async (req, res) => {
   }
 });
 
-app.post("/api/employees", async (req, res) => {
+
+app.post("/employees", async (req, res) => {
   try {
-    const { name, hours_worked, salary, position, manager } = req.body;
+    const { name, hours_worked, salary, position, manager, gitid } = req.body;
     const newEmployeeQuery = `
-      INSERT INTO employees (name, hours_worked, salary, position, manager)
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO employees (name, hours_worked, salary, position, manager, gitid)
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;`;
 
-    const result = await pool.query(newEmployeeQuery, [name, hours_worked, salary, position, manager]);
+    const result = await pool.query(newEmployeeQuery, [name, hours_worked, salary, position, manager, gitid]);
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error("Error adding new employee", error);
@@ -53,7 +55,8 @@ app.post("/api/employees", async (req, res) => {
 });
 
 
-app.get("/api/inventory", async (req, res) => {
+
+app.get("/inventory", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM inventory");
     res.json(result.rows);
@@ -63,7 +66,7 @@ app.get("/api/inventory", async (req, res) => {
   }
 });
 
-app.delete("/api/employees/:id", async (req, res) => {
+app.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deleteQuery = 'DELETE FROM employees WHERE employee_id = $1 RETURNING *;';
@@ -81,7 +84,7 @@ app.delete("/api/employees/:id", async (req, res) => {
 });
 
 
-app.post("/api/inventory", async (req, res) => {
+app.post("/inventory", async (req, res) => {
   try {
     const { name, price_per_unit, quantity, last_bought_date, minimum } = req.body;
     const newInventoryQuery = `
@@ -98,7 +101,7 @@ app.post("/api/inventory", async (req, res) => {
 });
 
 
-app.delete("/api/inventory/:id", async (req, res) => {
+app.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deleteQuery = "DELETE FROM inventory WHERE id = $1 RETURNING *";
@@ -115,7 +118,9 @@ app.delete("/api/inventory/:id", async (req, res) => {
   }
 });
 
-app.post("/api/products", async (req, res) => {
+
+
+app.post("/products", async (req, res) => {
   try {
     // Destructure the product information from the request body
     const { name, price, ingredients, image_url } = req.body;
@@ -126,6 +131,7 @@ app.post("/api/products", async (req, res) => {
       VALUES ($1, $2, $3, $4)
       RETURNING *;`;
 
+    
     // Execute the query with the product information
     const result = await pool.query(newProductQuery, [name, price, ingredients, image_url]);
 
@@ -137,7 +143,7 @@ app.post("/api/products", async (req, res) => {
   }
 });
 
-app.delete("/api/products/:id", async (req, res) => {
+app.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deleteQuery = "DELETE FROM product WHERE id = $1 RETURNING *";
@@ -156,7 +162,7 @@ app.delete("/api/products/:id", async (req, res) => {
 
 
 
-app.get("/api/sales-data", async (req, res) => {
+app.get("/sales-data", async (req, res) => {
   try {
     const result = await pool.query(`
       SELECT date_trunc('day', order_date) AS day, SUM(price + tip) AS total_sales
@@ -171,7 +177,7 @@ app.get("/api/sales-data", async (req, res) => {
   }
 });
 
-app.get("/api/product-sales-data", async (req, res) => {
+app.get("/product-sales-data", async (req, res) => {
   const productName = req.query.productName;
   try {
     const result = await pool.query(`

@@ -5,16 +5,18 @@
     align-items: center;
     flex-direction: column;
     position: relative;
-    left: 8%;
+    left: 18%;
+    width: 80%;
     
   }
   
 
 .chart{
   height: auto;
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: center;
+  
 }
 
 .buttons{
