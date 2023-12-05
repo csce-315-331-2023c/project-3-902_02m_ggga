@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  background-color: #333;
+  background-color: rgb(80, 41, 41);
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -26,7 +26,8 @@
 }
 
 .sharetea_header img {
-  width: 60%;
+  width: 80%;
+  padding: 5px 0;
 }
 
 .links {
@@ -57,7 +58,7 @@
 .cart-dropdown {
   position: fixed;
   top: 70px;
-  right: 160px;
+  right: 140px;
   background-color: white;
   border: 1px solid #ddd;
   padding: 10px;
@@ -110,6 +111,9 @@
 
 .body {
   padding: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button-container {
@@ -126,13 +130,12 @@
 .product-button {
   width: 300px;
   height: 300px;
-  background-color: rgb(233, 233, 233);
+  background-color: rgb(80, 41, 41);
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 16px;
   border: none;
-  color: #000;
 }
 
 .product-button:hover {

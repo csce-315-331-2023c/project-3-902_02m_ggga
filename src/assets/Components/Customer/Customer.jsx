@@ -159,7 +159,7 @@ const ProductModal = ({ isOpen, onClose, addToCart, product }) => {
  * used by the customer to place orders
  * @returns the html javascript page that can adapt to our server information
  */
-export const Customer = ()  => {
+export const Customer = () => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);
@@ -168,6 +168,7 @@ export const Customer = ()  => {
   const [isOrderSuccessOpen, setIsOrderSuccessOpen] = useState(false);
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
   const [quantity, setQuantity] = useState(1);
+  const [accessibilityOptions, setAccessibilityOptions] = useState([]);
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -231,7 +232,7 @@ export const Customer = ()  => {
     setSelectedProduct(null);
   };
   /**
-   * 
+   *
    * @param {*} product defined as a string that reflects product rom the server
    * @param {*} quantity defined as a positive number
    * @param {*} sugarLevel an in 2, 1, 0 defined by the amount of sugar
@@ -326,8 +327,8 @@ export const Customer = ()  => {
     return groupedItems;
   };
   /**
-  * used to place orders using info defined from the user. takes in thee local date  
-  */
+   * used to place orders using info defined from the user. takes in thee local date
+   */
   const placeOrder = async () => {
     const orderData = {
       orderID: maxOrderId + 1,
@@ -391,30 +392,46 @@ export const Customer = ()  => {
     }
   };
   /**
-   * used to effect the accessibilty for the customer site
-   * @param {*} styleName takes in the current style of the site
-   * @param {*} value takes in the current size of the site
+   * the toggleStyle function is called within the handleAccessibilityOption function below.
+   * This grabs the element we want to change, finds the value fo the stylename we want to change, then sets it using the value we input.
+   * If there it will either be the updated accessibility value, or the default value that is grabs at the initialization of the function
+   * @param {*} element
+   * @param {*} styleName
+   * @param {*} value
    */
-  const toggleStyle = (styleName, value) => {
-    const currentStyle = document.body.style[styleName];
-    document.body.style[styleName] = currentStyle ? "" : value;
-    document.documentElement.style[styleName] = currentStyle ? "" : value;
+
+  const toggleStyle = (element, styleName, value) => {
+    const chosenStyle = element.style[styleName];
+    element.style[styleName] = chosenStyle ? "" : value;
   };
   /**
    * handles accessibity options for customer page
-   * @param {*} option 
+   * @param {*} option
    */
   const handleAccessibilityOption = (option) => {
+    const updatedOptions = [...accessibilityOptions];
+    const productLabels = document.querySelectorAll(".product-info");
+    const popup = document.querySelectorAll(".modal-container-right");
+    const body = document.body;
+    const products = document.querySelectorAll(".product-button");
     switch (option) {
       case "biggerText":
-        toggleStyle("fontSize", "1.3em");
+        productLabels.forEach((label) => {
+          toggleStyle(label, "font-size", "1.2rem");
+        });
+        popup.forEach((text) => {
+          toggleStyle(text, "font-size", "1.2rem");
+        });
         break;
       case "highContrast":
-        toggleStyle("backgroundColor", "#000");
-        toggleStyle("color", "#fff");
+        toggleStyle(body, "backgroundColor", "#000");
+        products.forEach((button) => {
+          toggleStyle(button, "backgroundColor", "#fff");
+          toggleStyle(button, "color", "#000");
+        });
         break;
       case "legibleText":
-        toggleStyle("fontFamily", "Times New Roman, Times, serif");
+        toggleStyle(body, "font-family", "Times New Roman, Times, serif");
         break;
       default:
         document.documentElement.style.fontSize = "";
@@ -427,7 +444,7 @@ export const Customer = ()  => {
   return (
     <div>
       <nav className="header">
-        <div className="weather-container"></div>
+        <div className="weather-container">{/* <Weather /> */}</div>
         <div className="sharetea_header">
           <img src={headerImage} alt="ShareTea" />
         </div>
@@ -524,9 +541,8 @@ export const Customer = ()  => {
         isOpen={isOrderSuccessOpen}
         onClose={() => setIsOrderSuccessOpen(false)}
       />
-      {/*<Weather/>*/}
     </div>
   );
-}
+};
 
 export default Customer;
