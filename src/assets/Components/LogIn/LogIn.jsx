@@ -38,7 +38,7 @@ function LogIn()  {
                     if(data.access_token) {
                         console.log("access token: " + data.access_token);
                         localStorage.setItem("accessToken", data.access_token);
-                        //setRerender(!rerender);
+                        setRerender(!rerender);
                     }
                     else {
                         console.log("error getting acces Token");
