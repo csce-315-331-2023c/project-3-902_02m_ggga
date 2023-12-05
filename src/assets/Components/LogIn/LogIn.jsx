@@ -68,7 +68,7 @@ function LogIn()  {
      * @param {*} internalUser the data of the current user
      */
     async function checkManager(internalUser) {
-        fetch ("https://mocktea.onrender.com/employees?gitid="+ internalUser.id, {
+        await fetch ("https://mocktea.onrender.com/employees?gitid="+ internalUser.id, {
             method: "GET",
         }).then((response) => {
             setPrivleges("Not current employee. Please log out or contact your supervisor");
