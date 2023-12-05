@@ -4,8 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/Switch';
-import { Link } from "react-router-dom"
-import { NavLink, Outlet } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { NavLink, Outlet } from 'react-router-dom';
 import headerImage from "./ShareTea_Header.png";
 import { Accessibility } from '../Accessibility/Accessibility'
 import { right } from '@popperjs/core';
@@ -79,7 +79,9 @@ export const Header = () => {
     const toggleAcc = () => {
         const [currentMode, setCurrMode] = useState(false);
     }
-
+    const handleLogOut = () => {
+        localStorage.removeItem("accessToken")
+    }
     return (
         <div>
             <header className='header_cashier'>
@@ -94,7 +96,7 @@ export const Header = () => {
                     <ul className='links'>
                         <li><Link to="/CashierLanding/vieworder">View Orders</Link></li>
                         <li><Link to='/CashierLanding/placeorder'>Place Orders</Link></li>
-                        <li><Link to='/home'>Log Out</Link></li>
+                        <li><Link onClick={handleLogOut} to='/' >Log Out</Link></li>
                     </ul>
                 </div>
             </header>

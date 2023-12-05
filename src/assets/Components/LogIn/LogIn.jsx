@@ -77,7 +77,7 @@ function LogIn()  {
             console.log("git id" + internalUser.id);
             console.log(data.manager);
             if (data.manager === true) {
-                setPrivleges(<div><body>Welcome {internalUser.name}!</body><button>Manager</button><Link to='/CashierLanding'><button>Cashier</button></Link></div>)
+                setPrivleges(<div><body>Welcome {internalUser.name}!</body><Link to='/Manager'><button>Manager</button></Link><Link to='/CashierLanding'><button>Cashier</button></Link></div>)
                 console.log('This user is a manager.');
                 // Perform actions for a manager user
             } else {
@@ -109,9 +109,6 @@ function LogIn()  {
 
     return (
         <div className='LogIn'>
-            <div className='home_header'>
-                <Navbar />
-            </div>
                 <div className='body'>
                     {localStorage.getItem("accessToken") ?
                         <div>
