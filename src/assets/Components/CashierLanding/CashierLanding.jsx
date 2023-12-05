@@ -28,14 +28,3 @@ export const CashierLanding = () => {
 }
 
 export default CashierLanding
-
-{/* <Router>
-{/* <Header /> */}
-// {/* <Routes>
-//     {/* <Route path="/" element={<Header />} /> */}
-//     <Route index element = {<Header />}></Route>
-//     <Route path="/CashierLanding/placeorder" element={<Cashier />} />
-//     <Route path="/CashierLanding/vieworder" element={<ViewOrders />} />
-//     <Route path="/home" element={<Home />} />
-// </Routes>
-// </Router> */} */}

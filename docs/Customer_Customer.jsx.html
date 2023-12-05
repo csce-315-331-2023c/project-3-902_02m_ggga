@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Customer/Customer.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Customer/Customer.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./Customer.css";
+import tea from "./assets/MilkTea_ClassicPearl_Black.jpg";
+import headerImage from "./assets/ShareTea_Header.png";
+import Modal from "react-modal";
+import Weather from "./Weather";
+import { Link } from "react-router-dom";
+import Accessibility from "../Accessibility/Accessibility";
+
+Modal.setAppElement("#root");
+/**
+ * Drop down menu for the customer view. used to define an order
+ * @param {*} isOpen used to check to see if the drop down is open
+ * @param {*} onClose used to start function for when closing menu
+ * @param {*} addToCart used to start the add to cart function when used is ready
+ * @param {*} product defines the product the user creates. is a string
+ * @returns the javascript used to define the drop down menu
+ */
+const ProductModal = ({ isOpen, onClose, addToCart, product }) => {
+  const [quantity, setQuantity] = useState(1);
+  const [sugarLevel, setSugarLevel] = useState("1"); // Default to "Normal"
+  const [milk, setMilk] = useState(
+    product.name.toLowerCase().includes("milk") ? "1" : "0"
+  );
+  const [boba, setBoba] = useState(
+    product.name.toLowerCase().includes("pearls") ||
+      product.name.toLowerCase().includes("pearl")
+      ? "1"
+      : "0"
+  );
+
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity, sugarLevel, milk, boba);
+    onClose();
+    setQuantity(1);
+    setSugarLevel("1"); // Reset sugar level to default
+    setMilk("1"); // Reset milk to default
+    setBoba("0"); // Reset boba to default
+  };
+
+  return (
+    &lt;Modal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      contentLabel="Product Modal"
+      className="product-modal"
+      overlayClassName="product-overlay"
+    >
+      &lt;div className="modal-container">
+        &lt;div className="modal-container-left">
+          &lt;img src={product.image_url || tea} alt={product.name} />
+        &lt;/div>
+        &lt;div className="modal-container-right">
+          &lt;h2
+            style={{
+              margin: "1rem 1rem 0",
+              paddingBottom: "1rem",
+              borderBottom: "black 1px solid",
+            }}
+          >
+            {product.name}
+          &lt;/h2>
+          &lt;p className="modal-price">Price: ${product.price}&lt;/p>
+          &lt;div className="dropdown-container">
+            &lt;div className="dropdown-mods">
+              &lt;label htmlFor="">Sugar Level&lt;/label>
+              &lt;select
+                name="sugar"
+                className="select-menu"
+                onChange={(e) => setSugarLevel(e.target.value)}
+              >
+                &lt;option value="1">Normal&lt;/option>
+                &lt;option value="2">Extra Sugar&lt;/option>
+                &lt;option value="0">No Sugar&lt;/option>
+              &lt;/select>
+            &lt;/div>
+            &lt;div className="dropdown-mods">
+              &lt;label htmlFor="">Milk&lt;/label>
+              &lt;select
+                name="milk"
+                className="select-menu"
+                onChange={(e) => setMilk(e.target.value)}
+              >
+                {product.name.toLowerCase().includes("milk") ? (
+                  &lt;>
+                    &lt;option value="1">Normal&lt;/option>
+                    &lt;option value="2">Extra Milk&lt;/option>
+                    &lt;option value="0">No Milk&lt;/option>
+                  &lt;/>
+                ) : (
+                  &lt;>
+                    &lt;option value="0">No Milk&lt;/option>
+                    &lt;option value="1">Milk&lt;/option>
+                    &lt;option value="2">Extra Milk&lt;/option>
+                  &lt;/>
+                )}
+              &lt;/select>
+            &lt;/div>
+            &lt;div className="dropdown-mods">
+              &lt;label htmlFor="">Boba&lt;/label>
+              &lt;select
+                name="boba"
+                className="select-menu"
+                onChange={(e) => setBoba(e.target.value)}
+              >
+                {product.name.toLowerCase().includes("pearls") ? (
+                  &lt;>
+                    &lt;option value="1">Boba&lt;/option>
+                    &lt;option value="2">Extra Boba&lt;/option>
+                  &lt;/>
+                ) : (
+                  &lt;>
+                    &lt;option value="0">No Boba&lt;/option>
+                    &lt;option value="1">Boba&lt;/option>
+                    &lt;option value="2">Extra Boba&lt;/option>
+                  &lt;/>
+                )}
+              &lt;/select>
+            &lt;/div>
+            &lt;div className="dropdown-mods">
+              &lt;label htmlFor="">Quantity&lt;/label>
+              &lt;div className="quantity-button-container">
+                &lt;button onClick={decreaseQuantity} className="modal-buttons b1">
+                  -
+                &lt;/button>
+                &lt;span className="quantity">{quantity}&lt;/span>
+                &lt;button onClick={increaseQuantity} className="modal-buttons b2">
+                  +
+                &lt;/button>
+              &lt;/div>
+            &lt;/div>
+          &lt;/div>
+          &lt;div className="modal-button-container">
+            &lt;button onClick={onClose} className="modal-buttons b1">
+              Close
+            &lt;/button>
+            &lt;button onClick={handleAddToCart} className="modal-buttons b2">
+              Add to Cart
+            &lt;/button>
+          &lt;/div>
+        &lt;/div>
+      &lt;/div>
+    &lt;/Modal>
+  );
+};
+
+/**
+ * used by the customer to place orders
+ * @returns the html javascript page that can adapt to our server information
+ */
+export const Customer = ()  => {
+  const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [maxOrderId, setMaxOrderId] = useState(null);
+  const [isOrderSuccessOpen, setIsOrderSuccessOpen] = useState(false);
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+  const [quantity, setQuantity] = useState(1);
+
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+  //backend used to collect the orders
+  useEffect(() => {
+    axios
+      .get("https://mocktea.onrender.com/orderid")
+      .then((response) => setMaxOrderId(response.data))
+      .catch((error) => console.error("Error fetching max order ID", error));
+  }, []);
+  //backend used to collect the products
+  useEffect(() => {
+    axios
+      .get("https://mocktea.onrender.com/products")
+      .then((response) => setProducts(response.data))
+      .catch((error) => console.error("Error fetching products", error));
+  }, []);
+  /**
+   * gives a success screen for placing an order
+   * @param {*} isOpen checks to see if function is open
+   * @param {*} onClose function used to define when model is closed
+   * @returns a success screen for order placed
+   */
+  const OrderSuccessModal = ({ isOpen, onClose }) => {
+    return (
+      &lt;Modal
+        isOpen={isOpen}
+        onRequestClose={onClose}
+        contentLabel="Order Success Modal"
+        className="order-success-modal"
+        overlayClassName="order-success-overlay"
+      >
+        &lt;div className="order-success-container">
+          &lt;h2>Order Successfully Placed!&lt;/h2>
+          &lt;p>
+            Your order has been placed successfully. Thank you for choosing
+            ShareTea!
+          &lt;/p>
+          &lt;p>Order Number: {maxOrderId + 1}&lt;/p>
+          &lt;button onClick={onClose} className="close-button">
+            Close
+          &lt;/button>
+        &lt;/div>
+      &lt;/Modal>
+    );
+  };
+
+  const openModal = (product) => {
+    setSelectedProduct(product);
+    setIsCartOpen(false);
+  };
+
+  const closeModal = () => {
+    setSelectedProduct(null);
+  };
+  /**
+   * 
+   * @param {*} product defined as a string that reflects product rom the server
+   * @param {*} quantity defined as a positive number
+   * @param {*} sugarLevel an in 2, 1, 0 defined by the amount of sugar
+   * @param {*} milk amount and type of milk. defined as an int selection
+   * @param {*} boba 2, 1, 0 for amount of boba
+   */
+  const addToCart = (product, quantity, sugarLevel, milk, boba) => {
+    let mods = [];
+    if (sugarLevel == 2) {
+      mods.push("Extra Sugar");
+    }
+    if (sugarLevel == 0) {
+      mods.push("No Sugar");
+    }
+    if (milk == 2) {
+      mods.push("Extra Milk");
+    } else if (product.name.toLowerCase().includes("milk") &amp;&amp; milk == 0) {
+      mods.push("No Milk");
+    } else if (!product.name.toLowerCase().includes("milk") &amp;&amp; milk == 1) {
+      mods.push("Milk");
+    }
+    if (boba == 2) {
+      mods.push("Extra Boba");
+    } else if (
+      (product.name.toLowerCase().includes("pearls") ||
+        product.name.toLowerCase().includes("pearl")) &amp;&amp;
+      boba == 0
+    ) {
+      mods.push("No Boba");
+    } else if (
+      (!product.name.toLowerCase().includes("pearls") ||
+        !product.name.toLowerCase().includes("pearl")) &amp;&amp;
+      boba == 1
+    ) {
+      mods.push("Boba");
+    }
+    if (quantity > 1) {
+      const itemsToAdd = Array.from({ length: quantity }, (_, index) => ({
+        name: `${product.name} ${mods.length == 0 ? "" : "(" + mods + ")"}`,
+        price: product.price,
+        ingredients: product.ingredients,
+        quantity: 1,
+      }));
+
+      setCart([...cart, ...itemsToAdd]);
+      setQuantity(1);
+    } else {
+      setCart([
+        ...cart,
+        {
+          name: `${product.name} ${mods.length == 0 ? "" : "(" + mods + ")"}`,
+          price: product.price,
+          ingredients: product.ingredients,
+          quantity: quantity,
+        },
+      ]);
+    }
+
+    closeModal();
+    setQuantity(1);
+  };
+
+  const clearCart = () => {
+    setCart([]);
+  };
+
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
+  /**
+   * checks the cart to see if there multiple of the same item
+   * @returns returns the new minimized cart of items
+   */
+  const getGroupedCartItems = () => {
+    const groupedItems = cart.reduce((result, item) => {
+      const existingItem = result.find(
+        (groupedItem) => groupedItem.name === item.name
+      );
+      if (existingItem) {
+        existingItem.quantity += item.quantity;
+        existingItem.totalPrice += item.price * item.quantity;
+      } else {
+        result.push({
+          name: item.name,
+          quantity: item.quantity,
+          totalPrice: item.price * item.quantity,
+        });
+      }
+      return result;
+    }, []);
+
+    return groupedItems;
+  };
+  /**
+  * used to place orders using info defined from the user. takes in thee local date  
+  */
+  const placeOrder = async () => {
+    const orderData = {
+      orderID: maxOrderId + 1,
+      tip: 0,
+      price: cart
+        .reduce((total, item) => total + item.price * item.quantity, 0)
+        .toFixed(2),
+      order_date: new Date().toLocaleDateString(),
+      order_time: new Date().toLocaleTimeString(),
+      items: cart.map((item) => item.name),
+    };
+
+    try {
+      for (let i = 0; i &lt; cart.length; i++) {
+        const product = cart[i];
+        const ingredientsArray = product.ingredients.split(",");
+        ingredientsArray.forEach(async (ingredient) => {
+          let quantityQuery = 1;
+          if (
+            (product.name.toLowerCase().includes("extra boba") &amp;&amp;
+              ingredient == 1) ||
+            (product.name.toLowerCase().includes("extra boba") &amp;&amp;
+              ingredient == 7)
+          ) {
+            quantityQuery = 2;
+          }
+          if (
+            product.name.toLowerCase().includes("extra sugar") &amp;&amp;
+            ingredient == 10
+          ) {
+            quantityQuery = 2;
+          }
+          if (
+            product.name.toLowerCase().includes("extra milk") &amp;&amp;
+            ingredient == 20
+          ) {
+            quantityQuery = 2;
+          }
+          try {
+            await axios.post(
+              "https://mocktea.onrender.com/neworderinventory",
+              { quan: quantityQuery, id: ingredient },
+              {
+                headers: { "Content-Type": "application/json" },
+              }
+            );
+            console.log("Ingredient:", ingredient);
+          } catch (error) {
+            console.error("Error processing ingredient", error);
+          }
+        });
+      }
+      await axios.post("https://mocktea.onrender.com/neworder", orderData, {
+        headers: { "Content-Type": "application/json" },
+      });
+      setCart([]);
+      setIsCartOpen(false);
+      setIsOrderSuccessOpen(true);
+    } catch (error) {
+      console.error("Error placing order", error);
+    }
+  };
+  /**
+   * used to effect the accessibilty for the customer site
+   * @param {*} styleName takes in the current style of the site
+   * @param {*} value takes in the current size of the site
+   */
+  const toggleStyle = (styleName, value) => {
+    const currentStyle = document.body.style[styleName];
+    document.body.style[styleName] = currentStyle ? "" : value;
+    document.documentElement.style[styleName] = currentStyle ? "" : value;
+  };
+  /**
+   * handles accessibity options for customer page
+   * @param {*} option 
+   */
+  const handleAccessibilityOption = (option) => {
+    switch (option) {
+      case "biggerText":
+        toggleStyle("fontSize", "1.3em");
+        break;
+      case "highContrast":
+        toggleStyle("backgroundColor", "#000");
+        toggleStyle("color", "#fff");
+        break;
+      case "legibleText":
+        toggleStyle("fontFamily", "Times New Roman, Times, serif");
+        break;
+      default:
+        document.documentElement.style.fontSize = "";
+        document.documentElement.style.backgroundColor = "";
+        document.documentElement.style.color = "";
+        document.documentElement.style.cursor = "";
+    }
+  };
+
+  return (
+    &lt;div>
+      &lt;nav className="header">
+        &lt;div className="weather-container">&lt;/div>
+        &lt;div className="sharetea_header">
+          &lt;img src={headerImage} alt="ShareTea" />
+        &lt;/div>
+        &lt;ul className="links">
+          &lt;li onClick={toggleCart}>
+            View Cart{" "}
+            {cartCount > 0 &amp;&amp; (
+              &lt;span className="cart-counter">- {cartCount}&lt;/span>
+            )}
+          &lt;/li>
+          &lt;li>
+            &lt;Link to="/">Home&lt;/Link>
+          &lt;/li>
+        &lt;/ul>
+      &lt;/nav>
+      &lt;div>
+        &lt;Accessibility onOptionClick={handleAccessibilityOption} />
+      &lt;/div>
+      &lt;div className="body">
+        &lt;div className="button-container">
+          {products.map((product) => (
+            &lt;button
+              key={product.name}
+              className="product-button"
+              onClick={() => openModal(product)}
+            >
+              &lt;img
+                src={product.image_url || tea}
+                alt={product.name}
+                className="product-image"
+              />
+              &lt;div className="product-info">
+                &lt;div>{product.name}&lt;/div>
+                &lt;div>${product.price}&lt;/div>
+              &lt;/div>
+            &lt;/button>
+          ))}
+
+          {selectedProduct &amp;&amp; (
+            &lt;ProductModal
+              isOpen={!!selectedProduct}
+              onClose={closeModal}
+              product={selectedProduct}
+              addToCart={addToCart}
+              quantity={quantity}
+              increaseQuantity={increaseQuantity}
+              decreaseQuantity={decreaseQuantity}
+            />
+          )}
+        &lt;/div>
+      &lt;/div>
+      {isCartOpen &amp;&amp; (
+        &lt;div
+          className="cart-dropdown"
+          style={{ minWidth: cart.length > 0 ? "300px" : "auto" }}
+        >
+          &lt;h3>Shopping Cart&lt;/h3>
+          {cart.length === 0 ? (
+            &lt;p style={{ textAlign: "center" }}>Cart is Empty&lt;/p>
+          ) : (
+            &lt;div>
+              &lt;ul>
+                {getGroupedCartItems().map((groupedItem, index) => (
+                  &lt;li key={index}>
+                    {groupedItem.quantity} {groupedItem.name} - $
+                    {groupedItem.totalPrice.toFixed(2)}
+                  &lt;/li>
+                ))}
+              &lt;/ul>
+              &lt;p className="price-total">
+                Total: $
+                {cart
+                  .reduce(
+                    (total, item) => total + item.price * item.quantity,
+                    0
+                  )
+                  .toFixed(2)}
+              &lt;/p>
+            &lt;/div>
+          )}
+          {cart.length > 0 &amp;&amp; (
+            &lt;div className="cart-button-container">
+              &lt;button className="cart-buttons b1" onClick={clearCart}>
+                Clear Cart
+              &lt;/button>
+              &lt;button className="cart-buttons b2" onClick={placeOrder}>
+                Place Order
+              &lt;/button>
+            &lt;/div>
+          )}
+        &lt;/div>
+      )}
+      &lt;OrderSuccessModal
+        isOpen={isOrderSuccessOpen}
+        onClose={() => setIsOrderSuccessOpen(false)}
+      />
+      {/*&lt;Weather/>*/}
+    &lt;/div>
+  );
+}
+
+export default Customer;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Accessibility">Accessibility</a></li><li><a href="global.html#Cashier">Cashier</a></li><li><a href="global.html#Customer">Customer</a></li><li><a href="global.html#DenseTable">DenseTable</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#LogIn">LogIn</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#ProductModal">ProductModal</a></li><li><a href="global.html#ViewOrders">ViewOrders</a></li><li><a href="global.html#Weather">Weather</a></li><li><a href="global.html#populateButtons">populateButtons</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 05 2023 13:27:41 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -4,7 +4,10 @@ import "./Navbar.css"
 import { NavLink, Outlet } from 'react-router-dom'
 import headerImage from "../Components/Header/ShareTea_Header.png";
 
-
+/**
+ * creates the navigation bar for the home menu
+ * @returns the nav bar for home
+ */
 export const Navbar = () => {
     return (
         <div className='header_page'>
@@ -13,9 +16,6 @@ export const Navbar = () => {
             </div>
             <div className='header'>
                 <ul class="nav justify-content-center" id='lower_nav_bar'>
-                    <li class="nav-item">
-                        Language
-                    </li>
                     <li class="nav-item">
                         Menu
                     </li>
