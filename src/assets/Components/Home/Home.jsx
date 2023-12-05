@@ -89,7 +89,6 @@ export const Home = () => {
                     <p>Established in 1992 in Taiwan, we strive to create high quality drinks with fresh ingredients.</p>
                 </div>
                 <div className='button-container-home'>
-                    <button className='home_button'> <Link to='/LogIn'></Link>Log In</button>
                     <button className='home_button'> <Link to='/Customer'> Start Order</Link></button>
                 </div>
             </div>
