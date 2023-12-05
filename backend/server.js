@@ -380,6 +380,7 @@ app.get("/product-sales-data", async (req, res) => {
 app.get("/weather", async (req, res) => {
   const city = "college station";
   const apiKey = process.env.VITE_REACT_APP_WEATHER_KEY;
+  console.log("API Key:", process.env.VITE_REACT_APP_WEATHER_KEY);
   const APIUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
   try {
     const weather = await axios.get(APIUrl);
