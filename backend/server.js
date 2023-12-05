@@ -329,6 +329,20 @@ app.get("/product-sales-data", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+app.get("/weather", async (req, res) => {
+  const city = "college station";
+  const apiKey = import.meta.env.VITE_REACT_APP_WEATHER_KEY;
+  const APIUrl = "https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}";
+  try {
+    const weather = await axios.get(APIUrl);
+    res.json(weather);
+  } catch (error) {
+    console.error("Error fetching weather", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
