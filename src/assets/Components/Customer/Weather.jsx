@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-
+/**
+ * api that checks the weather for the user in their current location
+ * @returns api features from weather map
+ */
 const Weather = () => {
   const [weatherData, setWeatherData] = useState(null);
   const apiKey = import.meta.env.VITE_REACT_APP_WEATHER_KEY;
