@@ -25,9 +25,9 @@ import { Accessibility } from '../Accessibility/Accessibility'
  * This function serves the populate the button array from the products table on the data base.
  * The parameter is a function that we assign to the handleClick parameter of each button. 
  * The function uses Axios to contact the correct data base, then stores results in a list.
+ * This function is no longer in use.
  * @param {*} handleClick 
  */
-function populateButtons(handleClick) {
     function populateButtons(handleClick) {
         const [products, setProducts] = useState([]);
 
@@ -52,7 +52,6 @@ function populateButtons(handleClick) {
 
         return (order_buttons)
     }
-}
 
 /**
  * 
@@ -77,7 +76,9 @@ export const Cashier = () => {
 
 
 /**
- * this function handles 
+ * this function handles when a modification label is changed. either selecting or deselecting.
+ * this function will also handle if the clear button is pressed -- resetting all values back to default 
+ * 
  */
     const handleLabelChange = (label) => {
         if (label === 'clearAll') {
@@ -101,26 +102,17 @@ export const Cashier = () => {
             setQuantity(currentProd.qty);
             setName(currentProd.name);
             setPrice(currentProd.price);
-            // setSelectedLabels(selectedLabels.filter(item => item !== label));
-            // setCurrentProd({
-            //     name: name,
-            //     qty: quantity,
-            //     price: currentProd.price,
-            //     ingredients: [...currentProd.ingredients, ...selectedLabels]
-            // })
         } else {
             // If the item was not selected, then we will add it
             setSelectedLabels([...selectedLabels, label]);
-            // setCurrentProd({
-            //     name: currentProd.name,
-            //     qty: currentProd.quantity,
-            //     price: currentProd.price,
-            //     ingredients: [...currentProd.ingredients, ...selectedLabels]
-            // })
         }
 
         // setCurrentProd({ name: selectedButton, qty: quantity, price: price, ingredients: selectedLabels });
     };
+
+    /**
+     * THis function handles when the clear button is pressed. Will reset all settings 
+     */
 
     const handleClear = () => {
         // Create a new object with all checkboxes set to false
@@ -146,6 +138,12 @@ export const Cashier = () => {
     //     setOrderPrice((Number(totalPrice) + Number(orderPrice)).toFixed(2));
     //     setQuantity(1)
     // }
+
+    /**
+     * handleCartChange handles when we add a new product to the cart. If the quantity is more than one, it will add it to cart twice so that the order
+     * label is correctly printed out. This also benefits the managers side so that if the drink is ordered twice, instead of displaying it as drink (2), it
+     * will display as drink, drink. Makes analysis easier. This function also makes sure to add modifications in
+     */
 
     const handleCartChange = () => {
         // Check if the quantity is greater than 0
@@ -190,6 +188,15 @@ export const Cashier = () => {
     }, []);
 
 
+    /**
+     * this function handles the place order button. 
+     * The function will create an orderData property which handles the ID< price, date and time. These are the parameters that will be posted to the data base.
+     * The function will iterate through the cart, grabbing the ingredient array which holds the indecies in the actual ingredient table on the data base. 
+     * For each ingredient, it will check if its normal or extra, depending on the modification, it will set the quantity query, then 
+     * use axios to update that ingredients inventory on the data base. 
+     * Following ingredient inventory updating, this function will use axios again to place an order, adding all the previous orderData information to the 
+     * orders data base
+     */
     const placeOrder = async () => {
 
         const orderData = {
@@ -254,7 +261,11 @@ export const Cashier = () => {
         // cart current holds all the things in the cart
     };
 
-
+    /**
+     * this function takes in the input to the quantity text box
+     * Is called whenever the quantity changes. This updates the quantity object for the current selected button. 
+     * @param {*} e 
+     */
     const handleQuantityChange = (e) => {
         // Update the quantity state with the input value
         // Update the quantity state with the input value
@@ -268,15 +279,18 @@ export const Cashier = () => {
         });
     };
 
-    // when a button is clicked, the attribtues are then passed in.
-    // this function will then set the current products attributes to what is pressed
+   /**
+    * this function is what is passed to the populate buttons function from earlier.
+    * Each button is assigned this function for onClick. It will set the current states for the selected button (with the button name),
+    * price, and total price. 
+    * Every button has this function for onClick property.
+    * @param {*} buttonName 
+    * @param {*} btn_price 
+    */
     const handleButtonClick = (buttonName, btn_price) => {
         setSelectedButton(buttonName);
         setPrice(btn_price);
         setTotalPrice(btn_price * quantity);
-    }
-    const handleViewChange = (view) => {
-        setCurrentView(view);
     }
 
     //populating the button
@@ -288,6 +302,10 @@ export const Cashier = () => {
     // -------------populating buttons-----------------
     const [products_from_db, setProducts] = useState([]);
 
+    /**
+     * this effect sets the products array using axios.
+     * 
+     */
     useEffect(() => {
         axios
             .get("https://mocktea.onrender.com/products")
@@ -296,11 +314,18 @@ export const Cashier = () => {
     }, []);
 
 
-
     products_from_db.map((product) => (
         ingredients_array.push({ name: product.name, ingredients: product.ingredients })
     ))
 
+    /**
+     * the toggleStyle function is called within the handleAccessibilityOption function below.
+     * This grabs the element we want to change, finds the value fo the stylename we want to change, then sets it using the value we input.
+     * If there it will either be the updated accessibility value, or the default value that is grabs at the initialization of the function
+     * @param {*} element 
+     * @param {*} styleName 
+     * @param {*} value 
+     */
 
     const toggleStyle = (element, styleName, value) => {
         // const currentStyle = document.style[styleName];
@@ -310,11 +335,15 @@ export const Cashier = () => {
         element.style[styleName] = chosenStyle ? "" : value;
     };
 
-    // const [currentView, setCurrentView] = useState("");
 
-    // const handleViewChange = (view) => {
-    //     setCurrentView(view);
-    // }
+    /**
+     * The handleAccessibilityOption takes in an option that is selected using the Accessibility object. 
+     * The option is either bigger text, high contrast, or legible text
+     * Depending on which option is selected, the function will update the appropriate document elements that are defined at the start of the function
+     * It will then call toggleStyle on the correct elements and change the style. 
+     * Accessibility options can stack.
+     * @param {*} option 
+     */
     const handleAccessibilityOption = (option) => {
         const enlarge = document.querySelector(".selectedAttributes");
         const checkbox = document.querySelector(".checkbox_container");
@@ -459,7 +488,7 @@ export const Cashier = () => {
                             </div>
                             <div className='row_box'>
                                 <h1>Total price: {totalPrice.toFixed(2)}</h1>
-                                <h1>Ingredients: {selectedLabels} </h1>
+                                {/* <h1>Ingredients: {selectedLabels} </h1> */}
                             </div>
                             <div className='row_box'>
                                 <h1>Quantity: {quantity} </h1>
@@ -470,7 +499,7 @@ export const Cashier = () => {
                         <ul>
                             {cart.map((item, index) => (
                                 <li key={index}>
-                                    <p>Name: {item.name} ({quantity})</p>
+                                    <p>Name: {item.name}</p>
                                     <p>Price: {item.price}</p>
                                     <p>Quantity: {item.qty}</p>
                                     <p>Ingredients: {item.ingredients}</p>
@@ -490,6 +519,13 @@ export const Cashier = () => {
         </div>
     );
 }
+/**
+ * This function returns a table with the data that is inputted into the function when calling it.
+ * The table row names are to be set by us. 
+
+ * @param {*} param0 
+ * @returns 
+ */
 function DenseTable({ data }) {
     return (
         <TableContainer component={Paper}>
@@ -522,22 +558,5 @@ function DenseTable({ data }) {
     );
 }
 
-function ViewOrders() { }
-function PlaceOrders() { }
 
-// function Cashier() {
-//     return (
-//         <Navbar bg="light" data-bs-theme="light">
-//             <Container>
-//                 <Navbar.Brand className="me-auto" href="#home">Share Tea</Navbar.Brand>
-//                 <Nav className="me-auto">
-//                     <Nav.Link href="#test">Home</Nav.Link>
-//                     <Nav.Link href="#features">Features</Nav.Link>
-//                     <Nav.Link href="#pricing">Pricing</Nav.Link>
-//                 </Nav>
-//             </Container>
-//         </Navbar>
-//     );
-
-// }
 export default Cashier;

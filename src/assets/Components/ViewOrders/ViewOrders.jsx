@@ -11,7 +11,20 @@ import Paper from '@mui/material/Paper';
 import { Header } from '../Header/Header';
 import { Accessibility } from '../Accessibility/Accessibility'
 
+
+/**
+ * Vieworders returns a page with the last 40 orders, their contents, price, ID, and order date
+ * @returns page for viewing orders
+ */
 export const ViewOrders = () => {
+    /**
+ * the toggleStyle function is called within the handleAccessibilityOption function below.
+ * This grabs the element we want to change, finds the value fo the stylename we want to change, then sets it using the value we input.
+ * If there it will either be the updated accessibility value, or the default value that is grabs at the initialization of the function
+ * @param {*} element 
+ * @param {*} styleName 
+ * @param {*} value 
+ */
     const toggleStyle = (element, styleName, value) => {
         // const currentStyle = document.style[styleName];
         const chosenStyle = element.style[styleName];
@@ -20,22 +33,20 @@ export const ViewOrders = () => {
         element.style[styleName] = chosenStyle ? "" : value;
     };
 
-    // const [currentView, setCurrentView] = useState("");
-
-    // const handleViewChange = (view) => {
-    //     setCurrentView(view);
-    // }
+    /**
+     * The handleAccessibilityOption takes in an option that is selected using the Accessibility object. 
+     * The option is either bigger text, high contrast, or legible text
+     * Depending on which option is selected, the function will update the appropriate document elements that are defined at the start of the function
+     * It will then call toggleStyle on the correct elements and change the style. 
+     * Accessibility options can stack.
+     * @param {*} option 
+     */
     const handleAccessibilityOption = (option) => {
-        const enlarge = document.querySelector(".selectedAttributes");
-        const checkbox = document.querySelector(".checkbox_container");
-        const modLabel = document.querySelector(".order_mods");
-        const menuTitle = document.querySelector(".menu-title");
-        const leftSide = document.querySelector(".place_left_side");
         const table = document.querySelector(".orders_table");
         const tableLabels = document.querySelectorAll(".orders_table .table_labels");
         const tableText = document.querySelectorAll(".orders_table .table_entry");
-        const orderButtons = document.querySelector(".order_placing_btns");
         const pastOrders = document.querySelector(".past_orders");
+        const pastOrders_header = document.querySelector(".past_orders h1");
         // console.log(tableLabels); // Check if it's not null or undefined
         // console.log(tableEntries); // Check if it's not null or undefined
         const rightSide = document.querySelector(".place_right_side");
@@ -47,6 +58,7 @@ export const ViewOrders = () => {
                 tableText.forEach((entry) => {
                     toggleStyle(entry, "font-size", "1.3rem");
                 });
+                toggleStyle(pastOrders_header, "font-size", "4rem")
                 break;
             case "highContrast":
                 toggleStyle(pastOrders, "color", "#fff");
@@ -97,6 +109,14 @@ export const ViewOrders = () => {
         </div>
     )
 }
+
+/**
+ * This function returns a table with the data that is inputted into the function when calling it.
+ * The table row names are to be set by us. 
+
+ * @param {*} param0 
+ * @returns 
+ */
 function DenseTable({ data }) {
     return (
 

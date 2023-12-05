@@ -9,8 +9,15 @@ import headerImage from "../Header/ShareTea_Header.png";
 import banner from "./sharetea_webbanner_2.png"
 import Accessibility from '../Accessibility/Accessibility';
 
-
+/**
+ * 
+ * @returns returns the home page with built in navigation bar
+ */
 export const Home = () => {
+
+    /**
+     * Calls the google translate element to switch the page into the language the user chooses
+     */
     const googleTranslateElementInit = () => {
         new window.google.translate.TranslateElement(
             {
@@ -39,6 +46,15 @@ export const Home = () => {
         }
     }, []);
 
+    /**
+ * the toggleStyle function is called within the handleAccessibilityOption function below.
+ * This grabs the element we want to change, finds the value fo the stylename we want to change, then sets it using the value we input.
+ * If there it will either be the updated accessibility value, or the default value that is grabs at the initialization of the function
+ * @param {*} element 
+ * @param {*} styleName 
+ * @param {*} value 
+ */
+
     const toggleStyle = (element, styleName, value) => {
         // const currentStyle = document.style[styleName];
         const chosenStyle = element.style[styleName];
@@ -49,63 +65,62 @@ export const Home = () => {
 
     // const [currentView, setCurrentView] = useState("");
 
-    // const handleViewChange = (view) => {
-    //     setCurrentView(view);
-    // }
+    /**
+  * The handleAccessibilityOption takes in an option that is selected using the Accessibility object. 
+  * The option is either bigger text, high contrast, or legible text
+  * Depending on which option is selected, the function will update the appropriate document elements that are defined at the start of the function
+  * It will then call toggleStyle on the correct elements and change the style. 
+  * Accessibility options can stack.
+  * @param {*} option 
+  */
     const handleAccessibilityOption = (option) => {
         const enlarge = document.querySelector(".selectedAttributes");
-        const checkbox = document.querySelector(".checkbox_container");
-        const modLabel = document.querySelector(".order_mods");
-        const quant = document.querySelector(".quant_label");
-        const menuTitle = document.querySelector(".menu-title");
-        const leftSide = document.querySelector(".place_left_side");
-        const table = document.querySelector(".orders_table");
-        const tableLabels = document.querySelectorAll(".table .table_label");
-        const tableText = document.querySelectorAll(".table .table_entry");
-        const orderButtons = document.querySelector(".order_placing_btns");
-        const pastOrders = document.querySelector(".past_orders");
-        // console.log(tableLabels); // Check if it's not null or undefined
-        // console.log(tableEntries); // Check if it's not null or undefined
-        const rightSide = document.querySelector(".place_right_side");
+        const banner_background = document.querySelector(".header_banner");
+        const background = document.querySelector(".body_home");
+        const menu_option = document.querySelectorAll(".header_banner .nav-item");
+        const menu_optionlist = document.querySelectorAll(".header_banner .nav-item a");
+        const title = document.querySelector(".big_logo h1");
+        const home_text = document.querySelectorAll(".home_text p");
+        const button_home = document.querySelector(".button-container-home .home_button");
+        const button_home_text = document.querySelector(".button-container-home .home_button a");
         switch (option) {
             case "biggerText":
-                // toggleStyle(modLabel, "font-size", "1.3rem");
-                // toggleStyle(pastOrders, "font-size", "2rem");
-                toggleStyle(leftSide, "font-size", "1.3rem");
-                toggleStyle(rightSide, "font-size", "1.5rem");
-                toggleStyle(quant, "font-size", "1.5rem");
-                tableLabels.forEach((label) => {
-                    toggleStyle(label, "font-size", "1.5rem");
-                });
-                tableText.forEach((entry) => {
-                    toggleStyle(entry, "font-size", "1.3rem");
-                });
+                menu_option.forEach((option) => {
+                    toggleStyle(option, "font-size", "3rem");
+                })
+                menu_optionlist.forEach((list) => {
+                    toggleStyle(list, "font-size", "3rem");
+                })
+                toggleStyle(title, "font-size", "5rem")
+                home_text.forEach((text) => {
+                    toggleStyle(text, "font-size", "40px");
+                })
+                toggleStyle(button_home, "font-size", "4rem");
+                toggleStyle(button_home, "width", "500px");
                 break;
             case "highContrast":
-                toggleStyle(leftSide, "background-color", "#000");
-                toggleStyle(leftSide, "color", "#fff");
-                toggleStyle(rightSide, "color", "#fff");
-                toggleStyle(rightSide, "background-color", "#000");
-                toggleStyle(menuTitle, "color", "#fff");
-                tableLabels.forEach((label) => {
-                    toggleStyle(label, "color", "#fff");
-                    toggleStyle(label, "background-color", "#000");
-
-                });
-                tableText.forEach((entry) => {
-                    toggleStyle(entry, "color", "#fff");
-                    toggleStyle(entry, "background-color", "#000");
-                });
+                toggleStyle(banner_background, "background-color", "#000");
+                toggleStyle(background, "background-color", "#000");
+                toggleStyle(title, "color", "#fff");
+                toggleStyle(button_home, "background-color", "#fff");
+                toggleStyle(button_home_text, "color", "#000");
+                home_text.forEach((text) => {
+                    toggleStyle(text, "color", "#fff");
+                })
                 break;
             case "legibleText":
-                toggleStyle(leftSide, "font-family", "Times New Roman, Times, serif");
-                toggleStyle(rightSide, "font-family", "Times New Roman, Times, serif");
-                tableLabels.forEach((label) => {
+                menu_option.forEach((label) => {
                     toggleStyle(label, "font-family", "Times New Roman, Times, serif");
                 });
-                tableText.forEach((entry) => {
+                menu_optionlist.forEach((entry) => {
                     toggleStyle(entry, "font-family", "Times New Roman, Times, serif");
                 });
+                home_text.forEach((text) => {
+                    toggleStyle(text, "font-family", "Times New Roman, Times, serif");
+                });
+
+                toggleStyle(title, "font-family", "Times New Roman, Times, serif");
+                toggleStyle(button_home_text, "font-family", "Times New Roman, Times, serif");
                 break;
             default:
                 document.documentElement.style.fontSize = "";
