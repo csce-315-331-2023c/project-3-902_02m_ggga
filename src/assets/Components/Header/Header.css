@@ -12,6 +12,7 @@
     height: 80px;
 }
 
+
 .header_left {
     display: flex;
     align-items: center;
@@ -35,8 +36,8 @@
 }
 
 .sharetea_header img{
-    height: 50px;
-    /* width: 10px; */
+    height: 70px;
+    width: auto;
 }
 
 

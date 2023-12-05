@@ -1,3 +1,80 @@
+/* .header_page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.header_title {
+    padding-bottom: 10px;
+    position: relative;
+    z-index: 2;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+#lower_nav_bar {
+    gap: 50px;
+    background-color: rgb(82, 17, 143);
+}
+
 .links {
-    
+
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+*/
+
+
+.header_page {
+    width: 100%;
+}
+
+.header_title {
+    width: 100%;
+    text-align: center;
+    /* Centers the image in the header_title */
+}
+
+.header {
+    width: 100%;
+    background-color: rgb(94, 210, 241);
+    /* Example background color */
+    border-bottom: 1px solid #cf0808;
+    align-items: center;
+}
+
+.nav {
+    display: flex; /* Enables flexbox */
+    justify-content: center; /* Centers the nav items horizontally */
+    padding: 0;
+    margin: 0;
+    list-style: none; /* Removes default list styling */
+}
+
+.nav-item {
+    padding: 10px;
+    /* Example padding, adjust as needed */
+}
+
+.nav-item {
+    font-size: 2rem;
+    color: rgb(255, 255, 255);
+    list-style: none;
+}
+
+.nav-item a {
+    font-size: 2rem;
+    color: rgb(255, 255, 255);
+    list-style: none;
+    text-decoration: none;
 }

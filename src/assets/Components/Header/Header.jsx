@@ -84,23 +84,19 @@ export const Header = () => {
         <div>
             <header className='header_cashier'>
                 <div className='header_left'>
-                    <div className="sharetea_header">
-                        <img src={headerImage} alt="ShareTea" />
-                    </div>
+                    <Link to="/home">
+                        <div className="sharetea_header">
+                            <img src={headerImage} alt="ShareTea" />
+                        </div>
+                    </Link>
                 </div>
                 <div className='header_right'>
                     <ul className='links'>
-                        {/* <div className="form-switch">
-                            <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" />
-                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault" id='switchLabel'>Accessible View</label>
-                        </div> */}
-                        {/* <li><Accessibility onOptionClick={handleAccessibilityOption} /></li> */}
                         <li><Link to="/CashierLanding/vieworder">View Orders</Link></li>
                         <li><Link to='/CashierLanding/placeorder'>Place Orders</Link></li>
                         <li><Link to='/home'>Log Out</Link></li>
                     </ul>
                 </div>
-
             </header>
             <div className='outlet_content'>
                 {/* this section is for linkage. everything will display below the */}
