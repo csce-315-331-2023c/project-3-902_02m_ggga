@@ -154,7 +154,7 @@ app.get('/getUserData', async function (req, res) {
 });
 
 
-app.get('/employees', async function (req, res) {
+app.get('/verifyEmployee', async function (req, res) {
   const gitidValue = req.query.gitid;
   const query = 'SELECT manager FROM employees WHERE gitid = $1';
   const result = await pool.query(query, [gitidValue]).then((response) => {
