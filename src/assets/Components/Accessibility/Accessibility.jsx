@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Accessibility.css";
+import logo from "../Customer/assets/accessibility_icon.png";
 /**
  * used to effect the website through an accessibity menu available on most pages
  * @param {*} onOptionClick  takes in the information regarding the location and if accessibility is open
@@ -39,7 +40,7 @@ export const Accessibility = ({ onOptionClick }) => {
   return (
     <div>
       <button className="accessibility-button" onClick={toggleMenu}>
-        Accessibility
+        <img className="logo" src={logo} alt="" />
       </button>
 
       {isMenuOpen && (

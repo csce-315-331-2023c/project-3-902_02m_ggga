@@ -422,6 +422,7 @@ export const Customer = () => {
         popup.forEach((text) => {
           toggleStyle(text, "font-size", "1.2rem");
         });
+        toggleStyle(body, "font-size", "1.2rem");
         break;
       case "highContrast":
         toggleStyle(body, "backgroundColor", "#000");
@@ -462,9 +463,7 @@ export const Customer = () => {
           </li>
         </ul>
       </nav>
-      <div>
-        <Accessibility onOptionClick={handleAccessibilityOption} />
-      </div>
+
       <div className="body">
         <div className="button-container">
           {products.map((product) => (
@@ -543,6 +542,9 @@ export const Customer = () => {
         isOpen={isOrderSuccessOpen}
         onClose={() => setIsOrderSuccessOpen(false)}
       />
+      <div>
+        <Accessibility onOptionClick={handleAccessibilityOption} />
+      </div>
     </div>
   );
 };
