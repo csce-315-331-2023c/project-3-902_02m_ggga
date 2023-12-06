@@ -86,19 +86,21 @@ function LogIn()  {
             let privlege;
             if (data.manager === true) {
                 privlege = (
-                    <div>
+                    <div className='UserInteraction'>
                         <h1>Welcome {internalUser.name}!</h1>
                         <Link to='/Manager'><button>Manager</button></Link>
                         <Link to='/CashierLanding'><button>Cashier</button></Link>
+                        <Link onClick={handleLogOut} to='/' ><button>Log Out</button></Link>
                     </div>
                 );
                 console.log('This user is a manager.');
                 // Perform actions for a manager user
             } else {
                 privlege = (
-                    <div>
+                    <div className='UserInteraction'>
                         <h1>Welcome {internalUser.name}!</h1>
                         <Link to='/CashierLanding'><button>Cashier</button></Link>
+                        <Link onClick={handleLogOut} to='/' ><button>Log Out</button></Link>
                     </div>
                 );
                 console.log('This user is not a manager.');
@@ -107,7 +109,10 @@ function LogIn()  {
             setPrivleges(privlege);
         } catch (error) {
             console.error("Error fetching employee verification:", error);
-            setPrivleges("Not a current employee. Please log out or contact your supervisor.");
+            setPrivleges(<div className='UserInteraction'><p>Not a current employee. Please log out or contact your supervisor.</p>
+                            <Link onClick={handleLogOut} to='/' ><button>Log Out</button></Link>
+                        </div>
+            );
         }
     }
 
@@ -134,27 +139,32 @@ function LogIn()  {
     }
     return (
         <div className='LogIn'>
-            <img src={headerImage} alt="ShareTea" />
-                <div className='body'>
-                    {localStorage.getItem("accessToken") ?
-                        <div>
-                            {Object.keys(userData).length !== 0 ?
-                            <>  
-                                {userPrivleges}
-                            </>
-                            :
-                            <>
-                                <p>An error occured while logging in. please retry logging in and if that doesnt work contact an employee</p>
-                            </>}
-                            <li><Link onClick={handleLogOut} to='/' ><button>Log Out</button></Link></li>
-                        </div>
-                    :
-                        <button onClick={loginWithGithub}>
-                        Login with Github
-                        </button>
-                    }
+            <nav className="header">
+                <div className="sharetea_header">
+                    <img src={headerImage} alt="ShareTea" />
                 </div>
-        </div>
+            </nav>
+            <div className='body'>
+                {localStorage.getItem("accessToken") ?
+                    <div>
+                        {Object.keys(userData).length !== 0 ?
+                        <>  
+                            {userPrivleges}
+                        </>
+                        :
+                        <>
+                            <p>An error occured while logging in. please retry logging in and if that doesnt work contact an employee</p>
+                            <Link onClick={handleLogOut} to='/' ><button>Log Out</button></Link>
+                        </>}
+                        
+                    </div>
+                :
+                    <button onClick={loginWithGithub}>
+                    Login with Github
+                    </button>
+                }
+            </div>
+    </div>
     );
 }
 

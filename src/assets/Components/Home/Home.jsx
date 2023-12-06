@@ -167,17 +167,11 @@ export const Home = () => {
             <li class="nav-item">
               <Link to="/Customer">Start Order</Link>
             </li>
-            {/*<li class="nav-item">
-                            <Link to='/CashierLanding'>Cashier</Link>
-    </li>*/}
             <li class="nav-item">
               <Link to="https://github.com/login/oauth/authorize?client_id=c1e2a3c233d9b16112ee">
                 Employee
               </Link>
             </li>
-            {/*<li class="nav-item">
-                            <Link to="/Manager">Manager</Link>
-    </li>*/}
           </ul>
         </div>
         {/* <div>
