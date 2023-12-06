@@ -6,7 +6,7 @@ import { Header } from '../Header/Header';
 import { Navbar as Navbar } from '../Navbar';
 import { Outlet, Link } from 'react-router-dom';
 import headerImage from "../ShareTea_header.png";
-import banner from "./sharetea_webbanner_2.png"
+import banner from "./sharetea_webbanner_2.png";
 import Accessibility from '../Accessibility/Accessibility';
 
 /**

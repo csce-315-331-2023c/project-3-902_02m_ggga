@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import "./Navbar.css"
-import { NavLink, Outlet } from 'react-router-dom'
+import "./Navbar.css";
+import { NavLink, Outlet } from 'react-router-dom';
 import headerImage from "./ShareTea_header.png";
 
 /**
