@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/Switch';
 import { Link } from "react-router-dom";
 import { NavLink, Outlet } from 'react-router-dom';
-import headerImage from "./ShareTea_Header.png";
+import headerImage from "../ShareTea_header.png";
 import { Accessibility } from '../Accessibility/Accessibility'
 import { right } from '@popperjs/core';
 

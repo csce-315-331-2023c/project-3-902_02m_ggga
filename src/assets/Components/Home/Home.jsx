@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { Header } from '../Header/Header';
 import { Navbar as Navbar } from '../Navbar';
 import { Outlet, Link } from 'react-router-dom';
-import headerImage from "../Header/ShareTea_Header.png";
+import headerImage from "../ShareTea_header.png";
 import banner from "./sharetea_webbanner_2.png"
 import Accessibility from '../Accessibility/Accessibility';
 
@@ -144,15 +144,15 @@ export const Home = () => {
                         <li class="nav-item">
                             <Link to='/Customer'>Start Order</Link>
                         </li>
-                        <li class="nav-item">
+                        {/*<li class="nav-item">
                             <Link to='/CashierLanding'>Cashier</Link>
-                        </li>
+    </li>*/}
                         <li class="nav-item">
                             <Link to="https://github.com/login/oauth/authorize?client_id=c1e2a3c233d9b16112ee">Employee</Link>
                         </li>
-                        <li class="nav-item">
+                        {/*<li class="nav-item">
                             <Link to="/Manager">Manager</Link>
-                        </li>
+    </li>*/}
                     </ul>
                 </div>
                 {/* <div>

@@ -3,7 +3,7 @@ import React from 'react'
 import './LogIn.css'
 import {Navbar as Navbar} from '../Navbar';
 import { Link } from 'react-router-dom';
-
+import headerImage from "../ShareTea_header.png";
 
 const CLIENT_ID = "c1e2a3c233d9b16112ee";
 const CLIENT_SECRET = "a24ff8ff78fb3910d162c62667d21c0a336526f5";
@@ -106,9 +106,12 @@ function LogIn()  {
             checkManager(data)
         })
     }
-
+    const handleLogOut = () => {
+        localStorage.removeItem("accessToken")
+    }
     return (
         <div className='LogIn'>
+            <img src={headerImage} alt="ShareTea" />
                 <div className='body'>
                     {localStorage.getItem("accessToken") ?
                         <div>
@@ -120,8 +123,7 @@ function LogIn()  {
                             <>
                                 <body>An error occured while logging in. please retry logging in and if that doesnt work contact an employee</body>
                             </>}
-
-                        <button onClick={() => {localStorage.clear("accessToken"); setRerender(!rerender);}}>log out</button>
+                            <li><Link onClick={handleLogOut} to='/' ><button>Log Out</button></Link></li>
                         </div>
                     :
                         <button onClick={loginWithGithub}>
