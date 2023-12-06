@@ -86,21 +86,19 @@ function LogIn()  {
             let privlege;
             if (data.manager === true) {
                 privlege = (
-                    <div className='UserInteraction'>
+                    <div>
                         <h1>Welcome {internalUser.name}!</h1>
                         <Link to='/Manager'><button>Manager</button></Link>
                         <Link to='/CashierLanding'><button>Cashier</button></Link>
-                        <Link onClick={handleLogOut} to='/' ><button>Log Out</button></Link>
                     </div>
                 );
                 console.log('This user is a manager.');
                 // Perform actions for a manager user
             } else {
                 privlege = (
-                    <div className='UserInteraction'>
+                    <div>
                         <h1>Welcome {internalUser.name}!</h1>
                         <Link to='/CashierLanding'><button>Cashier</button></Link>
-                        <Link onClick={handleLogOut} to='/' ><button>Log Out</button></Link>
                     </div>
                 );
                 console.log('This user is not a manager.');
@@ -109,8 +107,7 @@ function LogIn()  {
             setPrivleges(privlege);
         } catch (error) {
             console.error("Error fetching employee verification:", error);
-            setPrivleges(<div className='UserInteraction'><p>Not a current employee. Please log out or contact your supervisor.</p>
-                            <Link onClick={handleLogOut} to='/' ><button>Log Out</button></Link>
+            setPrivleges(<div><p>Not a current employee. Please log out or contact your supervisor.</p>
                         </div>
             );
         }
@@ -134,7 +131,6 @@ function LogIn()  {
         })
     }
     const handleLogOut = () => {
-        privlegeSet = true;
         localStorage.removeItem("accessToken");
     }
     return (
@@ -146,7 +142,7 @@ function LogIn()  {
             </nav>
             <div className='body'>
                 {localStorage.getItem("accessToken") ?
-                    <div>
+                    <div className='UserInteraction'>
                         {Object.keys(userData).length !== 0 ?
                         <>  
                             {userPrivleges}
@@ -154,9 +150,9 @@ function LogIn()  {
                         :
                         <>
                             <p>An error occured while logging in. please retry logging in and if that doesnt work contact an employee</p>
-                            <Link onClick={handleLogOut} to='/' ><button>Log Out</button></Link>
-                        </>}
-                        
+                        </>
+                        }
+                        <Link onClick={handleLogOut} to='/' ><button>Log Out</button></Link>
                     </div>
                 :
                     <button onClick={loginWithGithub}>
