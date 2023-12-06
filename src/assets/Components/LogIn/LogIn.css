@@ -64,3 +64,47 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
+
+.header {
+    width: 100%;
+    background-color: rgb(80, 41, 41);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    height: 5rem;
+  }
+  
+  .weather-container {
+    margin: 0 10px;
+  }
+  
+  .sharetea_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-left: 0;
+  }
+  
+  .sharetea_header img {
+    width: 100%;
+    padding: 5px 0;
+  }
+
+  .UserInteraction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .UserInteraction button {
+    margin: 10px;
+  }

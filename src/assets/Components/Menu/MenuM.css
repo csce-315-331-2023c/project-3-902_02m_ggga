@@ -1,0 +1,58 @@
+.header {
+  /* ... */
+}
+
+.weather-container {
+  /* ... */
+}
+
+.sharetea_header {
+  /* ... */
+}
+
+.links {
+  /* ... */
+}
+
+/* Apply a clean background to the entire page */
+.bodyM {
+  background-color: #f9f9f9; /* Light grey background */
+  padding: 6rem 0; /* Adjust top and bottom padding as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-containerM {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Creates a responsive grid */
+  gap: 20px; /* Spacing between items */
+  padding: 0 50px; /* Adjust horizontal padding as needed */
+}
+
+.product-displayM {
+  background-color: #ffffff; /* White background for each item */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.product-displayM:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+}
+
+.product-imageM {
+  width: 100%; /* Full width of the container */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 4px; /* Soften the image edges */
+}
+
+.product-infoM {
+  text-align: center;
+  margin-top: 10px; /* Space between image and text */
+}
+
+.product-infoM div {
+  margin-bottom: 5px;
+}

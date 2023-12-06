@@ -20,6 +20,7 @@ function LogIn()  {
     const [userData, setUserData] = useState({});
     //used to check employee privleges
     const [userPrivleges, setPrivleges] = useState([]);
+
     useEffect(() => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -38,21 +39,30 @@ function LogIn()  {
                     if(data.access_token) {
                         console.log("access token: " + data.access_token);
                         localStorage.setItem("accessToken", data.access_token);
-                        setRerender(!rerender);
+                        if(localStorage.getItem("accessToken" !== undefined)) {
+                            getUserData();
+                        }
                     }
                     else {
                         console.log("error getting acces Token");
                     }
                 }).then(() => {
-                    if(localStorage.getItem("accessToken" !== undefined)) {
-                        getUserData();
-                    }
                     setRerender(!rerender);
                 })
             }
             getAccessToken();
         }
+        else {
+            getUserData();
+        }
     }, []);
+
+    useEffect(() => {
+        if (Object.keys(userData).length !== 0) {
+            checkManager(userData);
+        }
+    }, [userData]);
+
 
 
     
@@ -76,11 +86,11 @@ function LogIn()  {
             const data = await response.json();
             console.log("git id" + internalUser.id);
             console.log(data.manager);
-    
+            let privlege;
             if (data.manager === true) {
-                setPrivleges(
+                privlege = (
                     <div>
-                        <body>Welcome {internalUser.name}!</body>
+                        <h1>Welcome {internalUser.name}!</h1>
                         <Link to='/Manager'><button>Manager</button></Link>
                         <Link to='/CashierLanding'><button>Cashier</button></Link>
                     </div>
@@ -88,43 +98,24 @@ function LogIn()  {
                 console.log('This user is a manager.');
                 // Perform actions for a manager user
             } else {
-                setPrivleges(
+                privlege = (
                     <div>
-                        <body>Welcome {internalUser.name}!</body>
+                        <h1>Welcome {internalUser.name}!</h1>
                         <Link to='/CashierLanding'><button>Cashier</button></Link>
                     </div>
                 );
                 console.log('This user is not a manager.');
                 // Perform actions for a non-manager user
             }
+            setPrivleges(privlege);
         } catch (error) {
             console.error("Error fetching employee verification:", error);
-            setPrivleges("Not a current employee. Please log out or contact your supervisor.");
+            setPrivleges(<div><p>Not a current employee. Please log out or contact your supervisor.</p>
+                        </div>
+            );
         }
     }
-    /*async function checkManager(internalUser) {
-        try {const response = await fetch ("https://mocktea.onrender.com/verifyEmployee?gitid="+ internalUser.id, {
-            method: "GET"
-    });
- //.then((response) => {
-        const data = await response.json();
-         setPrivleges("Not current employee. Please log out or contact your supervisor");
-           // return response.json();
-        //}).then((data) => {
-            console.log("git id" + internalUser.id);
-            console.log(data.manager);
-            if (data.manager === true) {
-                setPrivleges(<div><body>Welcome {internalUser.name}!</body><Link to='/Manager'><button>Manager</button></Link><Link to='/CashierLanding'><button>Cashier</button></Link></div>)
-                console.log('This user is a manager.');
-                // Perform actions for a manager user
-            } else {
-                setPrivleges(<div><body>Welcome {internalUser.name}!</body><Link to='/CashierLanding'><button>Cashier</button></Link></div>)
-                console.log('This user is not a manager.');
-                // Perform actions for a non-manager user
-            }
-            return false;
-        })
-    }*/
+
     /**
      * collects user fata from the github api
      */
@@ -143,35 +134,36 @@ function LogIn()  {
         })
     }
     const handleLogOut = () => {
-        localStorage.removeItem("accessToken")
+        localStorage.removeItem("accessToken");
     }
     return (
         <div className='LogIn'>
-            <img src={headerImage} alt="ShareTea" />
-                <div className='body'>
-                    {localStorage.getItem("accessToken") ?
-                        <div>
-                            {Object.keys(userData).length !== 0 ?
-                            <>  
-                                {checkManager((userData) => {
-                                    return (
-                                        {userData}
-                                    );
-                                })}
-                            </>
-                            :
-                            <>
-                                <body>An error occured while logging in. please retry logging in and if that doesnt work contact an employee</body>
-                            </>}
-                            <li><Link onClick={handleLogOut} to='/' ><button>Log Out</button></Link></li>
-                        </div>
-                    :
-                        <button onClick={loginWithGithub}>
-                        Login with Github
-                        </button>
-                    }
+            <nav className="header">
+                <div className="sharetea_header">
+                    <img src={headerImage} alt="ShareTea" />
                 </div>
-        </div>
+            </nav>
+            <div className='body'>
+                {localStorage.getItem("accessToken") ?
+                    <div className='UserInteraction'>
+                        {Object.keys(userData).length !== 0 ?
+                        <>  
+                            {userPrivleges}
+                        </>
+                        :
+                        <>
+                            <p>An error occured while logging in. please retry logging in and if that doesnt work contact an employee</p>
+                        </>
+                        }
+                        <Link onClick={handleLogOut} to='/' ><button>Log Out</button></Link>
+                    </div>
+                :
+                    <button onClick={loginWithGithub}>
+                    Login with Github
+                    </button>
+                }
+            </div>
+    </div>
     );
 }
 
