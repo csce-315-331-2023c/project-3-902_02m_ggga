@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./Menu.css";
+import "./MenuM.css";
 import headerImage from "/src/assets/Components/ShareTea_Header.png";
 import { Link } from "react-router-dom";
 import Weather from "./Weather";
 import Accessibility from "../Accessibility/Accessibility";
+
+
+
+
+
+
+
 
 export const MenuM = () => {
   const [products, setProducts] = useState([]);
@@ -84,16 +91,16 @@ export const MenuM = () => {
         </ul>
       </nav>
 
-      <div className="body">
-        <div className="button-container">
+      <div className="bodyM">
+        <div className="button-containerM">
           {products.map((product) => (
-            <div key={product.name} className="product-display">
+            <div key={product.name} className="product-displayM">
               <img
                 src={product.image_url}
                 alt={product.name}
-                className="product-image"
+                className="product-imageM"
               />
-              <div className="product-info">
+              <div className="product-infoM">
                 <div>{product.name}</div>
                 <div>${product.price}</div>
               </div>
@@ -109,3 +116,5 @@ export const MenuM = () => {
 };
 
 export default MenuM;
+
+
