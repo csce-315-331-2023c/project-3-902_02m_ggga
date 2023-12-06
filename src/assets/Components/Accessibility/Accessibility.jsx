@@ -39,7 +39,7 @@ export const Accessibility = ({ onOptionClick }) => {
 
   return (
     <div>
-      <button className="accessibility-button" onClick={toggleMenu}>
+      <button className="accessibility-menu-button" onClick={toggleMenu}>
         <img className="logo" src={logo} alt="" />
       </button>
 
