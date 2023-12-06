@@ -161,7 +161,9 @@ export const Home = () => {
             <Weather />
           </div>
           <ul class="nav justify-content-center" id="lower_nav_bar">
-            <li class="nav-item">Menu</li>
+            <li class="nav-item">
+              <Link to='/MenuM'>Menu</Link>
+            </li>
             <li class="nav-item">
               <Link to="/Customer">Start Order</Link>
             </li>
