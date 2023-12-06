@@ -46,6 +46,7 @@ function LogIn()  {
                 }).then(() => {
                     if(localStorage.getItem("accessToken" !== undefined)) {
                         getUserData();
+                        checkManager(userData);
                     }
                     setRerender(!rerender);
                 })
@@ -68,12 +69,49 @@ function LogIn()  {
      * @param {*} internalUser the data of the current user
      */
     async function checkManager(internalUser) {
-        await fetch ("https://mocktea.onrender.com/verifyEmployee?gitid="+ internalUser.id, {
-            method: "GET",
-        }).then((response) => {
-            setPrivleges("Not current employee. Please log out or contact your supervisor");
-            return response.json();
-        }).then((data) => {
+        try {
+            const response = await fetch("https://mocktea.onrender.com/verifyEmployee?gitid=" + internalUser.id, {
+                method: "GET",
+            });
+    
+            const data = await response.json();
+            console.log("git id" + internalUser.id);
+            console.log(data.manager);
+    
+            if (data.manager === true) {
+                setPrivleges(
+                    <div>
+                        <body>Welcome {internalUser.name}!</body>
+                        <Link to='/Manager'><button>Manager</button></Link>
+                        <Link to='/CashierLanding'><button>Cashier</button></Link>
+                    </div>
+                );
+                console.log('This user is a manager.');
+                // Perform actions for a manager user
+            } else {
+                setPrivleges(
+                    <div>
+                        <body>Welcome {internalUser.name}!</body>
+                        <Link to='/CashierLanding'><button>Cashier</button></Link>
+                    </div>
+                );
+                console.log('This user is not a manager.');
+                // Perform actions for a non-manager user
+            }
+        } catch (error) {
+            console.error("Error fetching employee verification:", error);
+            setPrivleges("Not a current employee. Please log out or contact your supervisor.");
+        }
+    }
+    /*async function checkManager(internalUser) {
+        try {const response = await fetch ("https://mocktea.onrender.com/verifyEmployee?gitid="+ internalUser.id, {
+            method: "GET"
+    });
+ //.then((response) => {
+        const data = await response.json();
+         setPrivleges("Not current employee. Please log out or contact your supervisor");
+           // return response.json();
+        //}).then((data) => {
             console.log("git id" + internalUser.id);
             console.log(data.manager);
             if (data.manager === true) {
@@ -87,7 +125,7 @@ function LogIn()  {
             }
             return false;
         })
-    }
+    }*/
     /**
      * collects user fata from the github api
      */
@@ -103,7 +141,6 @@ function LogIn()  {
             console.log("user data:" + data);
             console.log(data);
             setUserData(data);
-            checkManager(data)
         })
     }
     const handleLogOut = () => {
