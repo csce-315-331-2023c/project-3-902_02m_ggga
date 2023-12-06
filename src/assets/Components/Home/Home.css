@@ -10,18 +10,15 @@
 /* --------------------BODY STUFF ------------------ */
 
 .body_home {
-    width: 100%;
     text-align: center;
+    padding-top: 225px;
 
 }
-
-
-
 
 .big_logo {
     text-align: center;
     /* Increase the font size */
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     /* Add margin to create space between the text and buttons */
 }
 
@@ -29,9 +26,16 @@
     font-size: 4rem;
 }
 
+.weather-container {
+    color: #ffffff;
+    margin-right: auto;
+    font-size: 2rem;
+}
+
 .button-container-home {
     text-align: center;
     margin-top: 20px;
+
 }
 
 .home_button {
@@ -47,7 +51,7 @@
 .home_button a {
     text-decoration: none;
     color: #ffffff;
-        /* font-size: 2rem; */
+    /* font-size: 2rem; */
 }
 
 button:hover {
@@ -65,6 +69,7 @@ button:hover {
 .header_page {
     width: 100%;
     background-color: rgb(255, 255, 255);
+    position: fixed;
 }
 
 .header_title {
@@ -77,16 +82,18 @@ button:hover {
 
 .header_banner {
     background-color: #233141;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+    height: auto;
 }
-
 
 .nav {
     display: flex;
     /* Enables flexbox */
     justify-content: center;
     /* Centers the nav items horizontally */
-    padding: 0;
-    margin: 0;
     list-style: none;
     gap: 20px;
     /* Removes default list styling */
@@ -94,14 +101,12 @@ button:hover {
 
 .header_banner .nav-item {
     padding: 10px;
-    /* Example padding, adjust as needed */
-}
-
-.header_banner .nav-item {
     font-size: 2rem;
     color: rgb(255, 255, 255);
     list-style: none;
+    /* Example padding, adjust as needed */
 }
+
 
 .header_banner .nav-item a {
     font-size: 2rem;
@@ -124,3 +129,16 @@ button:hover {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+/* ---------footer stuff--------- */
+.footer_container {
+    background-color: #233141;
+    padding: 5rem 0;
+    display: flex;
+    margin-top: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+}
+

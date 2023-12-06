@@ -6,8 +6,9 @@ import { Header } from '../Header/Header';
 import { Navbar as Navbar } from '../Navbar';
 import { Outlet, Link } from 'react-router-dom';
 import headerImage from "/src/assets/Components/ShareTea_Header.png";
-import banner from "./sharetea_webbanner_2.png"; 
+import banner from "./sharetea_webbanner_2.png";
 import Accessibility from '../Accessibility/Accessibility';
+import Weather from '../Customer/Weather';
 
 /**
  * 
@@ -83,6 +84,8 @@ export const Home = () => {
         const home_text = document.querySelectorAll(".home_text p");
         const button_home = document.querySelector(".button-container-home .home_button");
         const button_home_text = document.querySelector(".button-container-home .home_button a");
+        const footer_text = document.querySelector(".footer_container .footer_text");
+        const footer_container = document.querySelector(".footer_container");
         switch (option) {
             case "biggerText":
                 menu_option.forEach((option) => {
@@ -96,6 +99,7 @@ export const Home = () => {
                     toggleStyle(text, "font-size", "40px");
                 })
                 toggleStyle(button_home, "font-size", "4rem");
+                toggleStyle(footer_text, "font-size", "2rem");
                 toggleStyle(button_home, "width", "500px");
                 break;
             case "highContrast":
@@ -104,6 +108,7 @@ export const Home = () => {
                 toggleStyle(title, "color", "#fff");
                 toggleStyle(button_home, "background-color", "#fff");
                 toggleStyle(button_home_text, "color", "#000");
+                toggleStyle(footer_container, "background-color", "#000");
                 home_text.forEach((text) => {
                     toggleStyle(text, "color", "#fff");
                 })
@@ -121,6 +126,7 @@ export const Home = () => {
 
                 toggleStyle(title, "font-family", "Times New Roman, Times, serif");
                 toggleStyle(button_home_text, "font-family", "Times New Roman, Times, serif");
+                toggleStyle(footer_text, "font-family", "Times New Roman, Times, serif");
                 break;
             default:
                 document.documentElement.style.fontSize = "";
@@ -137,7 +143,11 @@ export const Home = () => {
                     <img src={headerImage} alt="ShareTea" />
                 </div>
                 <div className='header_banner'>
+                    <div className="weather-container">
+                        <Weather />
+                    </div>
                     <ul class="nav justify-content-center" id='lower_nav_bar'>
+
                         <li class="nav-item">
                             Menu
                         </li>
@@ -176,6 +186,12 @@ export const Home = () => {
                 </div>
                 <div className='button-container-home'>
                     <button className='home_button'> <Link to='/Customer'> Start Order</Link></button>
+                </div>
+            </div>
+            <div className='footer_container'>
+                <div className='footer_text'>
+                    <p>Made for CSCE 331 Fall 2023
+                    </p>
                 </div>
             </div>
         </div>
