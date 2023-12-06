@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
 const axios = require("axios");
+require("dotenv").config();
 
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
@@ -173,19 +174,6 @@ app.get("/verifyEmployee", async function (req, res) {
       console.log(data[0]);
       res.json(data[0]);
     });
-});
-
-app.get("/weather", async (req, res) => {
-  const city = "college station";
-  const apiKey = process.env.VITE_REACT_APP_WEATHER_KEY;
-  const APIUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
-  try {
-    const weather = await axios.get(APIUrl);
-    res.json(weather);
-  } catch (error) {
-    console.error("Error fetching weather", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
 });
 
 app.get("/products", async (req, res) => {
@@ -380,11 +368,11 @@ app.get("/product-sales-data", async (req, res) => {
 app.get("/weather", async (req, res) => {
   const city = "college station";
   const apiKey = process.env.VITE_REACT_APP_WEATHER_KEY;
-  console.log("API Key:", process.env.VITE_REACT_APP_WEATHER_KEY);
   const APIUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
   try {
-    const weather = await axios.get(APIUrl);
-    res.json(weather);
+    const response = await fetch(APIUrl);
+    const data = await response.json();
+    res.status(200).json(data);
   } catch (error) {
     console.error("Error fetching weather", error);
     res.status(500).json({ error: "Internal Server Error" });
