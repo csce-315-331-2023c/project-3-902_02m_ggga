@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: Manager/Popup/Popup.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,36 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: Manager/Popup/Popup.jsx</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react'
+import './Popup.css'
+/**
+ * creates a pop up framework to be used by the mangemt UI
+ * @param {*} props the different buttons to use
+ * @returns a pop up tab to be used by the different uis
+ */
+function Popup(props) {
+  return (props.trigger) ? (
+    &lt;div className='popup'>
+      &lt;div className='popup-inner'>
+        &lt;button className='close-btn' onClick={() => props.setTrigger(false)}>close&lt;/button>
+        {props.children}
+      &lt;/div>
+    &lt;/div>
+  ) : ""; 
+}
 
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default Popup</code></pre>
+        </article>
+    </section>
 
 
 

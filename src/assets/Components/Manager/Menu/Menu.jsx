@@ -3,7 +3,10 @@ import axios from 'axios';
 import './Menu.css';
 import '../Popup/Popup';
 import Popup from '../Popup/Popup';
-
+/**
+ * used to edit the menu of a store. connects to the database and is available to the manager
+ * @returns the html and javascript for the ui of the menu for managers
+ */
 export const Menu = () => {
   const [products, setProducts] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
@@ -24,12 +27,18 @@ export const Menu = () => {
       .catch((error) => console.error("Error fetching products", error));
   }, []);
 
-  
+   /**
+   * used to set NewProduct from the input boxes
+   * @param {*} e an item from the input boxes in create new product
+   */
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewProduct({ ...newProduct, [name]: value });
   };
 
+  /**
+   * Adds product to the database taking in from newProduct
+   */
   const addNewProduct = () => {
     // Validate inputs as necessary before sending
     axios
@@ -45,10 +54,16 @@ export const Menu = () => {
       .catch((error) => console.error("Error adding product", error));
   };
 
+    /**
+   * takes in the input from the input and gives it to the DeleteItemId 
+   * @param {*} e the id from the input box for delete input
+   */
   const handleDeleteInputChange = (e) => {
     setDeletedItemId(e.target.value);
   };
-
+  /**
+   * deletes Products from the data base its unique id
+   */
   const deleteProduct = () => {
     const itemIdToDelete = Number(deletedItemId); // Convert to number
   

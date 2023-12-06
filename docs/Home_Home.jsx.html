@@ -33,9 +33,10 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { Header } from '../Header/Header';
 import { Navbar as Navbar } from '../Navbar';
 import { Outlet, Link } from 'react-router-dom';
-import headerImage from "../Header/ShareTea_Header.png";
-import banner from "./sharetea_webbanner_2.png"
+import headerImage from "/src/assets/Components/ShareTea_Header.png";
+import banner from "./sharetea_webbanner_2.png";
 import Accessibility from '../Accessibility/Accessibility';
+import Weather from '../Customer/Weather';
 
 /**
  * 
@@ -111,6 +112,8 @@ export const Home = () => {
         const home_text = document.querySelectorAll(".home_text p");
         const button_home = document.querySelector(".button-container-home .home_button");
         const button_home_text = document.querySelector(".button-container-home .home_button a");
+        const footer_text = document.querySelector(".footer_container .footer_text");
+        const footer_container = document.querySelector(".footer_container");
         switch (option) {
             case "biggerText":
                 menu_option.forEach((option) => {
@@ -124,6 +127,7 @@ export const Home = () => {
                     toggleStyle(text, "font-size", "40px");
                 })
                 toggleStyle(button_home, "font-size", "4rem");
+                toggleStyle(footer_text, "font-size", "2rem");
                 toggleStyle(button_home, "width", "500px");
                 break;
             case "highContrast":
@@ -132,6 +136,7 @@ export const Home = () => {
                 toggleStyle(title, "color", "#fff");
                 toggleStyle(button_home, "background-color", "#fff");
                 toggleStyle(button_home_text, "color", "#000");
+                toggleStyle(footer_container, "background-color", "#000");
                 home_text.forEach((text) => {
                     toggleStyle(text, "color", "#fff");
                 })
@@ -149,6 +154,7 @@ export const Home = () => {
 
                 toggleStyle(title, "font-family", "Times New Roman, Times, serif");
                 toggleStyle(button_home_text, "font-family", "Times New Roman, Times, serif");
+                toggleStyle(footer_text, "font-family", "Times New Roman, Times, serif");
                 break;
             default:
                 document.documentElement.style.fontSize = "";
@@ -165,25 +171,26 @@ export const Home = () => {
                     &lt;img src={headerImage} alt="ShareTea" />
                 &lt;/div>
                 &lt;div className='header_banner'>
+                    &lt;div className="weather-container">
+                        &lt;Weather />
+                    &lt;/div>
                     &lt;ul class="nav justify-content-center" id='lower_nav_bar'>
-                        &lt;li class="nav-item">
-                            Language
-                        &lt;/li>
+
                         &lt;li class="nav-item">
                             Menu
                         &lt;/li>
                         &lt;li class="nav-item">
                             &lt;Link to='/Customer'>Start Order&lt;/Link>
                         &lt;/li>
-                        &lt;li class="nav-item">
+                        {/*&lt;li class="nav-item">
                             &lt;Link to='/CashierLanding'>Cashier&lt;/Link>
-                        &lt;/li>
+    &lt;/li>*/}
                         &lt;li class="nav-item">
                             &lt;Link to="https://github.com/login/oauth/authorize?client_id=c1e2a3c233d9b16112ee">Employee&lt;/Link>
                         &lt;/li>
-                        &lt;li class="nav-item">
-                            &lt;Link to="/Nav">Manager&lt;/Link>
-                        &lt;/li>
+                        {/*&lt;li class="nav-item">
+                            &lt;Link to="/Manager">Manager&lt;/Link>
+    &lt;/li>*/}
                     &lt;/ul>
                 &lt;/div>
                 {/* &lt;div>
@@ -207,6 +214,12 @@ export const Home = () => {
                 &lt;/div>
                 &lt;div className='button-container-home'>
                     &lt;button className='home_button'> &lt;Link to='/Customer'> Start Order&lt;/Link>&lt;/button>
+                &lt;/div>
+            &lt;/div>
+            &lt;div className='footer_container'>
+                &lt;div className='footer_text'>
+                    &lt;p>Made for CSCE 331 Fall 2023
+                    &lt;/p>
                 &lt;/div>
             &lt;/div>
         &lt;/div>
@@ -234,13 +247,13 @@ export const Home = () => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Accessibility">Accessibility</a></li><li><a href="global.html#Cashier">Cashier</a></li><li><a href="global.html#Customer">Customer</a></li><li><a href="global.html#DenseTable">DenseTable</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#LogIn">LogIn</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#ProductModal">ProductModal</a></li><li><a href="global.html#ViewOrders">ViewOrders</a></li><li><a href="global.html#Weather">Weather</a></li><li><a href="global.html#populateButtons">populateButtons</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Accessibility">Accessibility</a></li><li><a href="global.html#Cashier">Cashier</a></li><li><a href="global.html#Customer">Customer</a></li><li><a href="global.html#DataAnalytics">DataAnalytics</a></li><li><a href="global.html#DenseTable">DenseTable</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Inventory">Inventory</a></li><li><a href="global.html#LogIn">LogIn</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Popup">Popup</a></li><li><a href="global.html#ProductModal">ProductModal</a></li><li><a href="global.html#ViewOrders">ViewOrders</a></li><li><a href="global.html#Weather">Weather</a></li><li><a href="global.html#populateButtons">populateButtons</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 05 2023 13:27:41 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 05 2023 21:37:45 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

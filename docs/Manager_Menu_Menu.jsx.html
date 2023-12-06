@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Manager/Menu/Menu.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Manager/Menu/Menu.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './Menu.css';
+import '../Popup/Popup';
+import Popup from '../Popup/Popup';
+/**
+ * used to edit the menu of a store. connects to the database and is available to the manager
+ * @returns the html and javascript for the ui of the menu for managers
+ */
+export const Menu = () => {
+  const [products, setProducts] = useState([]);
+  const [buttonPopup, setButtonPopup] = useState(false);
+  const [deletePopup, setDeletePopup] = useState(false);
+  const [deletedItemId, setDeletedItemId] = useState('');
+  const [newProduct, setNewProduct] = useState({
+      name: '',
+      price: '',
+      ingredients: '',
+      // Add other product properties as needed
+    });
+    
+
+  useEffect(() => {
+    axios
+      .get("https://mocktea.onrender.com/products")
+      .then((response) => setProducts(response.data))
+      .catch((error) => console.error("Error fetching products", error));
+  }, []);
+
+   /**
+   * used to set NewProduct from the input boxes
+   * @param {*} e an item from the input boxes in create new product
+   */
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewProduct({ ...newProduct, [name]: value });
+  };
+
+  /**
+   * Adds product to the database taking in from newProduct
+   */
+  const addNewProduct = () => {
+    // Validate inputs as necessary before sending
+    axios
+      .post("https://mocktea.onrender.com/products", newProduct)
+      .then((response) => {
+        // Add the new product to the products state
+        setProducts([...products, response.data]);
+        // Close the popup
+        setButtonPopup(false);
+        // Reset the new product state if needed
+        setNewProduct({ name: '', price: '', ingredients: '' });
+      })
+      .catch((error) => console.error("Error adding product", error));
+  };
+
+    /**
+   * takes in the input from the input and gives it to the DeleteItemId 
+   * @param {*} e the id from the input box for delete input
+   */
+  const handleDeleteInputChange = (e) => {
+    setDeletedItemId(e.target.value);
+  };
+  /**
+   * deletes Products from the data base its unique id
+   */
+  const deleteProduct = () => {
+    const itemIdToDelete = Number(deletedItemId); // Convert to number
+  
+    axios
+      .delete(`https://mocktea.onrender.com/products/${itemIdToDelete}`)
+      .then(() => {
+        setProducts(products.filter((product) => product.id !== itemIdToDelete));
+        setDeletePopup(false);
+        setDeletedItemId('');
+      })
+      .catch((error) => console.error("Error deleting product", error));
+  };
+  
+
+
+  return (
+    &lt;div className="centered-container-menu">
+      &lt;h1>Menu&lt;/h1>
+      &lt;table>
+        &lt;thead>
+          &lt;tr>
+            &lt;th>ID&lt;/th>
+            &lt;th>Name&lt;/th>
+            &lt;th>Price&lt;/th>
+            &lt;th>Ingredients&lt;/th>
+            {/* Add more headings as per your product data structure */}
+          &lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+          {products.map((product) => (
+            &lt;tr key={product.id}>
+              &lt;td>{product.id}&lt;/td>
+              &lt;td>{product.name}&lt;/td>
+              &lt;td>{product.price}&lt;/td>
+              &lt;td>{product.ingredients}&lt;/td>
+              
+            &lt;/tr>
+          ))}
+        &lt;/tbody>
+      &lt;/table>
+      &lt;Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+          &lt;h3>Add New Menu Item&lt;/h3>
+          Item Name: &lt;input name="name" value={newProduct.name} onChange={handleInputChange}/>
+          Price: &lt;input name="price" value={newProduct.price} onChange={handleInputChange}/>
+          Ingredients: &lt;input name="ingredients" value={newProduct.ingredients} onChange={handleInputChange}/>
+          &lt;button onClick={addNewProduct}>Enter&lt;/button>
+      &lt;/Popup>
+
+      &lt;Popup trigger={deletePopup} setTrigger={setDeletePopup}>
+        &lt;h3>Delete Menu Item&lt;/h3>
+        Item ID: &lt;input value={deletedItemId} onChange={handleDeleteInputChange}/>
+        &lt;button onClick={deleteProduct}>Enter&lt;/button>
+      &lt;/Popup>
+
+      &lt;button onClick={() => setButtonPopup(true)}>Add New Menu Item&lt;/button>
+      &lt;button onClick={() => setDeletePopup(true)}>Delete Menu Item&lt;/button>
+    &lt;/div>
+  );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Accessibility">Accessibility</a></li><li><a href="global.html#Cashier">Cashier</a></li><li><a href="global.html#Customer">Customer</a></li><li><a href="global.html#DataAnalytics">DataAnalytics</a></li><li><a href="global.html#DenseTable">DenseTable</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Inventory">Inventory</a></li><li><a href="global.html#LogIn">LogIn</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Popup">Popup</a></li><li><a href="global.html#ProductModal">ProductModal</a></li><li><a href="global.html#ViewOrders">ViewOrders</a></li><li><a href="global.html#Weather">Weather</a></li><li><a href="global.html#populateButtons">populateButtons</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 05 2023 21:37:45 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Manager/Inventory/Inventory.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Manager/Inventory/Inventory.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './Inventory.css';
+import Popup from './../Popup/Popup';
+import { Input } from '@mui/material';
+
+/**
+ * used by the manager to edit the inventory of the store
+ * @returns the html and javascript used to create the inventory tab
+ */
+export const Inventory = () => {
+  const [inventoryItems, setInventoryItems] = useState([]);
+  const [buttonPopup, setButtonPopup] = useState(false);
+  const [deletePopup, setDeletePopup] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState('');
+  const [newItem, setNewItem] = useState({
+    name: '',
+    price_per_unit: '',
+    quantity: '',
+    last_bought_date: '',
+    minimum: ''
+  });
+
+
+  useEffect(() => {
+    // Fetch the inventory data when the component mounts
+    axios
+      .get("https://mocktea.onrender.com/inventory") // Ensure this URL points to your API endpoint
+      .then((response) => {
+        // Update state with the fetched inventory items
+        setInventoryItems(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching inventory", error);
+      });
+  }, []); // The empty array ensures this effect runs only once on mount
+
+  /**
+   * used to set NewItem from the input boxes
+   * @param {*} e an item from the input boxes in create new item
+   */
+  const handleInputChange = (e) => {
+    setNewItem({ ...newItem, [e.target.name]: e.target.value });
+  };
+  /**
+   * addes inventory item from database taking from NewItem
+   * 
+   */
+  const addInventoryItem = () => {
+    axios
+      .post('https://mocktea.onrender.com/inventory', newItem)
+      .then((response) => {
+        setInventoryItems([...inventoryItems, response.data]);
+        setButtonPopup(false); // Close the popup
+      })
+      .catch((error) => {
+        console.error("Error adding inventory item", error);
+      });
+  };
+  /**
+   * takes in the input from the input and gives it to the DeleteItemId 
+   * @param {*} e the id from the input box for delete input
+   */
+  const handleDeleteInputChange = (e) => {
+    setDeleteItemId(e.target.value);
+  };
+  /**
+   * deletes items from the data base its unique id
+   */
+  const deleteItem = () => {
+    const itemIdToDelete = Number(deleteItemId);
+    axios
+      .delete(`https://mocktea.onrender.com/inventory/${itemIdToDelete}`)
+      .then(() => {
+        // Update the state to remove the deleted item
+        setInventoryItems(inventoryItems.filter(item => item.id !== itemIdToDelete));
+        setDeletePopup(false);
+        setDeleteItemId('');
+      })
+      .catch((error) => {
+        console.error("Error deleting item", error);
+      });
+  };
+
+
+  return (
+    &lt;div className="centered-container-inventory">
+      &lt;h1>Inventory&lt;/h1>
+      &lt;table>
+        &lt;thead>
+          &lt;tr>
+            &lt;th>ID&lt;/th>
+            &lt;th>Name&lt;/th>
+            &lt;th>Price per Unit&lt;/th>
+            &lt;th>Quantity&lt;/th>
+            &lt;th>Last Bought Date&lt;/th>
+            &lt;th id='min'>Minimum Required&lt;/th>
+          &lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+          {inventoryItems.map((item) => (
+            &lt;tr key={item.id}>
+              &lt;td>{item.id}&lt;/td>
+              &lt;td>{item.name}&lt;/td>
+              &lt;td>{item.price_per_unit}&lt;/td>
+              &lt;td>{item.quantity}&lt;/td>
+              &lt;td>{new Date(item.last_bought_date).toLocaleDateString()}&lt;/td>
+              &lt;td id='min'>{item.minimum}&lt;/td>
+              
+            &lt;/tr>
+          ))}
+        &lt;/tbody>
+      &lt;/table>
+      &lt;Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+        Item Name: &lt;input name="name" onChange={handleInputChange} />
+        Price Per Unit: &lt;input name="price_per_unit" onChange={handleInputChange} />
+        Quantity: &lt;input name="quantity" onChange={handleInputChange} />
+        Last Bought Date: &lt;input name="last_bought_date" onChange={handleInputChange} />
+        Minimum Required: &lt;input name="minimum" onChange={handleInputChange} />
+        &lt;button onClick={addInventoryItem}>Enter&lt;/button>
+      &lt;/Popup>
+
+      &lt;Popup trigger={deletePopup} setTrigger={setDeletePopup}>
+      &lt;h3>Enter inventory Item&lt;/h3>
+        Item ID:&lt;input value={deleteItemId} onChange={handleDeleteInputChange} />
+        &lt;button onClick={deleteItem}>Delete Item&lt;/button>
+      &lt;/Popup>
+
+
+
+      &lt;button onClick={() => setButtonPopup(true)}>Add New Item&lt;/button>
+      &lt;button onClick={() => setDeletePopup(true)}>Delete Item&lt;/button>
+    &lt;/div>
+  );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Accessibility">Accessibility</a></li><li><a href="global.html#Cashier">Cashier</a></li><li><a href="global.html#Customer">Customer</a></li><li><a href="global.html#DataAnalytics">DataAnalytics</a></li><li><a href="global.html#DenseTable">DenseTable</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Inventory">Inventory</a></li><li><a href="global.html#LogIn">LogIn</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Popup">Popup</a></li><li><a href="global.html#ProductModal">ProductModal</a></li><li><a href="global.html#ViewOrders">ViewOrders</a></li><li><a href="global.html#Weather">Weather</a></li><li><a href="global.html#populateButtons">populateButtons</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 05 2023 21:37:45 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

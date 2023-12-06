@@ -4,7 +4,10 @@ import './Inventory.css';
 import Popup from './../Popup/Popup';
 import { Input } from '@mui/material';
 
-
+/**
+ * used by the manager to edit the inventory of the store
+ * @returns the html and javascript used to create the inventory tab
+ */
 export const Inventory = () => {
   const [inventoryItems, setInventoryItems] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
@@ -32,11 +35,17 @@ export const Inventory = () => {
       });
   }, []); // The empty array ensures this effect runs only once on mount
 
-
+  /**
+   * used to set NewItem from the input boxes
+   * @param {*} e an item from the input boxes in create new item
+   */
   const handleInputChange = (e) => {
     setNewItem({ ...newItem, [e.target.name]: e.target.value });
   };
-
+  /**
+   * addes inventory item from database taking from NewItem
+   * 
+   */
   const addInventoryItem = () => {
     axios
       .post('https://mocktea.onrender.com/inventory', newItem)
@@ -48,11 +57,16 @@ export const Inventory = () => {
         console.error("Error adding inventory item", error);
       });
   };
-
+  /**
+   * takes in the input from the input and gives it to the DeleteItemId 
+   * @param {*} e the id from the input box for delete input
+   */
   const handleDeleteInputChange = (e) => {
     setDeleteItemId(e.target.value);
   };
-
+  /**
+   * deletes items from the data base its unique id
+   */
   const deleteItem = () => {
     const itemIdToDelete = Number(deleteItemId);
     axios

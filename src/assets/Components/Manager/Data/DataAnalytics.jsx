@@ -25,7 +25,10 @@ ChartJS.register(
 
 
 
-
+/**
+ * used by the manager to look at data trends about the variety of products in their store. Can look at individual products or all products.
+ * @returns the html and javascript for a funcitoning website
+ */
 export const DataAnalytics = () => {
 
   const [productName, setProductName] = useState('');

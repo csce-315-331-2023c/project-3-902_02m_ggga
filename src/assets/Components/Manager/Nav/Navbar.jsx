@@ -2,7 +2,14 @@ import React from 'react'
 import { Link, Outlet } from "react-router-dom";
 import './Navbar.css'
 
+/**
+ * creates the links, styling, and nav bar for the management page.
+ * @returns the navbar for the management page
+ */
 export const Navbar = () => {
+  /**
+   * handles log outs by removing the accessToken helping prevent security issues
+   */
   const handleLogOut = () => {
     localStorage.removeItem("accessToken")
 }

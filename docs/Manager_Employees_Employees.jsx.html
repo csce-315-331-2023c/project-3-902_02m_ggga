@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Manager/Employees/Employees.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Manager/Employees/Employees.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './Employees.css'; // Assuming you have a CSS file for styling
+import Popup from './../Popup/Popup';
+import { toUnitless } from '@mui/material/styles/cssUtils';
+import { Checkbox } from '@mui/material';
+
+/**
+ * used by the manager to manage, promote, fire, and create new employees for the store
+ * @returns the html and javascript for the employee tab of the site
+ */
+export const Employees = () => {
+  const [employees, setEmployees] = useState([]);
+  const [buttonPopup, setButtonPopup] = useState(false);
+  const [newEmployee, setNewEmployee] = useState({
+    name: '',
+    hours_worked: '',
+    salary: '',
+    position: '',
+    manager: false,
+  });
+  const [buttonPopup2, setButtonPopup2] = useState(false);
+  const [deleteEmployeeId, setDeleteEmployeeId] = useState('');
+
+  useEffect(() => {
+    axios
+      .get("https://mocktea.onrender.com/employees") // Update this URL to where your API is hosted
+      .then((response) => setEmployees(response.data))
+      .catch((error) => console.error("Error fetching employees", error));
+  }, []);
+
+  /**
+   * creates an employee to then be submitted used the back end code
+   * @param {*} e used for to create a new employee using the employee format
+   */
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setNewEmployee({
+      ...newEmployee,
+      [name]: type === 'checkbox' ? checked : value
+    });
+  };
+  /**
+  * handles the creation of new employees through the pop up menu
+  */
+  const handleSubmit = () => {
+    axios.post('https://mocktea.onrender.com/employees', newEmployee)
+      .then((response) => {
+        setEmployees([...employees, response.data]);
+        setButtonPopup(false);
+        
+        setNewEmployee({
+          name: '',
+          hours_worked: '',
+          salary: '',
+          position: '',
+          manager: false,
+        });
+      })
+      .catch((error) => console.error("Error adding employee", error));
+  };
+  /**
+   * handles the input box preseving employee id to be used for handle delete
+   * @param {*} e the information, specifically id, of an employee
+   */
+  const handleDeleteInputChange = (e) => {
+    setDeleteEmployeeId(e.target.value);
+  };
+  /**
+   * used to delete employees from the database. 
+   */
+  const handleDelete = () => {
+    axios.delete(`https://mocktea.onrender.com/employees/${deleteEmployeeId}`)
+      .then(() => {
+        setEmployees(employees.filter(employee => employee.employee_id !== parseInt(deleteEmployeeId)));
+        setButtonPopup2(false);
+        setDeleteEmployeeId(''); // Clear input field after deletion
+      })
+      .catch((error) => console.error("Error deleting employee", error));
+  };
+  
+  return (
+    &lt;div className="centered-container-employees">
+      &lt;h1>Employee List&lt;/h1>
+      &lt;table>
+        &lt;thead>
+          &lt;tr>
+            &lt;th>ID&lt;/th>
+            &lt;th>Name&lt;/th>
+            &lt;th>Hours Worked&lt;/th>
+            &lt;th>Salary&lt;/th>
+            &lt;th>Position&lt;/th>
+            &lt;th>Manager&lt;/th>
+          &lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+          {employees.map((employee) => {
+            console.log(employee); // Logging each employee, if needed
+            return (
+              &lt;tr key={employee.employee_id}>
+                &lt;td>{employee.employee_id}&lt;/td>
+                &lt;td>{employee.name}&lt;/td>
+                &lt;td>{employee.hours_worked}&lt;/td>
+                &lt;td>${employee.salary}&lt;/td>
+                &lt;td>{employee.position}&lt;/td>
+                &lt;td>{employee.manager ? 'Yes' : 'No'}&lt;/td>
+              &lt;/tr>
+            );
+          })}
+        &lt;/tbody>
+      &lt;/table> 
+      &lt;br/>
+      &lt;br/>
+      &lt;br/>
+      &lt;Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+        &lt;h3>Add a New Employee&lt;/h3>
+        
+          Name &lt;input name="name" value={newEmployee.name} onChange={handleInputChange} />
+        
+     
+          Hours Worked Per Week &lt;input name="hours_worked" value={newEmployee.hours_worked} onChange={handleInputChange} />
+          Salary &lt;input name="salary" value={newEmployee.salary} onChange={handleInputChange} />
+ 
+          Position &lt;input name="position" value={newEmployee.position} onChange={handleInputChange} />
+        &lt;div>
+          Manager? &lt;input name="manager" type='checkbox' checked={newEmployee.manager} onChange={handleInputChange} />
+        &lt;/div>
+        &lt;button onClick={handleSubmit}>Enter&lt;/button>
+      &lt;/Popup>
+
+      &lt;Popup trigger={buttonPopup2} setTrigger={setButtonPopup2}>
+        &lt;h3>Delete Employee&lt;/h3>
+        Enter Employee ID &lt;input value={deleteEmployeeId} onChange={handleDeleteInputChange}>&lt;/input>
+        &lt;br/>
+        &lt;button onClick={handleDelete}>Enter&lt;/button>
+      &lt;/Popup>
+      &lt;button onClick={() => setButtonPopup2(true)}>Delete Employee&lt;/button>
+      &lt;button onClick={() => setButtonPopup(true)}>Add New Employee&lt;/button>
+    &lt;/div>
+   
+  );
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Accessibility">Accessibility</a></li><li><a href="global.html#Cashier">Cashier</a></li><li><a href="global.html#Customer">Customer</a></li><li><a href="global.html#DataAnalytics">DataAnalytics</a></li><li><a href="global.html#DenseTable">DenseTable</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Inventory">Inventory</a></li><li><a href="global.html#LogIn">LogIn</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Popup">Popup</a></li><li><a href="global.html#ProductModal">ProductModal</a></li><li><a href="global.html#ViewOrders">ViewOrders</a></li><li><a href="global.html#Weather">Weather</a></li><li><a href="global.html#populateButtons">populateButtons</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 05 2023 21:37:45 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

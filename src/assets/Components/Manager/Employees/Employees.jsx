@@ -4,6 +4,11 @@ import './Employees.css'; // Assuming you have a CSS file for styling
 import Popup from './../Popup/Popup';
 import { toUnitless } from '@mui/material/styles/cssUtils';
 import { Checkbox } from '@mui/material';
+
+/**
+ * used by the manager to manage, promote, fire, and create new employees for the store
+ * @returns the html and javascript for the employee tab of the site
+ */
 export const Employees = () => {
   const [employees, setEmployees] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
@@ -24,6 +29,10 @@ export const Employees = () => {
       .catch((error) => console.error("Error fetching employees", error));
   }, []);
 
+  /**
+   * creates an employee to then be submitted used the back end code
+   * @param {*} e used for to create a new employee using the employee format
+   */
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setNewEmployee({
@@ -31,7 +40,9 @@ export const Employees = () => {
       [name]: type === 'checkbox' ? checked : value
     });
   };
-
+  /**
+  * handles the creation of new employees through the pop up menu
+  */
   const handleSubmit = () => {
     axios.post('https://mocktea.onrender.com/employees', newEmployee)
       .then((response) => {
@@ -48,11 +59,16 @@ export const Employees = () => {
       })
       .catch((error) => console.error("Error adding employee", error));
   };
-
+  /**
+   * handles the input box preseving employee id to be used for handle delete
+   * @param {*} e the information, specifically id, of an employee
+   */
   const handleDeleteInputChange = (e) => {
     setDeleteEmployeeId(e.target.value);
   };
-
+  /**
+   * used to delete employees from the database. 
+   */
   const handleDelete = () => {
     axios.delete(`https://mocktea.onrender.com/employees/${deleteEmployeeId}`)
       .then(() => {

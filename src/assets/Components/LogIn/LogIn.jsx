@@ -46,7 +46,6 @@ function LogIn()  {
                 }).then(() => {
                     if(localStorage.getItem("accessToken" !== undefined)) {
                         getUserData();
-                        checkManager(userData);
                     }
                     setRerender(!rerender);
                 })
@@ -154,7 +153,11 @@ function LogIn()  {
                         <div>
                             {Object.keys(userData).length !== 0 ?
                             <>  
-                                {userPrivleges}
+                                {checkManager((userData) => {
+                                    return (
+                                        {userData}
+                                    );
+                                })}
                             </>
                             :
                             <>

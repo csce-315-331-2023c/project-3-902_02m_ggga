@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: Manager/Nav/Navbar.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,46 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: Manager/Nav/Navbar.jsx</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react'
+import { Link, Outlet } from "react-router-dom";
+import './Navbar.css'
 
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+/**
+ * creates the links, styling, and nav bar for the management page.
+ * @returns the navbar for the management page
+ */
+export const Navbar = () => {
+  /**
+   * handles log outs by removing the accessToken helping prevent security issues
+   */
+  const handleLogOut = () => {
+    localStorage.removeItem("accessToken")
+}
+  return (
+    &lt;div id="body">
+    &lt;div id="mySidenav" className="sidenav">
+        &lt;Link to="Data">Business Analytics&lt;/Link>
+        &lt;Link to="Inventory">Inventory&lt;/Link>
+        &lt;Link to="Menu">Menu&lt;/Link>
+        &lt;Link to="Employees">Employees&lt;/Link>
+        &lt;Link to="/" onClick={handleLogOut}>Logout&lt;/Link>
+    &lt;/div>
+    &lt;Outlet/>
+    &lt;/div>
+  )
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
