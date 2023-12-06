@@ -39,18 +39,21 @@ function LogIn()  {
                     if(data.access_token) {
                         console.log("access token: " + data.access_token);
                         localStorage.setItem("accessToken", data.access_token);
+                        if(localStorage.getItem("accessToken" !== undefined)) {
+                            getUserData();
+                        }
                     }
                     else {
                         console.log("error getting acces Token");
                     }
                 }).then(() => {
-                    if(localStorage.getItem("accessToken" !== undefined)) {
-                        getUserData();
-                    }
                     setRerender(!rerender);
                 })
             }
             getAccessToken();
+        }
+        else {
+            getUserData();
         }
     }, []);
 
