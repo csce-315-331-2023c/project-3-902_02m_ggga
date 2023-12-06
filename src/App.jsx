@@ -13,6 +13,8 @@ import { Employees as Employees } from './assets/Components/Manager/Employees/Em
 import { Inventory as Inventory } from './assets/Components/Manager/Inventory/Inventory';
 import { DataAnalytics as DataAnalytics } from './assets/Components/Manager/Data/DataAnalytics';
 import { Navbar as Nav } from './assets/Components/Manager/Nav/Navbar';
+import {MenuM as MenuM} from './assets/Components/Menu/Menu';
+
 
 function App() {
   const [isAccessible, setAccessible] = useState(false);
@@ -39,7 +41,9 @@ function App() {
             <Route path="Inventory" element={<Inventory/>}/>
             <Route path="Employees" element={<Employees />}/>
             <Route path="Menu" element={<Menu />}/>
-            </Route>
+          </Route>
+          
+          <Route path="/MenuM" element={<MenuM/>}/>
         </Routes>
       </Router>
     </div>

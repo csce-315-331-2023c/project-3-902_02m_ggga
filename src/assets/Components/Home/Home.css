@@ -10,135 +10,136 @@
 /* --------------------BODY STUFF ------------------ */
 
 .body_home {
-    text-align: center;
-    padding-top: 225px;
-
+  text-align: center;
+  padding-top: 165px;
 }
 
 .big_logo {
-    text-align: center;
-    /* Increase the font size */
-    margin-bottom: 20px;
-    /* Add margin to create space between the text and buttons */
+  text-align: center;
+  /* Increase the font size */
+  margin-bottom: 20px;
+  margin-top: 20px;
+  /* Add margin to create space between the text and buttons */
 }
 
 .big_logo h1 {
-    font-size: 4rem;
+  font-size: 4rem;
 }
 
 .weather-container {
-    color: #ffffff;
-    margin-right: auto;
-    font-size: 2rem;
+  color: #ffffff;
+  margin-right: auto;
+  font-size: 2rem;
 }
 
 .button-container-home {
-    text-align: center;
-    margin-top: 20px;
-
+  text-align: center;
+  margin-top: 20px;
 }
 
 .home_button {
-    padding: 10px 20px;
-    font-size: 1.5rem;
-    background-color: #1f2933;
-    border: none;
-    cursor: pointer;
-    margin: 5px;
-    width: 250px;
+  padding: 10px 20px;
+  font-size: 1.5rem;
+  background-color: #1f2933;
+  border: none;
+  cursor: pointer;
+  margin: 5px;
+  width: 250px;
 }
 
 .home_button a {
-    text-decoration: none;
-    color: #ffffff;
-    /* font-size: 2rem; */
+  text-decoration: none;
+  color: #ffffff;
+  /* font-size: 2rem; */
 }
 
 button:hover {
-    background-color: #033366;
+  background-color: #033366;
 }
 
 .login-area {
-    display: none;
-    /* Initially hide the login area */
-    padding: 20px;
+  display: none;
+  /* Initially hide the login area */
+  padding: 20px;
 }
 
 /* ----------------nav bar stuff */
 
 .header_page {
-    width: 100%;
-    background-color: rgb(255, 255, 255);
-    position: fixed;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  position: fixed;
 }
 
 .header_title {
-    width: 100%;
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    /* Centers the image in the header_title */
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  /* Centers the image in the header_title */
+}
+
+.header_title img {
+  max-width: 300px; /* Adjust the maximum width as needed */
+  height: auto;
 }
 
 .header_banner {
-    background-color: #233141;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 100%;
-    height: auto;
+  background-color: #233141;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  height: auto;
 }
 
 .nav {
-    display: flex;
-    /* Enables flexbox */
-    justify-content: center;
-    /* Centers the nav items horizontally */
-    list-style: none;
-    gap: 20px;
-    /* Removes default list styling */
+  display: flex;
+  /* Enables flexbox */
+  justify-content: center;
+  /* Centers the nav items horizontally */
+  list-style: none;
+  gap: 20px;
+  /* Removes default list styling */
 }
 
 .header_banner .nav-item {
-    padding: 10px;
-    font-size: 2rem;
-    color: rgb(255, 255, 255);
-    list-style: none;
-    /* Example padding, adjust as needed */
+  padding: 10px;
+  font-size: 2rem;
+  color: rgb(255, 255, 255);
+  list-style: none;
+  /* Example padding, adjust as needed */
 }
 
-
 .header_banner .nav-item a {
-    font-size: 2rem;
-    color: rgb(255, 255, 255);
-    list-style: none;
-    /* text-decoration: none; */
+  font-size: 2rem;
+  color: rgb(255, 255, 255);
+  list-style: none;
+  /* text-decoration: none; */
 }
 
 .nav-item:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .banner img {
-    width: 100%;
-
+  width: 100%;
 }
 
 .home_text {
-    font-size: 1.2rem;
-    margin-top: 10px;
-    margin-bottom: 10px;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /* ---------footer stuff--------- */
 .footer_container {
-    background-color: #233141;
-    padding: 5rem 0;
-    display: flex;
-    margin-top: 20px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #ffffff;
+  background-color: #233141;
+  padding: 3rem 0;
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
 }
-

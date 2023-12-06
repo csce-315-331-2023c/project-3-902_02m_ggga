@@ -1,0 +1,132 @@
+.header {
+    width: 100%;
+    background-color: rgb(80, 41, 41);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    height: 5rem;
+  }
+  
+  .weather-container {
+    margin: 0 10px;
+  }
+  
+  .sharetea_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-left: 0;
+  }
+  
+  .sharetea_header img {
+    width: 100%;
+    padding: 5px 0;
+  }
+  
+  .links {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    margin-right: 10px;
+    margin-bottom: 0;
+    padding-left: 0;
+    position: relative;
+  }
+  
+  .links li {
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.6rem;
+    padding: 0 1rem;
+  }
+  
+  .links li:hover {
+    text-decoration: underline;
+  }
+  
+  /*header end*/
+  
+  
+  /*body of site*/
+  
+  .body {
+    padding: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .button-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    top: 0;
+    position: absolute;
+    padding: 8rem 4rem;
+  }
+  
+  .product-button {
+    width: 300px;
+    height: 300px;
+    background-color: rgb(80, 41, 41);
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    border: none;
+  }
+  
+  .product-button:hover {
+    cursor: pointer;
+    border: 3px black solid;
+  }
+  
+  .product-image {
+    width: 70%;
+    height: 70%;
+    margin-bottom: 10px;
+  }
+  
+  .product-info {
+    text-align: center;
+  }
+  
+  /* pop up window below */
+  .product-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(233, 233, 233);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #000;
+  }
+  
+  .product-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
+  
