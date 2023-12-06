@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Customer.css";
 import tea from "./assets/MilkTea_ClassicPearl_Black.jpg";
-import headerImage from "./assets/ShareTea_Header.png";
+import headerImage from "/src/assets/Components/ShareTea_Header.png";
 import Modal from "react-modal";
 import Weather from "./Weather";
 import { Link } from "react-router-dom";

@@ -3,7 +3,7 @@ import React from 'react'
 import './LogIn.css'
 import {Navbar as Navbar} from '../Navbar';
 import { Link } from 'react-router-dom';
-import headerImage from "../ShareTea_header.png";
+import headerImage from "/src/assets/Components/ShareTea_Header.png";
 
 const CLIENT_ID = "c1e2a3c233d9b16112ee";
 const CLIENT_SECRET = "a24ff8ff78fb3910d162c62667d21c0a336526f5";

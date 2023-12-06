@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import "./Navbar.css";
 import { NavLink, Outlet } from 'react-router-dom';
-import headerImage from "./ShareTea_header.png";
+import headerImage from "/src/assets/Components/ShareTea_Header.png";
 
 /**
  * creates the navigation bar for the home menu
