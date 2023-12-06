@@ -30,7 +30,7 @@ function LogIn()  {
         getUserData();
 
         //gets user data if the accesstoken does not exist
-        if(codeParams && (accessToken === null)) {
+        if(codeParams && (accessToken === undefined)) {
             async function getAccessToken() {
                 await fetch("https://mocktea.onrender.com/getAccessToken?code=" + codeParams, {
                     method: "GET"
