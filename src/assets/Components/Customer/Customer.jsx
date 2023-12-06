@@ -444,7 +444,9 @@ export const Customer = () => {
   return (
     <div>
       <nav className="header">
-        <div className="weather-container">{/* <Weather /> */}</div>
+        <div className="weather-container">
+          <Weather />
+        </div>
         <div className="sharetea_header">
           <img src={headerImage} alt="ShareTea" />
         </div>
