@@ -20,6 +20,7 @@ function LogIn()  {
     const [userData, setUserData] = useState({});
     //used to check employee privleges
     const [userPrivleges, setPrivleges] = useState([]);
+    const [accessToken, setAccessToken] = localStorage.getItem("accessToken");
 
     useEffect(() => {
         const queryString = window.location.search;
@@ -29,7 +30,7 @@ function LogIn()  {
         getUserData();
 
         //gets user data if the accesstoken does not exist
-        if(codeParams && (localStorage.getItem("accessToken") === null)) {
+        if(codeParams && (accessToken === null)) {
             async function getAccessToken() {
                 await fetch("https://mocktea.onrender.com/getAccessToken?code=" + codeParams, {
                     method: "GET"
@@ -39,7 +40,7 @@ function LogIn()  {
                     if(data.access_token) {
                         console.log("access token: " + data.access_token);
                         localStorage.setItem("accessToken", data.access_token);
-                        if(localStorage.getItem("accessToken" !== undefined)) {
+                        if(localStorage.getItem("accessToken") !== undefined) {
                             getUserData();
                         }
                     }
