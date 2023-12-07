@@ -19,9 +19,18 @@ export const Employees = () => {
     position: '',
     manager: false,
   });
+
+  const [editEmployeeId, setEditEmployeeId] = useState('');
+  const [editEmployeeDetails, setEditEmployeeDetails] = useState({
+    name: '',
+    salary: '',
+    position: '',
+    manager: false,
+    gitid: '', // if you want to edit this as well
+  });
   const [buttonPopup2, setButtonPopup2] = useState(false);
   const [deleteEmployeeId, setDeleteEmployeeId] = useState('');
-
+  const [buttonPopup3, setButtonPopup3] = useState(false);
   useEffect(() => {
     axios
       .get("https://mocktea.onrender.com/employees") // Update this URL to where your API is hosted
@@ -55,6 +64,7 @@ export const Employees = () => {
           salary: '',
           position: '',
           manager: false,
+          gitid: '',
         });
       })
       .catch((error) => console.error("Error adding employee", error));
@@ -78,6 +88,37 @@ export const Employees = () => {
       })
       .catch((error) => console.error("Error deleting employee", error));
   };
+
+
+
+
+
+  const handleEditInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setEditEmployeeDetails({
+      ...editEmployeeDetails,
+      [name]: type === 'checkbox' ? checked : value
+    });
+  };
+
+  const fetchEmployeeToEdit = (id) => {
+    const employeeToEdit = employees.find((employee) => employee.employee_id === Number(id));
+    if (employeeToEdit) {
+      setEditEmployeeDetails(employeeToEdit);
+    }
+  };
+
+
+  const updateEmployee = () => {
+    axios.put(`https://mocktea.onrender.com/employees/${editEmployeeId}`, editEmployeeDetails)
+      .then((response) => {
+        setEmployees(employees.map((employee) => 
+          employee.employee_id === Number(editEmployeeId) ? response.data : employee
+        ));
+        setButtonPopup3(false);
+      })
+      .catch((error) => console.error("Error updating employee", error));
+  };
   
   return (
     <div className="centered-container-employees">
@@ -91,6 +132,7 @@ export const Employees = () => {
             <th>Salary</th>
             <th>Position</th>
             <th>Manager</th>
+            <th>GitID</th>
           </tr>
         </thead>
         <tbody>
@@ -104,6 +146,7 @@ export const Employees = () => {
                 <td>${employee.salary}</td>
                 <td>{employee.position}</td>
                 <td>{employee.manager ? 'Yes' : 'No'}</td>
+                <td>{employee.gitid}</td>
               </tr>
             );
           })}
@@ -113,6 +156,7 @@ export const Employees = () => {
       <br/>
       <br/>
       <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+      <br/>
         <h3>Add a New Employee</h3>
         
           Name <input name="name" value={newEmployee.name} onChange={handleInputChange} />
@@ -125,17 +169,42 @@ export const Employees = () => {
         <div>
           Manager? <input name="manager" type='checkbox' checked={newEmployee.manager} onChange={handleInputChange} />
         </div>
+
+          GitID: GitID: <input name="gitid" value={newEmployee.gitid} onChange={handleInputChange} />
         <button onClick={handleSubmit}>Enter</button>
       </Popup>
 
       <Popup trigger={buttonPopup2} setTrigger={setButtonPopup2}>
+      <br/>
         <h3>Delete Employee</h3>
         Enter Employee ID <input value={deleteEmployeeId} onChange={handleDeleteInputChange}></input>
         <br/>
         <button onClick={handleDelete}>Enter</button>
       </Popup>
-      <button onClick={() => setButtonPopup2(true)}>Delete Employee</button>
-      <button onClick={() => setButtonPopup(true)}>Add New Employee</button>
+      
+      <Popup trigger={buttonPopup3} setTrigger={setButtonPopup3}>
+        <br/>
+        <h3>Edit Employee Information</h3>
+        Enter ID of Employee you wish to edit <input value={editEmployeeId} onChange={(e) => setEditEmployeeId(e.target.value)} onBlur={() => fetchEmployeeToEdit(editEmployeeId)}></input>
+        Fill in the Fields below you wish to change
+        <br/>
+        Name <input name="name" value={editEmployeeDetails.name} onChange={handleEditInputChange}></input>
+        Salary <input name="salary" value={editEmployeeDetails.salary} onChange={handleEditInputChange}></input>
+        Position <input name="position" value={editEmployeeDetails.position} onChange={handleEditInputChange}></input>
+        Manager <input name="manager" type="checkbox" checked={editEmployeeDetails.manager} onChange={handleEditInputChange}></input>
+        GitID <input name="gitid" value={editEmployeeDetails.gitid} onChange={handleEditInputChange}></input>
+        <br />
+        <button onClick={updateEmployee}>Submit</button>
+      </Popup>
+
+
+
+      <br />
+      <button className='pop' onClick={() => setButtonPopup2(true)}>Delete Employee</button>
+      <br />
+      <button className='pop' onClick={() => setButtonPopup(true)}>Add New Employee</button>
+      <br />
+      <button className='pop' onClick={() => setButtonPopup3(true)}>Edit Employee Details</button>
     </div>
    
   );

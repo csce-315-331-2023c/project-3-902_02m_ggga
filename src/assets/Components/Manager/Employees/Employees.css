@@ -36,10 +36,35 @@ tr:hover {
   background-color: #f1f1f1; /* Highlight row on hover */
 }
 
-/* Responsive table design
-@media screen and (max-width: 600px) {
-  table {
-    display: block;
-    overflow-x: auto; /* Allows table to be scrollable horizontally */
-  /* }
-} */
+.pop{
+  background-color: #DCDCDC; /* Green */
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;; /* Green */
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+
+
+.pop:hover{
+  background-color: #C0C0C0;
+}

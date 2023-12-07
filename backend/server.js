@@ -199,18 +199,14 @@ app.get("/employees", async (req, res) => {
 
 app.post("/employees", async (req, res) => {
   try {
-    const { name, hours_worked, salary, position, manager } = req.body;
+    const { name, hours_worked, salary, position, manager, gitid } = req.body;
     const newEmployeeQuery = `
-      INSERT INTO employees (name, hours_worked, salary, position, manager)
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO employees (name, hours_worked, salary, position, manager, gitid)
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;`;
 
     const result = await pool.query(newEmployeeQuery, [
-      name,
-      hours_worked,
-      salary,
-      position,
-      manager,
+      name, hours_worked, salary, position, manager, gitid
     ]);
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -239,6 +235,26 @@ app.delete("/employees/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
+app.get("/products/:id", async (req, res) => {
+  const productId = req.params.id;
+  try {
+    const result = await pool.query(
+      'SELECT * FROM product WHERE id = $1',
+      [productId]
+    );
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).json({ error: "Product not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching product", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 app.post("/inventory", async (req, res) => {
   try {
@@ -310,6 +326,27 @@ app.post("/products", async (req, res) => {
   }
 });
 
+app.put("/products/:id", async (req, res) => {
+  const productId = req.params.id;
+  const { name, price, ingredients, image_url } = req.body;
+
+  try {
+    const result = await pool.query(
+      'UPDATE product SET name = $1, price = $2, ingredients = $3, image_url = $4 WHERE id = $5 RETURNING *',
+      [name, price, ingredients, image_url, productId]
+    );
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).json({ error: "Product not found or no changes made" });
+    }
+  } catch (error) {
+    console.error("Error updating product", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 app.delete("/products/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -364,6 +401,61 @@ app.get("/product-sales-data", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+app.put("/employees/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, hours_worked, salary, position, manager, gitid } = req.body;
+
+  try {
+    const updateQuery = `
+      UPDATE employees
+      SET name = $1, hours_worked = $2, salary = $3, position = $4, manager = $5, gitid = $6
+      WHERE employee_id = $7
+      RETURNING *;`;
+
+    const result = await pool.query(updateQuery, [name, hours_worked, salary, position, manager, gitid, id]);
+
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).json({ error: "Employee not found" });
+    }
+  } catch (error) {
+    console.error("Error updating employee", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+
+app.put("/inventory/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, price_per_unit, quantity, last_bought_date, minimum } = req.body;
+
+  try {
+    const updateQuery = `
+      UPDATE inventory
+      SET name = $1, price_per_unit = $2, quantity = $3, last_bought_date = $4, minimum = $5
+      WHERE id = $6
+      RETURNING *;`;
+
+    const result = await pool.query(updateQuery, [
+      name, price_per_unit, quantity, new Date(last_bought_date), minimum, id
+    ]);
+
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).json({ error: "Inventory item not found" });
+    }
+  } catch (error) {
+    console.error("Error updating inventory item", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+
 
 app.get("/weather", async (req, res) => {
   const city = "college station";

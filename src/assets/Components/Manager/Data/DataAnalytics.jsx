@@ -32,26 +32,29 @@ ChartJS.register(
 export const DataAnalytics = () => {
 
   const [productName, setProductName] = useState('');
-  const [salesData, setSalesData] = useState([]);
+  const [totalSalesData, setTotalSalesData] = useState([]); // Separate state for total sales data
+  const [productSalesData, setProductSalesData] = useState([]); // Separate state for product-specific sales data
 
   useEffect(() => {
     axios.get("https://mocktea.onrender.com/sales-data")
       .then((response) => {
-        setSalesData(response.data);
+        setTotalSalesData(response.data);
         console.log(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching sales data", error);
+        console.error("Error fetching total sales data", error);
       });
   }, []);
 
+ 
+
 
   const lineChartData = {
-    labels: salesData.map(data => new Date(data.day).toLocaleDateString()), // Assuming 'day' is in a date-compatible format
+    labels: productName ? productSalesData.map(data => new Date(data.day).toLocaleDateString()) : totalSalesData.map(data => new Date(data.day).toLocaleDateString()),
     datasets: [
       {
-        label: 'Total Sales',
-        data: salesData.map(data => data.total_sales),
+        label: productName ? `Sales for ${productName}` : 'Total Sales',
+        data: productName ? productSalesData.map(data => data.number_of_sales) : totalSalesData.map(data => data.total_sales),
         fill: false,
         backgroundColor: 'rgb(75, 192, 192)',
         borderColor: 'rgba(75, 192, 192, 0.2)',
@@ -60,52 +63,46 @@ export const DataAnalytics = () => {
   };
 
 
-  const fetchTotalSalesData = () => {
-    axios.get("https://mocktea.onrender.com/sales-data")
-      .then((response) => {
-        setSalesData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching total sales data", error);
-      });
-  };
-
-
-
   const fetchProductSalesData = () => {
     axios.get(`https://mocktea.onrender.com/product-sales-data?productName=${productName}`)
       .then((response) => {
-        setSalesData(response.data);
-        console.log(response.data)
+        setProductSalesData(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("Error fetching product sales data", error);
       });
   };
 
-  useEffect(() => {
-    fetchTotalSalesData();
-  }, []);
+  // This function will handle the form submission
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent the default form submit action
+    fetchProductSalesData();
+  };
+
+  
 
 
   return (
-  
     <div className="centered-container-data">
       <h1>Data Analytics</h1>
 
-      <input 
-        type="text" 
-        value={productName} 
-        onChange={(e) => setProductName(e.target.value)} 
-        placeholder="Enter product name"
-      />
-      <button onClick={fetchProductSalesData}>Show Sales Data for Product</button>
+      {/* Wrap the input and button in a form */}
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          value={productName} 
+          onChange={(e) => setProductName(e.target.value)} 
+          placeholder="Enter product name"
+        />
+        {/* Type 'submit' will trigger form submission */}
+        <button type="submit">Show Sales Data for Product</button>
+      </form>
 
       <div className='chart'>
         <Line data={lineChartData} options={{ responsive: true }} />
-        
       </div>
     </div>
-    )
+  );
   
 }

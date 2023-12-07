@@ -14,7 +14,7 @@ import { Inventory as Inventory } from './assets/Components/Manager/Inventory/In
 import { DataAnalytics as DataAnalytics } from './assets/Components/Manager/Data/DataAnalytics';
 import { Navbar as Nav } from './assets/Components/Manager/Nav/Navbar';
 import {MenuM as MenuM} from './assets/Components/Menu/MenuM';
-
+import {Settings as Settings} from './assets/Components/Manager/Settings/Settings';
 
 function App() {
   const [isAccessible, setAccessible] = useState(false);
@@ -41,7 +41,10 @@ function App() {
             <Route path="Inventory" element={<Inventory/>}/>
             <Route path="Employees" element={<Employees />}/>
             <Route path="Menu" element={<Menu />}/>
+            <Route path="Settings" element={<Settings />}/>
           </Route>
+
+
           
           <Route path="/MenuM" element={<MenuM/>}/>
         </Routes>

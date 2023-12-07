@@ -1,0 +1,53 @@
+.centered-container-settings {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to start for better spacing */
+    flex-direction: column;
+    position: relative;
+    width: 80%;
+    left: 40%; /* Adjusted for better centering */
+    margin-top: 50px; /* Add some space on top */
+}
+
+.centered-container-settings h1 {
+    color: #333; /* Dark grey for better readability */
+    font-size: 2em; /* Larger title for emphasis */
+    margin-bottom: 0.5em; /* Space below the title */
+}
+
+.centered-container-settings h2 {
+    color: #666; /* Lighter than the title for hierarchy */
+    font-size: 1.5em;
+    margin-top: 20px; /* Add space above each settings section */
+    margin-bottom: 10px; /* Space above buttons */
+}
+
+.centered-container-settings button {
+    background-color: #007BFF; /* A professional blue */
+    color: white;
+    border: none;
+    padding: 10px 20px; /* Larger click area */
+    margin: 5px; /* Space between buttons */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 1em; /* Matching font size for all buttons */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.centered-container-settings button:hover {
+    background-color: #0056b3; /* Darker shade on hover for interaction feedback */
+}
+
+/* Add a class to the container for better scoping of these styles */
+.centered-container-settings .settings-section {
+    width: 100%; /* Full width to contain buttons */
+    text-align: left; /* Align text to the left */
+}
+
+
+.large-text {
+    font-size: 1.25em; /* Or any size that you consider to be large */
+  }
+
+
+

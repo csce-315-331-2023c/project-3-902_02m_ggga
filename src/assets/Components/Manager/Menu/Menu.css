@@ -10,5 +10,56 @@
     top: 50px;
     left: 17%;
   }
+
+.pop{
+  background-color: #DCDCDC; /* Green */
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;; /* Green */
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  width: 100%;
+}
   
 
+
+.pop:hover{
+  background-color: #C0C0C0;
+}
+
+
+
+
+
+/* 
+
+.popI button{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background-color: #DCDCDC;
+    color: black;
+}
+
+.popI button:hover{
+    background-color: #C0C0C0;
+    
+} */

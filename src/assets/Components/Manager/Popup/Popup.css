@@ -22,8 +22,16 @@
 
 }
 
-.popup-inner .close-btn{
-    position: absolute;
+.popup  button{
+    /* position: absolute; */
     top: 16px;
     right: 16px;
+    background-color: #DCDCDC;
+    color: black;
+    width: 15%;
+}
+
+.popup  button:hover{
+    background-color: #C0C0C0;
+    
 }

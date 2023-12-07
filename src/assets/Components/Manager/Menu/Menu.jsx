@@ -12,13 +12,22 @@ export const Menu = () => {
   const [buttonPopup, setButtonPopup] = useState(false);
   const [deletePopup, setDeletePopup] = useState(false);
   const [deletedItemId, setDeletedItemId] = useState('');
+  const [editPopup, setEditPopup] = useState(false);
   const [newProduct, setNewProduct] = useState({
       name: '',
       price: '',
       ingredients: '',
+      image_url: '',
       // Add other product properties as needed
     });
     
+  const [editItemId, setEditItemId] = useState(''); // State to hold the ID of the item to edit
+  const [editProductDetails, setEditProductDetails] = useState({
+    name: '',
+    price: '',
+    ingredients: '',
+    image_url: '',
+  });
 
   useEffect(() => {
     axios
@@ -77,6 +86,42 @@ export const Menu = () => {
       .catch((error) => console.error("Error deleting product", error));
   };
   
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditProductDetails({ ...editProductDetails, [name]: value });
+  };
+
+
+  
+
+
+  const fetchProductToEdit = (id) => {
+    // Fetch the product details by ID or find it in the existing state
+    const productToEdit = products.find((product) => product.id === Number(id));
+    if (productToEdit) {
+      setEditProductDetails(productToEdit);
+    }
+  };
+
+  useEffect(() => {
+    if (editPopup) {
+      fetchProductToEdit(editItemId);
+    }
+  }, [editPopup, editItemId, products]);
+
+  const updateProduct = () => {
+    // Validate inputs as necessary before sending
+    axios
+      .put(`https://mocktea.onrender.com/products/${editItemId}`, editProductDetails)
+      .then((response) => {
+        // Update the products state with the updated product details
+        setProducts(products.map((product) => (product.id === Number(editItemId) ? response.data : product)));
+        // Close the popup
+        setEditPopup(false);
+      })
+      .catch((error) => console.error("Error updating product", error));
+  };
+
 
 
   return (
@@ -89,6 +134,7 @@ export const Menu = () => {
             <th>Name</th>
             <th>Price</th>
             <th>Ingredients</th>
+            <th>Image URL</th>
             {/* Add more headings as per your product data structure */}
           </tr>
         </thead>
@@ -99,27 +145,52 @@ export const Menu = () => {
               <td>{product.name}</td>
               <td>{product.price}</td>
               <td>{product.ingredients}</td>
-              
+              <td>{product.image_url}</td>
+              {console.log(product)}
             </tr>
           ))}
         </tbody>
       </table>
       <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+        <br/>
           <h3>Add New Menu Item</h3>
           Item Name: <input name="name" value={newProduct.name} onChange={handleInputChange}/>
           Price: <input name="price" value={newProduct.price} onChange={handleInputChange}/>
           Ingredients: <input name="ingredients" value={newProduct.ingredients} onChange={handleInputChange}/>
-          <button onClick={addNewProduct}>Enter</button>
+          Image URL: <input name="image_url" value={newProduct.image_url} onChange={handleInputChange} />
+          <br/>
+          <button className='popI' onClick={addNewProduct}>Enter</button>
       </Popup>
 
       <Popup trigger={deletePopup} setTrigger={setDeletePopup}>
+      <br/>
         <h3>Delete Menu Item</h3>
         Item ID: <input value={deletedItemId} onChange={handleDeleteInputChange}/>
-        <button onClick={deleteProduct}>Enter</button>
+        <br/>
+        <button className='popI'  onClick={deleteProduct}>Enter</button>
       </Popup>
 
-      <button onClick={() => setButtonPopup(true)}>Add New Menu Item</button>
-      <button onClick={() => setDeletePopup(true)}>Delete Menu Item</button>
+      <Popup trigger={editPopup} setTrigger={setEditPopup}>
+        <br />
+        <h3>Edit Menu Item</h3>
+        Enter ID of Item to be Edited: <input value={editItemId} onChange={(e) => setEditItemId(e.target.value)} onBlur={() => fetchProductToEdit(editItemId)} />
+        <h3>Fill Out Fields You Wish to Edit</h3>
+        Name: <input name="name" value={editProductDetails.name} onChange={handleEditInputChange} />
+        Price: <input name="price" value={editProductDetails.price} onChange={handleEditInputChange} />
+        Ingredients: <input name="ingredients" value={editProductDetails.ingredients} onChange={handleEditInputChange} />
+        Image URL: <input name="image_url" value={editProductDetails.image_url} onChange={handleEditInputChange} />
+        <br />
+        <button onClick={updateProduct}>Enter</button>
+      </Popup>
+
+
+      <br />
+      <br />
+      <button className='pop' onClick={() => setButtonPopup(true)}>Add New Menu Item</button>
+      <br />
+      <button className='pop' onClick={() => setDeletePopup(true)}>Delete Menu Item</button>
+      <br />
+      <button className="pop" onClick={() => setEditPopup(true)}>Edit Menu Item</button>
     </div>
   );
 }

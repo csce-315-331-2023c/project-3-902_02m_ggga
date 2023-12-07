@@ -20,6 +20,7 @@ export const Navbar = () => {
         <Link to="Inventory">Inventory</Link>
         <Link to="Menu">Menu</Link>
         <Link to="Employees">Employees</Link>
+        <Link to ="Settings">Settings</Link>
         <Link to="/" onClick={handleLogOut}>Logout</Link>
     </div>
     <Outlet/>
