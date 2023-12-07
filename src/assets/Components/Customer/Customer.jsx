@@ -338,7 +338,7 @@ export const Customer = () => {
         .toFixed(2),
       order_date: new Date().toLocaleDateString(),
       order_time: new Date().toLocaleTimeString(),
-      items: cart.map((item) => item.name),
+      items: [cart.map((item) => item.name).join(", ")],
     };
 
     try {

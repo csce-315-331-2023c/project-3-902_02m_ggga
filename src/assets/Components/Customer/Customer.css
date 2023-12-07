@@ -159,7 +159,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgb(233, 233, 233);
+  background-color: rgb(255, 255, 255);
   color: white;
   padding: 20px;
   border-radius: 10px;
@@ -189,6 +189,7 @@
   width: 50%;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .modal-container-left img {
@@ -259,6 +260,7 @@
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  border: 1px solid #ccc;
 }
 
 .b1:hover {

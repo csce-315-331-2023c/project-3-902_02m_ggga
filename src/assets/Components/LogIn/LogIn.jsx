@@ -20,6 +20,7 @@ function LogIn()  {
     const [userData, setUserData] = useState({});
     //used to check employee privleges
     const [userPrivleges, setPrivleges] = useState([]);
+    const [accessToken, setAccessToken] = localStorage.getItem("accessToken");
 
     useEffect(() => {
         const queryString = window.location.search;
@@ -39,18 +40,21 @@ function LogIn()  {
                     if(data.access_token) {
                         console.log("access token: " + data.access_token);
                         localStorage.setItem("accessToken", data.access_token);
+                        if(localStorage.getItem("accessToken") !== undefined) {
+                            getUserData();
+                        }
                     }
                     else {
                         console.log("error getting acces Token");
                     }
                 }).then(() => {
-                    if(localStorage.getItem("accessToken" !== undefined)) {
-                        getUserData();
-                    }
                     setRerender(!rerender);
                 })
             }
             getAccessToken();
+        }
+        else {
+            getUserData();
         }
     }, []);
 
