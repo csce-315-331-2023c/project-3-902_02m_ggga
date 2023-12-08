@@ -15,6 +15,7 @@ import Accessibility from "../Accessibility/Accessibility";
 
 export const MenuM = () => {
   const [products, setProducts] = useState([]);
+  const [accessibilityOptions, setAccessibilityOptions] = useState([]);
 
   // Fetch products from the backend
   useEffect(() => {
@@ -91,7 +92,7 @@ export const MenuM = () => {
         </ul>
       </nav>
 
-      <div className="bodyM">
+      <div className="body">
         <div className="button-containerM">
           {products.map((product) => (
             <div key={product.name} className="product-displayM">

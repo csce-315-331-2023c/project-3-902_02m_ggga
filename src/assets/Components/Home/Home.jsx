@@ -160,14 +160,14 @@ export const Home = () => {
           <div className="weather-container">
             <Weather />
           </div>
-          <ul class="nav justify-content-center" id="lower_nav_bar">
-            <li class="nav-item">
+          <ul className="nav justify-content-center" id="lower_nav_bar">
+            <li className="nav-item">
               <Link to='/MenuM'>Menu</Link>
             </li>
-            <li class="nav-item">
+            <li className="nav-item">
               <Link to="/Customer">Start Order</Link>
             </li>
-            <li class="nav-item">
+            <li className="nav-item">
               <Link to="https://github.com/login/oauth/authorize?client_id=c1e2a3c233d9b16112ee">
                 Employee
               </Link>

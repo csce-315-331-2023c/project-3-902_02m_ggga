@@ -34,7 +34,6 @@ export const Accessibility = ({ onOptionClick }) => {
       onClick: () => handleOptionClick("highContrast"),
     },
     { label: "Legible Text", onClick: () => handleOptionClick("legibleText") },
-    { label: "Translate" },
   ];
 
   return (
