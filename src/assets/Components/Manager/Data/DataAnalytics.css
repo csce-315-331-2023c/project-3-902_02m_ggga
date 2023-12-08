@@ -1,4 +1,4 @@
-/* In your CSS file */
+
 .centered-container-data {
     display: flex;
     justify-content: center;
@@ -7,7 +7,7 @@
     position: relative;
     left: 19%;
     width: 80%;
-    
+   
   }
   
 
@@ -21,7 +21,6 @@
 
 .centered-container-data input{
   position: relative;
-  left: 29%
 }
 
 .centered-container-data button{
@@ -40,18 +39,60 @@
   border: none;
   color: black;
   padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-  width: 100%;
+  /* width: 100%; */
 }
 
+.centered-container-data form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+/* 
 .centered-container-data button:hover{
   background-color: #C0C0C0;
+} */
+
+
+.access h3{
+  z-index: 10000;
 }
+
+/* Default font size */
+.font-size-default {
+  font-size: 16px; /* or whatever your default size is */
+}
+
+/* Large font size */
+.font-size-large {
+  font-size: x-large; /* or whatever size you consider to be large */
+}
+
+
+.high-contrast {
+  background-color: #000; /* Black background for high contrast */
+  color: #FFF; /* White text for high contrast */
+}
+
+.high-contrast button {
+  background-color: #353935 ; /* White button background */
+  color: #FFF; /* Black button text */
+}
+
+.high-contrast table {
+  border: 2px solid #FFF; /* White border for tables */
+}
+
+.high-contrast th,
+.high-contrast td {
+  border: 2px solid #FFF; /* White border for table cells */
+}
+
+.high-contrast .access {
+  color: white; /* Text color for high contrast mode */
+}
+
+.high-contrast button {
+  background-color: #353935; /* Adjust the background color */
+  color: white; /* Adjust the text color for visibility */
+}
+

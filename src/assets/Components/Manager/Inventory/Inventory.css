@@ -19,7 +19,7 @@
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 4px;
@@ -40,6 +40,86 @@
   width: 100%;
 }
 
+
+.access{
+  position: fixed;
+  width: auto;
+  z-index: 1000;
+  background-color: #DCDCDC;
+  left: 90%;
+  top: 10%;
+  color: black;
+}
+
+.access:hover{
+  background-color: #C0C0C0;
+}
+
 .pop:hover{
   background-color: #C0C0C0;
 }
+
+/*Dark Mode */
+/* .pop{
+  background-color: #343434;
+
+  color: white; 
+}
+
+.centered-container-inventory{
+  background-color: 	#28282B;
+  color: white;
+  
+} */
+
+
+.settings-section{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.settings-section button{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 200px;
+}
+
+
+
+/* Default font size */
+.font-size-default {
+  font-size: 16px; /* or whatever your default size is */
+}
+
+/* Large font size */
+.font-size-large {
+  font-size: x-large; /* or whatever size you consider to be large */
+}
+
+
+.high-contrast {
+  background-color: #000; /* Black background for high contrast */
+  color: #FFF; /* White text for high contrast */
+}
+
+.high-contrast button {
+  background-color: #353935 ; /* White button background */
+  color: #FFF; /* Black button text */
+}
+
+.high-contrast table {
+  border: 2px solid #FFF; /* White border for tables */
+}
+
+.high-contrast th,
+.high-contrast td {
+  border: 2px solid #FFF; /* White border for table cells */
+}
+
+
+
+

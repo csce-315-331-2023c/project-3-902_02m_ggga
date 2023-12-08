@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './DataAnalytics.css'
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
+import Popup from './../Popup/Popup';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -34,7 +35,12 @@ export const DataAnalytics = () => {
   const [productName, setProductName] = useState('');
   const [totalSalesData, setTotalSalesData] = useState([]); // Separate state for total sales data
   const [productSalesData, setProductSalesData] = useState([]); // Separate state for product-specific sales data
+  const [settingPopup, setSettingPopup] = useState(false);
+  const [isLargeText, setIsLargeText] = useState(false);
+  const [highContrast, setHighContrast] = useState(false);
 
+  const contrastClass = highContrast ? 'high-contrast' : '';
+  const fontSizeClass = isLargeText ? 'font-size-large' : 'font-size-default';
   useEffect(() => {
     axios.get("https://mocktea.onrender.com/sales-data")
       .then((response) => {
@@ -45,7 +51,11 @@ export const DataAnalytics = () => {
         console.error("Error fetching total sales data", error);
       });
   }, []);
-
+  
+  const setLargeText = (value) => {
+    console.log("Large text now: ", value);
+    setIsLargeText(value);
+  };
  
 
 
@@ -58,6 +68,7 @@ export const DataAnalytics = () => {
         fill: false,
         backgroundColor: 'rgb(75, 192, 192)',
         borderColor: 'rgba(75, 192, 192, 0.2)',
+        
       },
     ],
   };
@@ -80,11 +91,16 @@ export const DataAnalytics = () => {
     fetchProductSalesData();
   };
 
-  
+  // const toggleDarkMode = () => {
+  //   document.documentElement.classList.toggle('dark-mode');
+  // };
 
 
   return (
-    <div className="centered-container-data">
+    <div className={`centered-container-data ${fontSizeClass} ${contrastClass}`}>
+      <button className="access" onClick={() => setSettingPopup(true)}>
+        Accessibility
+      </button>
       <h1>Data Analytics</h1>
 
       {/* Wrap the input and button in a form */}
@@ -102,6 +118,45 @@ export const DataAnalytics = () => {
       <div className='chart'>
         <Line data={lineChartData} options={{ responsive: true }} />
       </div>
+
+
+      <Popup  trigger={settingPopup}  setTrigger={setSettingPopup}>
+        <div className={` ${contrastClass}`}>
+        <br />
+        <h3 className={` ${contrastClass}`}>Accessibility Settings</h3>
+        <br />
+        <h2 className={` ${contrastClass}`}>Contrast</h2>
+        <br></br>
+        <div className={`settings-section ${contrastClass}`}>
+            
+            <button onClick={() => setHighContrast(true)}>High Contrast</button>
+            <button onClick={() => setHighContrast(false)}>Default Contrast</button>
+
+        </div>
+        <br></br>
+        <h2 className={` ${contrastClass}`}>Font Size</h2>
+        <br></br>
+        <div className={` settings-section ${contrastClass}`}>
+           
+            <button className={` ${contrastClass}`} onClick={() => setLargeText(true)}>Large</button>
+            <br />
+            <button className={` ${contrastClass}`} onClick={() => setLargeText(false)}>Default</button>
+        </div>
+        
+        <h2 className={` ${contrastClass}`}>Font Type</h2>
+        <br></br>
+        <div className={` settings-section ${contrastClass}`}>
+           
+            <button>Legible</button>
+            <br />
+            <button>Default</button>
+        </div>
+        </div>
+
+      </Popup>
+
+
+      
     </div>
   );
   

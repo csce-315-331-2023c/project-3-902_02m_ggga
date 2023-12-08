@@ -20,6 +20,13 @@ export const Menu = () => {
       image_url: '',
       // Add other product properties as needed
     });
+
+
+  const [settingPopup, setSettingPopup] = useState(false);
+  const [isLargeText, setIsLargeText] = useState(false);
+  const [highContrast, setHighContrast] = useState(false);
+  const fontSizeClass = isLargeText ? 'font-size-large' : 'font-size-default';
+  const contrastClass = highContrast ? 'high-contrast' : '';
     
   const [editItemId, setEditItemId] = useState(''); // State to hold the ID of the item to edit
   const [editProductDetails, setEditProductDetails] = useState({
@@ -93,7 +100,10 @@ export const Menu = () => {
 
 
   
-
+  const setLargeText = (value) => {
+    console.log("Large text now: ", value);
+    setIsLargeText(value);
+  };
 
   const fetchProductToEdit = (id) => {
     // Fetch the product details by ID or find it in the existing state
@@ -122,10 +132,14 @@ export const Menu = () => {
       .catch((error) => console.error("Error updating product", error));
   };
 
-
+  
 
   return (
-    <div className="centered-container-menu">
+    <div className={`centered-container-menu ${fontSizeClass} ${contrastClass}`}>
+      <button className="access" onClick={() => setSettingPopup(true)}>
+        Accessibility
+      </button>
+
       <h1>Menu</h1>
       <table>
         <thead>
@@ -152,35 +166,79 @@ export const Menu = () => {
         </tbody>
       </table>
       <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-        <br/>
-          <h3>Add New Menu Item</h3>
-          Item Name: <input name="name" value={newProduct.name} onChange={handleInputChange}/>
-          Price: <input name="price" value={newProduct.price} onChange={handleInputChange}/>
-          Ingredients: <input name="ingredients" value={newProduct.ingredients} onChange={handleInputChange}/>
-          Image URL: <input name="image_url" value={newProduct.image_url} onChange={handleInputChange} />
+        <div className={` ${contrastClass}`}>
+          <br/>
+          <h3 className={` ${contrastClass}`}>Add New Menu Item</h3>
+
+          <p className={` ${contrastClass}`}>Item Name:</p> <input className={` ${contrastClass}`} name="name" value={newProduct.name} onChange={handleInputChange}/>
+          <p className={` ${contrastClass}`}>Price:</p> <input className={` ${contrastClass}`} name="price" value={newProduct.price} onChange={handleInputChange}/>
+          <p className={` ${contrastClass}`}>Ingredients: </p> <input className={` ${contrastClass}`} name="ingredients" value={newProduct.ingredients} onChange={handleInputChange}/>
+          <p className={` ${contrastClass}`}>Image URL:</p>  <input className={` ${contrastClass}`} name="image_url" value={newProduct.image_url} onChange={handleInputChange} />
           <br/>
           <button className='popI' onClick={addNewProduct}>Enter</button>
+        </div>
       </Popup>
 
       <Popup trigger={deletePopup} setTrigger={setDeletePopup}>
-      <br/>
-        <h3>Delete Menu Item</h3>
-        Item ID: <input value={deletedItemId} onChange={handleDeleteInputChange}/>
-        <br/>
-        <button className='popI'  onClick={deleteProduct}>Enter</button>
+        <div className={` ${contrastClass}`}>
+          <br/>
+          <h3 className={` ${contrastClass}`}>Delete Menu Item</h3>
+          <p className={` ${contrastClass}`}>Item ID:</p> <input className={` ${contrastClass}`} value={deletedItemId} onChange={handleDeleteInputChange}/>
+          <br/>
+          <button className='popI'  onClick={deleteProduct}>Enter</button>
+        </div>
       </Popup>
 
       <Popup trigger={editPopup} setTrigger={setEditPopup}>
+        <div className={` ${contrastClass}`}>
+          <br />
+
+          <h3 className={` ${contrastClass}`}>Edit Menu Item</h3>
+          <p className={` ${contrastClass}`} >Enter ID of Item to be Edited:</p> <input className={` ${contrastClass}`} value={editItemId} onChange={(e) => setEditItemId(e.target.value)} onBlur={() => fetchProductToEdit(editItemId)} />
+          <h3 className={` ${contrastClass}`} >Fill Out Fields You Wish to Edit</h3>
+          <p className={` ${contrastClass}`}>Name: </p><input className={` ${contrastClass}`} name="name" value={editProductDetails.name} onChange={handleEditInputChange} />
+          <p className={` ${contrastClass}`}>Price: </p><input  className={` ${contrastClass}`} name="price" value={editProductDetails.price} onChange={handleEditInputChange} />
+          <p className={` ${contrastClass}`}>Ingredients:</p> <input className={` ${contrastClass}`} name="ingredients" value={editProductDetails.ingredients} onChange={handleEditInputChange} />
+          <p className={` ${contrastClass}`}>Image URL:</p> <input className={` ${contrastClass}`} name="image_url" value={editProductDetails.image_url} onChange={handleEditInputChange} />
+          <br />
+          <button onClick={updateProduct}>Enter</button>
+        </div>
+      </Popup>
+      
+
+      <Popup  trigger={settingPopup}  setTrigger={setSettingPopup}>
+        <div className={` ${contrastClass}`}>
         <br />
-        <h3>Edit Menu Item</h3>
-        Enter ID of Item to be Edited: <input value={editItemId} onChange={(e) => setEditItemId(e.target.value)} onBlur={() => fetchProductToEdit(editItemId)} />
-        <h3>Fill Out Fields You Wish to Edit</h3>
-        Name: <input name="name" value={editProductDetails.name} onChange={handleEditInputChange} />
-        Price: <input name="price" value={editProductDetails.price} onChange={handleEditInputChange} />
-        Ingredients: <input name="ingredients" value={editProductDetails.ingredients} onChange={handleEditInputChange} />
-        Image URL: <input name="image_url" value={editProductDetails.image_url} onChange={handleEditInputChange} />
+        <h3 className={` ${contrastClass}`}>Accessibility Settings</h3>
         <br />
-        <button onClick={updateProduct}>Enter</button>
+        <h2 className={` ${contrastClass}`}>Contrast</h2>
+        <br></br>
+        <div className={`settings-section ${contrastClass}`}>
+            
+            <button onClick={() => setHighContrast(true)}>High Contrast</button>
+            <button onClick={() => setHighContrast(false)}>Default Contrast</button>
+
+        </div>
+        <br></br>
+        <h2 className={` ${contrastClass}`}>Font Size</h2>
+        <br></br>
+        <div className={` settings-section ${contrastClass}`}>
+           
+            <button className={` ${contrastClass}`} onClick={() => setLargeText(true)}>Large</button>
+            <br />
+            <button className={` ${contrastClass}`} onClick={() => setLargeText(false)}>Default</button>
+        </div>
+        
+        <h2 className={` ${contrastClass}`}>Font Type</h2>
+        <br></br>
+        <div className={` settings-section ${contrastClass}`}>
+           
+            <button>Legible</button>
+            <br />
+            <button>Default</button>
+        </div>
+        </div>
+
       </Popup>
 
 

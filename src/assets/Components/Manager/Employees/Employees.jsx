@@ -31,6 +31,13 @@ export const Employees = () => {
   const [buttonPopup2, setButtonPopup2] = useState(false);
   const [deleteEmployeeId, setDeleteEmployeeId] = useState('');
   const [buttonPopup3, setButtonPopup3] = useState(false);
+  const [settingPopup, setSettingPopup] = useState(false);
+  const [isLargeText, setIsLargeText] = useState(false);
+  const [highContrast, setHighContrast] = useState(false);
+
+  const contrastClass = highContrast ? 'high-contrast' : '';
+  const fontSizeClass = isLargeText ? 'font-size-large' : 'font-size-default';
+
   useEffect(() => {
     axios
       .get("https://mocktea.onrender.com/employees") // Update this URL to where your API is hosted
@@ -120,8 +127,18 @@ export const Employees = () => {
       .catch((error) => console.error("Error updating employee", error));
   };
   
+
+  const setLargeText = (value) => {
+    console.log("Large text now: ", value);
+    setIsLargeText(value);
+  };
+
+  
   return (
-    <div className="centered-container-employees">
+    <div className={`centered-container-employees ${fontSizeClass} ${contrastClass}`}>
+      <button className="access" onClick={() => setSettingPopup(true)}>
+        Accessibility
+      </button>
       <h1>Employee List</h1>
       <table>
         <thead>
@@ -156,48 +173,89 @@ export const Employees = () => {
       <br/>
       <br/>
       <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-      <br/>
-        <h3>Add a New Employee</h3>
+        <div className={` ${contrastClass}`}>
+          <br/>
+            <h3 className={` ${contrastClass}`}>Add a New Employee</h3>
+            
+              <p className={` ${contrastClass}`}>Name</p> <input className={` ${contrastClass}`} name="name" value={newEmployee.name} onChange={handleInputChange} />
+            
         
-          Name <input name="name" value={newEmployee.name} onChange={handleInputChange} />
-        
-     
-          Hours Worked Per Week <input name="hours_worked" value={newEmployee.hours_worked} onChange={handleInputChange} />
-          Salary <input name="salary" value={newEmployee.salary} onChange={handleInputChange} />
- 
-          Position <input name="position" value={newEmployee.position} onChange={handleInputChange} />
-        <div>
-          Manager? <input name="manager" type='checkbox' checked={newEmployee.manager} onChange={handleInputChange} />
-        </div>
+              <p className={` ${contrastClass}`}>Hours Worked Per Week</p> <input className={` ${contrastClass}`} name="hours_worked" value={newEmployee.hours_worked} onChange={handleInputChange} />
+              <p className={` ${contrastClass}`}>Salary</p>  <input name="salary" className={` ${contrastClass}`} value={newEmployee.salary} onChange={handleInputChange} />
+    
+              <p className={` ${contrastClass}`}>Position </p> <input name="position" className={` ${contrastClass}`} value={newEmployee.position} onChange={handleInputChange} />
+            <div className={` ${contrastClass}`}>
+              Manager? <input name="manager" className={` ${contrastClass}`} type='checkbox' checked={newEmployee.manager} onChange={handleInputChange} />
+            </div>
 
-          GitID: GitID: <input name="gitid" value={newEmployee.gitid} onChange={handleInputChange} />
-        <button onClick={handleSubmit}>Enter</button>
+              <p className={` ${contrastClass}`}>GitID:</p> <input name="gitid" className={` ${contrastClass}`} value={newEmployee.gitid} onChange={handleInputChange} />
+              <br />
+              <br />
+            <button onClick={handleSubmit}>Enter</button>
+        </div>
       </Popup>
 
       <Popup trigger={buttonPopup2} setTrigger={setButtonPopup2}>
+      <div className={` ${contrastClass}`}>
       <br/>
-        <h3>Delete Employee</h3>
-        Enter Employee ID <input value={deleteEmployeeId} onChange={handleDeleteInputChange}></input>
+        <h3 className={` ${contrastClass}`}>Delete Employee</h3>
+        <p className={` ${contrastClass}`}>Enter Employee ID</p> <input className={` ${contrastClass}`} value={deleteEmployeeId} onChange={handleDeleteInputChange}></input>
         <br/>
         <button onClick={handleDelete}>Enter</button>
+        </div>
       </Popup>
       
       <Popup trigger={buttonPopup3} setTrigger={setButtonPopup3}>
+        <div className={` ${contrastClass}`}>
         <br/>
-        <h3>Edit Employee Information</h3>
-        Enter ID of Employee you wish to edit <input value={editEmployeeId} onChange={(e) => setEditEmployeeId(e.target.value)} onBlur={() => fetchEmployeeToEdit(editEmployeeId)}></input>
-        Fill in the Fields below you wish to change
+        <h3 className={` ${contrastClass}`} >Edit Employee Information</h3>
+        <p>Enter ID of Employee you wish to edit </p><input className={` ${contrastClass}`} value={editEmployeeId} onChange={(e) => setEditEmployeeId(e.target.value)} onBlur={() => fetchEmployeeToEdit(editEmployeeId)}></input>
+        <h3 className={` ${contrastClass}`}>Fill in the Fields below you wish to change</h3>
         <br/>
-        Name <input name="name" value={editEmployeeDetails.name} onChange={handleEditInputChange}></input>
-        Salary <input name="salary" value={editEmployeeDetails.salary} onChange={handleEditInputChange}></input>
-        Position <input name="position" value={editEmployeeDetails.position} onChange={handleEditInputChange}></input>
-        Manager <input name="manager" type="checkbox" checked={editEmployeeDetails.manager} onChange={handleEditInputChange}></input>
-        GitID <input name="gitid" value={editEmployeeDetails.gitid} onChange={handleEditInputChange}></input>
+        <p className={` ${contrastClass}`}>Name</p>  <input name="name" className={` ${contrastClass}`} value={editEmployeeDetails.name} onChange={handleEditInputChange}></input>
+        <p className={` ${contrastClass}`}>Salary</p>  <input name="salary" className={` ${contrastClass}`} value={editEmployeeDetails.salary} onChange={handleEditInputChange}></input>
+        <p className={` ${contrastClass}`}>Position</p>  <input name="position" className={` ${contrastClass}`} value={editEmployeeDetails.position} onChange={handleEditInputChange}></input>
+        <p className={` ${contrastClass}`}> Manager</p> <input name="manager" className={` ${contrastClass}`} type="checkbox" checked={editEmployeeDetails.manager} onChange={handleEditInputChange}></input>
+        <p className={` ${contrastClass}`}>GitID</p> <input name="gitid" className={` ${contrastClass}`} value={editEmployeeDetails.gitid} onChange={handleEditInputChange}></input>
         <br />
         <button onClick={updateEmployee}>Submit</button>
+        </div>
       </Popup>
 
+      <Popup  trigger={settingPopup}  setTrigger={setSettingPopup}>
+        <div className={` ${contrastClass}`}>
+        <br />
+        <h3 className={` ${contrastClass}`}>Accessibility Settings</h3>
+        <br />
+        <h2 className={` ${contrastClass}`}>Contrast</h2>
+        <br></br>
+        <div className={`settings-section ${contrastClass}`}>
+            
+            <button onClick={() => setHighContrast(true)}>High Contrast</button>
+            <button onClick={() => setHighContrast(false)}>Default Contrast</button>
 
+        </div>
+        <br></br>
+        <h2 className={` ${contrastClass}`}>Font Size</h2>
+        <br></br>
+        <div className={` settings-section ${contrastClass}`}>
+           
+            <button className={` ${contrastClass}`} onClick={() => setLargeText(true)}>Large</button>
+            <br />
+            <button className={` ${contrastClass}`} onClick={() => setLargeText(false)}>Default</button>
+        </div>
+        
+        <h2 className={` ${contrastClass}`}>Font Type</h2>
+        <br></br>
+        <div className={` settings-section ${contrastClass}`}>
+           
+            <button>Legible</button>
+            <br />
+            <button>Default</button>
+        </div>
+        </div>
+
+      </Popup>
 
       <br />
       <button className='pop' onClick={() => setButtonPopup2(true)}>Delete Employee</button>
