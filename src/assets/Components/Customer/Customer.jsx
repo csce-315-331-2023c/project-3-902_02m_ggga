@@ -446,7 +446,7 @@ export const Customer = () => {
         document.documentElement.style.cursor = "";
     }
   };
-
+//asdads
   return (
     <div>
       <nav className="header">
@@ -468,7 +468,7 @@ export const Customer = () => {
           </li>
         </ul>
       </nav>
-
+          
       <div className="body">
         <div className="button-container">
           {products.map((product) => (
