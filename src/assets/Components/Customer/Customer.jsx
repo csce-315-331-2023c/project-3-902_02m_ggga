@@ -414,6 +414,7 @@ export const Customer = () => {
     const popup = document.querySelectorAll(".modal-container-right");
     const body = document.body;
     const products = document.querySelectorAll(".product-button");
+    const popupWindow = document.querySelectorAll(".modal-container");
     switch (option) {
       case "biggerText":
         productLabels.forEach((label) => {
@@ -429,6 +430,10 @@ export const Customer = () => {
         products.forEach((button) => {
           toggleStyle(button, "backgroundColor", "#fff");
           toggleStyle(button, "color", "#000");
+        });
+        popupWindow.forEach((button) => {
+          toggleStyle(button, "backgroundColor", "#000");
+          toggleStyle(button, "color", "#fff");
         });
         break;
       case "legibleText":
